@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./App.css";
+import { Nav } from "./components";
 
 function App() {
   return (
-    <>
-      <h1>Hello new Project!</h1>
-    </>
+    <div>
+      <Nav />
+    </div>
   );
 }
 
