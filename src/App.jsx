@@ -1,12 +1,34 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Nav } from "./components";
+import { Nav, Menu, Header, InfoHeader, Footer } from "./components";
+import { BrowserRouter } from "react-router-dom";
+import { Transition } from "@headlessui/react";
 
 function App() {
+  const [menuActive, setMenuActive] = useState(false);
+  const [activeSession, setActiveSession] = useState(false);
+
   return (
-    <div>
-      <Nav />
-    </div>
+    <main>
+      <BrowserRouter>
+        <div className="header-gradient">
+          <Nav
+            menuActive={menuActive}
+            setMenuActive={setMenuActive}
+            activeSession={activeSession}
+            setActiveSession={setActiveSession}
+          />
+          <Header />
+          <InfoHeader />
+        </div>
+        <Footer />
+        <Menu
+          menuActive={menuActive}
+          activeSession={activeSession}
+          setActiveSession={setActiveSession}
+        />
+      </BrowserRouter>
+    </main>
   );
 }
 

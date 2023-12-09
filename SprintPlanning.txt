@@ -1,0 +1,13 @@
+12/09/2023
+
+1. Navigation
+    a. Home, guides, createGuides?, profile
+2. Realistic footer
+    a. react icons with socials
+    b. copyright warnings
+    c. the whole shebang
+3. Header page
+    a. nice looking black header, transparent image on left, nice big catchy header- "Lets. Get. Hacking" with nice fade in. 
+    b. "(ethically)" fades in right beneath
+    c. then a little description about the purpose of the website.
+    d. then a white background under that with 4 featured guides, icons

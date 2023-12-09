@@ -1,5 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px; */
+  scroll-behavior: smooth;
   margin: 0px;
   padding: 0px;
+  font-family: "Manrope", sans-serif;
 }
+
+.header-gradient {
+  background: rgb(10, 2, 88);
+  background: linear-gradient(353deg,
+      rgba(10, 2, 88, 1) 0%,
+      rgba(10, 10, 10, 1) 99%,
+      rgba(10, 10, 10, 244) 100%);
+}
+
+.hamburger-menu-gradient {
+  background: rgb(10, 2, 88);
+  background: linear-gradient(270deg,
+      rgba(10, 2, 88, 1) 0%,
+      rgba(10, 10, 10, 1) 99%,
+      rgba(255, 255, 255, 1) 100%);
+}
+
+.transformation {
+  transition: transform 0.3s ease;
+  transform: translateX(50px);
+}
+
+.fade-in-effect {
+  animation: fade-in 2s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100;
+  }
+}
+
+.slide-in-effect {
+  animation: slide-in 1.3s;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(10%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.box-shadow {
+  -webkit-box-shadow: 0px 2px 8px 1px rgba(0, 0, 0, 0.62);
+  box-shadow: 0px 2px 8px 1px rgba(0, 0, 0, 0.62);
+}
+
+/* background: rgb(10, 2, 88);
+background: linear-gradient(353deg, rgba(10, 2, 88, 1) 0%, rgba(10, 10, 10, 1) 99%, rgba(255, 255, 255, 1) 100%); */
