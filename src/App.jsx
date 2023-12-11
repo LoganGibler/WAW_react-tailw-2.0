@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import "./App.css";
 import {
   Nav,
@@ -7,9 +7,10 @@ import {
   InfoHeader,
   Footer,
   FooterLinks,
+  Login,
+  Register,
 } from "./components";
-import { BrowserRouter } from "react-router-dom";
-import { Transition } from "@headlessui/react";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 function App() {
   const [menuActive, setMenuActive] = useState(false);
@@ -25,11 +26,22 @@ function App() {
             activeSession={activeSession}
             setActiveSession={setActiveSession}
           />
-          <Header />
-          <InfoHeader />
+          <Routes>
+            <Route
+              path="/"
+              element={[
+                <Header />,
+                <InfoHeader />,
+                <Footer />,
+                <FooterLinks />,
+              ]}
+            />
+          </Routes>
         </div>
-        <Footer />
-        <FooterLinks />
+        <Routes>
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
+        </Routes>
         <Menu
           menuActive={menuActive}
           setMenuActive={setMenuActive}
