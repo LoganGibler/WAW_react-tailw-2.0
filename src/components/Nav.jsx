@@ -16,23 +16,31 @@ const Nav = ({
   };
 
   return (
-    <div className="w-full px-2 pt-2 flex sm:px-8 pt-4">
+    <div className="w-full px-2 flex sm:px-8 lg:px-[6rem] pt-4">
       <div className="text-white flex ml-6">
         <img className="w-[33px] h-auto md:w-[42px]" src={logo}></img>
-        <h1 className="ml-2 font-semibold md:text-lg hover:cursor-pointer hover:text-orange-600">
+        <h1 className="ml-2 font-semibold md:text-lg lg:pl-5 hover:cursor-pointer hover:text-orange-600">
           WebAppWarfare
         </h1>
       </div>
 
       <div className="hidden sm:flex grow mr-6 mt-[1px] py-[2px] justify-end text-white">
-        <p className="mx-1.5 text-sm  md:text-base hover:cursor-pointer hover:text-orange-600">
+        <p className="mx-1.5  lg:mx-4 text-sm  md:text-base hover:cursor-pointer hover:text-orange-600">
           Guides
         </p>
-        <p className="mx-1.5 text-sm md:text-base  hover:cursor-pointer hover:text-orange-600">
-          Profile
-        </p>
-        <p className="mx-1.5 text-sm   md:text-base hover:cursor-pointer hover:text-orange-600">
-          Create Guide
+        {activeSession && (
+          <p className="mx-1.5 lg:mx-4 text-sm md:text-base  hover:cursor-pointer hover:text-orange-600">
+            Dashboard
+          </p>
+        )}
+
+        {activeSession && (
+          <p className="mx-1.5 lg:mx-4 text-sm   md:text-base hover:cursor-pointer hover:text-orange-600">
+            Create Guide
+          </p>
+        )}
+        <p className="mx-1.5 lg:mx-4 text-sm   md:text-base hover:cursor-pointer hover:text-orange-600">
+          About Us
         </p>
       </div>
       <div className="text-white text-sm flex grow justify-end mr-2 sm:grow-0">

@@ -7,10 +7,10 @@ export default {
       "xs": "450px",
       'sm': '640px',
       // => @media (min-width: 640px) { ... }
-
+      "sm+": "700px",
       'md': '768px',
       // => @media (min-width: 768px) { ... }
-
+      "md+": "815px",
       'lg': '1024px',
       // => @media (min-width: 1024px) { ... }
 

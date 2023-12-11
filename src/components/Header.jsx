@@ -18,10 +18,10 @@ const Header = () => {
           id="splash-desc"
           className="slide-in-effect flex flex-col text-center pr-2 max-w-[500px] opacity-100 transition-opacity duration-100 ease-in-out"
         >
-          <div className="flex mt-5 text-white text-center justify-center text-xl xs:text-2xl sm:text-3xl md:text-4xl md:mt-[3rem]">
+          <div className="flex mt-5 font-semibold text-white text-center justify-center text-xl xs:text-2xl sm:text-3xl md:text-4xl md:mt-[3rem] lg:text-[45px]">
             <p className="">Lets.</p>
-            <p className=" ml-1">Get.</p>
-            <p className=" ml-1 typewriter">Hacking.</p>
+            <p className=" ml-1 lg:ml-3 md:ml-2">Get.</p>
+            <p className=" ml-1 lg:ml-3 md:ml-2">Hacking.</p>
           </div>
           <p className="text-white text-xs mt-1 sm:text-sm">(Ethically)</p>
           <p className="text-slate-300 text-xs mt-2 xs:text-sm xs:mt-[2rem] sm:text-base md:text-lg">

@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Nav, Menu, Header, InfoHeader, Footer } from "./components";
+import {
+  Nav,
+  Menu,
+  Header,
+  InfoHeader,
+  Footer,
+  FooterLinks,
+} from "./components";
 import { BrowserRouter } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 
@@ -22,8 +29,10 @@ function App() {
           <InfoHeader />
         </div>
         <Footer />
+        <FooterLinks />
         <Menu
           menuActive={menuActive}
+          setMenuActive={setMenuActive}
           activeSession={activeSession}
           setActiveSession={setActiveSession}
         />

@@ -24,7 +24,6 @@ const InfoHeader = () => {
             where education meets innovation, a nd mastery is just a click away.
           </p>
         </div>
-
         <div className="flex justify-center pb-[4rem] m-0">
           <img
             src={lock}
@@ -34,11 +33,21 @@ const InfoHeader = () => {
       </div>
       <div className="flex text-white justify-center pb-2">
         <div className="flex">
-          <AiFillLinkedin className="mx-1  text-lg xs:text-xl sm:text-2xl md:4xl" />
-          <AiFillTwitterCircle className="mx-1 text-lg xs:text-xl sm:text-2xl md:4xl" />
-          <AiFillFacebook className="mx-1 text-lg xs:text-xl sm:text-2xl md:4xl" />
-          <AiFillInstagram className="mx-1 text-lg xs:text-xl sm:text-2xl md:4xl" />
-          <AiFillYoutube className="mx-1 text-lg xs:text-xl sm:text-2xl md:4xl" />
+          <a href="https://www.linkedin.com/in/logan-gibler/">
+            <AiFillLinkedin className="mx-2 mb-2  text-lg xs:text-xl sm:text-2xl md:4xl hover:cursor-pointer" />
+          </a>
+          <a href="">
+            <AiFillTwitterCircle className="mx-2 mb-2 text-lg xs:text-xl sm:text-2xl md:4xl hover:cursor-pointer" />
+          </a>
+          <a href="">
+            <AiFillFacebook className="mx-2 mb-2 text-lg xs:text-xl sm:text-2xl md:4xl hover:cursor-pointer" />
+          </a>
+          <a href="">
+            <AiFillInstagram className="mx-2 mb-2 text-lg xs:text-xl sm:text-2xl md:4xl hover:cursor-pointer" />
+          </a>
+          <a href="">
+            <AiFillYoutube className="mx-2 mb-2 text-lg xs:text-xl sm:text-2xl md:4xl hover:cursor-pointer" />
+          </a>
         </div>
       </div>
     </div>
