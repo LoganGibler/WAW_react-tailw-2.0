@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 import "../index.css";
 
@@ -10,16 +11,18 @@ const Menu = ({
   activeSession,
   setActiveSession,
 }) => {
-  useEffect(() => {
-    // console.log("comp rerendering!");
-    // console.log("MenuActiveStatus:", menuActive);
-  });
+  const navigate = useNavigate();
 
-  const menuClass = `absolute left-[0px] top-9 h-screen w-[150px] text-white hamburger-menu-gradient border-r-[1px] border-orange-600 ${
-    menuActive
-      ? "transition-all duration-500 delay-70 translate-x-[180px] origin-left"
-      : "transition-all duration-500 delay-70 translate-x-[-180px] origin-right"
-  } `;
+  function deleteAllCookies() {
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+  }
 
   return (
     <Transition
@@ -41,28 +44,77 @@ const Menu = ({
           />
         </div>
 
-        <p className="text-sm mb-2 pl-3 pb-0 pt-2 mt-[1px] border-orange-600 border-t-[1px]  hover:cursor-pointer">
+        <p
+          className="text-sm mb-2 pl-3 pb-0 pt-2 mt-[1px] border-orange-600 border-t-[1px]  hover:cursor-pointer"
+          onClick={() => {
+            navigate("/");
+            setMenuActive(false);
+          }}
+        >
           Home
         </p>
-        <p className="text-sm mb-2 pl-3 pb-2 pt-2 mt-[1px] border-orange-600 border-b-[1px] border-t-[1px]  hover:cursor-pointer">
+        <p
+          className="text-sm mb-2 pl-3 pb-2 pt-2 mt-[1px] border-orange-600 border-b-[1px] border-t-[1px]  hover:cursor-pointer"
+          onClick={() => {
+            navigate("/Guides");
+            setMenuActive(false);
+          }}
+        >
           Guides
         </p>
         {activeSession && (
-          <p className="text-sm my-2 pl-3 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer">
+          <p
+            className="text-sm my-2 pl-3 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
+            onClick={() => {
+              navigate("/Dashboard");
+              setMenuActive(false);
+            }}
+          >
             Dashboard
           </p>
         )}
         {activeSession && (
-          <p className="text-sm my-2 pl-3 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer">
+          <p
+            className="text-sm my-2 pl-3 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
+            onClick={() => {
+              navigate("/CreateGuide");
+              setMenuActive(false);
+            }}
+          >
             Create Guide
           </p>
         )}
+
+        <p
+          className="text-sm my-2 pl-3 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
+          onClick={() => {
+            navigate("/AboutUs");
+            setMenuActive(false);
+          }}
+        >
+          About Us
+        </p>
         {!activeSession ? (
-          <button className="bg-orange-600 rounded-md text-sm justify-center ml-9 px-4 py-0.5">
+          <button
+            className="bg-orange-600 rounded-md text-sm justify-center ml-9 px-4 py-0.5"
+            onClick={() => {
+              navigate("/Login");
+              setMenuActive(false);
+            }}
+          >
             Sign in
           </button>
         ) : (
-          <button className="bg-orange-600 rounded-md text-sm justify-center ml-7 px-4 py-0.5">
+          <button
+            className="bg-orange-600 rounded-md text-sm justify-center ml-7 px-4 py-0.5"
+            onClick={() => {
+              navigate("/");
+              setMenuActive(false);
+              setActiveSession(false);
+              deleteAllCookies();
+              window.location.reload();
+            }}
+          >
             Sign out
           </button>
         )}

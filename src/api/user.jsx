@@ -19,22 +19,8 @@ export async function loginUser(username, password) {
     username: username,
     password: password,
   });
-  console.log("This is response.data", response.data);
-  cookies.set("AUTH_API", response.data.token, {
-    path: "/",
-    domain: domain,
-    httpOnly: true,
-    // secure: true,
-    expires: new Date(Date.now() + 1000 * 60 * 60 * 12), // 12 hours
-  });
-
-  cookies.set("USER_ID", response.data.user_id, {
-    path: "/",
-    domain: domain,
-    httpOnly: true,
-    // secure: true,
-  });
-
-  console.log("This is cookies", cookies.cookies);
+  // console.log("This is response.data", response.data);
+  document.cookie = `AUTH_API=${response.data.token}`;
+  document.cookie = `USER_ID=${response.data.user_id}`;
   return response.data;
 }

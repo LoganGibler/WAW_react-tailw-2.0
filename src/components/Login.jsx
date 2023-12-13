@@ -31,7 +31,7 @@ const Login = ({ setSessionActive }) => {
               setUsername("");
               setPassword("");
               navigate("/");
-              // window.location.reload();
+              window.location.reload();
             } catch (error) {
               setShowLoginError(true);
             }

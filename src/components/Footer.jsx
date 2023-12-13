@@ -20,7 +20,7 @@ const Footer = () => {
             Subscribe
           </button>
         </div>
-        <p className="ml-1 text-xs text-white mt-1 p-0">
+        <div className="ml-1 text-xs text-white mt-1 p-0">
           We're commited to your privacy. WebAppWarfare uses the information you
           provide to us to contact you regarding the lastest news regarding
           WebAppWarfare. You may unsubscribe from this service at any time. For
@@ -28,7 +28,7 @@ const Footer = () => {
           <ul className="inline ml-1 hover:cursor-pointer text-blue-200">
             privacy policy.
           </ul>
-        </p>
+        </div>
       </div>
     </div>
   );

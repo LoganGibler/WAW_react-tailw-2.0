@@ -9,30 +9,23 @@ import {
   FooterLinks,
   Login,
   Register,
+  Dashboard,
 } from "./components";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { testingProtectedRoute } from "./middleware/auth";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   const [menuActive, setMenuActive] = useState(false);
   const [activeSession, setActiveSession] = useState(false);
 
-  const headersTemp = document.cookie.split(";");
-  const finalHeaders = {};
-  console.log(headersTemp[0]);
-  if (headersTemp[0] !== "") {
-    headersTemp.forEach((header) => {
-      const headerTemp = header.split("=");
-      finalHeaders[headerTemp[0].trim()] = headerTemp[1].trim(); // save on object to access using keys.
-    });
-  }
   const fetchSession = async () => {
     const sessionStatus = await testingProtectedRoute();
     setActiveSession(sessionStatus);
   };
 
   useEffect(() => {
-    // fetchSession();
+    fetchSession();
   }, []);
 
   return (
@@ -42,17 +35,20 @@ function App() {
           <Routes>
             <Route
               path="/"
+              id="home"
+              key="home"
               element={[
                 <Nav
+                  key="home-nav"
                   menuActive={menuActive}
                   setMenuActive={setMenuActive}
                   activeSession={activeSession}
                   setActiveSession={setActiveSession}
                 />,
-                <Header />,
-                <InfoHeader />,
-                <Footer />,
-                <FooterLinks />,
+                <Header key="home-header" />,
+                <InfoHeader key="home-info" />,
+                <Footer key="home-footer" />,
+                <FooterLinks key="home-links" />,
               ]}
             />
           </Routes>
@@ -60,31 +56,50 @@ function App() {
         <Routes>
           <Route
             path="/Login"
+            key="login"
             element={[
               <Nav
                 menuActive={menuActive}
                 setMenuActive={setMenuActive}
                 activeSession={activeSession}
                 setActiveSession={setActiveSession}
+                key={"login-nav"}
               />,
-              <Login />,
+              <Login key="login-form" />,
             ]}
           />
           <Route
             path="/Register"
+            key="register"
             element={[
               <Nav
                 menuActive={menuActive}
                 setMenuActive={setMenuActive}
                 activeSession={activeSession}
                 setActiveSession={setActiveSession}
+                key="register-nav"
               />,
               <Register
                 activeSession={activeSession}
                 setActiveSession={setActiveSession}
+                key="register-form"
               />,
             ]}
           />
+
+          <Route
+            path="/Dashboard"
+            element={[
+              <Nav
+                menuActive={menuActive}
+                setMenuActive={setMenuActive}
+                activeSession={activeSession}
+                setActiveSession={setActiveSession}
+                key="register-nav"
+              />,
+              <ProtectedRoute element={Dashboard} key="protected-Dash" />,
+            ]}
+          ></Route>
         </Routes>
         <Menu
           menuActive={menuActive}

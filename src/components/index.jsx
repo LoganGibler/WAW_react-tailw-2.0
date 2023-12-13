@@ -6,3 +6,4 @@ export { default as Footer } from "./Footer";
 export {default as FooterLinks} from "./FooterLinks";
 export {default as Login} from "./Login";
 export {default as Register} from "./Register";
+export {default as Dashboard} from "./Dashboard";
