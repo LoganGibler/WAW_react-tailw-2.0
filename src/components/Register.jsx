@@ -6,8 +6,9 @@ import { BiSolidUserRectangle } from "react-icons/bi";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { BiX } from "react-icons/bi";
+import { createUser, loginUser } from "../api/user";
 
-const Register = () => {
+const Register = ({ activeSession, setActiveSession }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassRequirements, setShowPassRequirements] = useState(false);
@@ -19,7 +20,47 @@ const Register = () => {
   return (
     <div className="flex flex-col justify-center">
       <div className="flex justify-center">
-        <form className="flex flex-col pb-[15rem] mt-[5rem] lg:mt-[7rem]">
+        <form
+          className="flex flex-col pb-[15rem] mt-[5rem] lg:mt-[7rem]"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            try {
+              if (username.length < 4) {
+                alert("Please use at least 5 characters in username.");
+                return;
+              } else if (password.length < 6) {
+                alert("Please use at least 7 characters for your password.");
+                return;
+              } else if (!/\p{Lu}/u.test(password)) {
+                alert("Please include a capital letter in your password.");
+                return;
+              } else if (!/\d/.test(password)) {
+                alert("Please include one number in your password.");
+                return;
+              } else {
+                // console.log("this is username", username);
+                // console.log("this is password", password)
+                let user = await createUser(username, password);
+                console.log("this is user", user);
+                if (user.user) {
+                  let token = await loginUser(username, password);
+                  console.log("this is token", token);
+                  localStorage.setItem("username", JSON.stringify(username));
+                  alert("Sign up successful");
+                  setActiveSession(true);
+                  setUsername("");
+                  setPassword("");
+                  navigate("/");
+                  // window.location.reload();
+                } else {
+                  alert("Sign up failed. Please use another username.");
+                }
+              }
+            } catch (error) {
+              throw error;
+            }
+          }}
+        >
           <div className="flex justify-center mb-2">
             <img src={logo} className="w-[50px] h-auto"></img>
             <h1 className="text-white font-semibold mt-1 mx-4 text-lg md:text-xl lg:text-2xl">
@@ -50,6 +91,7 @@ const Register = () => {
               maxLength={50}
               value={password}
               onChange={(e) => {
+                setShowPassRequirements(true);
                 setPassword(e.target.value);
                 if (e.target.value.length > 6) {
                   setPassLength(true);
@@ -104,7 +146,10 @@ const Register = () => {
               </div>
             </div>
           )}
-          <button className="border-none rounded-md p-1 mt-2 text-white bg-orange-600">
+          <button
+            className="border-none rounded-md p-1 mt-2 text-white bg-orange-600"
+            type="submit"
+          >
             Register
           </button>
 

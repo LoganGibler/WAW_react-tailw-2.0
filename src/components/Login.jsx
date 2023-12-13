@@ -4,13 +4,39 @@ import { CiLogin } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { BiSolidUserRectangle } from "react-icons/bi";
 import { FaEyeSlash } from "react-icons/fa";
+import { loginUser } from "../api/user";
 
-const Login = () => {
+const Login = ({ setSessionActive }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   return (
     <div className="flex flex-col justify-center">
       <div className="flex justify-center">
-        <form className="flex flex-col pb-[15rem] mt-[5rem] lg:mt-[7rem]">
+        <form
+          className="flex flex-col pb-[15rem] mt-[5rem] lg:mt-[7rem]"
+          type="submit"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            try {
+              console.log("form submitted");
+              let token = await loginUser(username, password);
+              if (!token) {
+                alert("Login Failed.");
+                return;
+              }
+              // alert("Login Successful");
+              localStorage.setItem("username", JSON.stringify(username));
+              setUsername("");
+              setPassword("");
+              navigate("/");
+              // window.location.reload();
+            } catch (error) {
+              setShowLoginError(true);
+            }
+          }}
+        >
           <div className="flex justify-center mb-2">
             <img src={logo} className="w-[50px] h-auto"></img>
             <h1 className="text-white font-semibold mt-1 mx-4 text-lg md:text-xl lg:text-2xl">
@@ -22,6 +48,9 @@ const Login = () => {
             <input
               placeholder="Username"
               className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px] lg:w-[300px]"
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
             ></input>
           </div>
           <div className="flex">
@@ -30,9 +59,15 @@ const Login = () => {
               placeholder="Password"
               type="password"
               className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px] lg:w-[300px]"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             ></input>
           </div>
-          <button className="border-none rounded-md p-1 mt-2 text-white bg-orange-600">
+          <button
+            className="border-none rounded-md p-1 mt-2 text-white bg-orange-600"
+            type="submit"
+          >
             Login
           </button>
 

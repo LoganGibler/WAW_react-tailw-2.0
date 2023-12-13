@@ -11,8 +11,8 @@ const Menu = ({
   setActiveSession,
 }) => {
   useEffect(() => {
-    console.log("comp rerendering!");
-    console.log("MenuActiveStatus:", menuActive);
+    // console.log("comp rerendering!");
+    // console.log("MenuActiveStatus:", menuActive);
   });
 
   const menuClass = `absolute left-[0px] top-9 h-screen w-[150px] text-white hamburger-menu-gradient border-r-[1px] border-orange-600 ${
