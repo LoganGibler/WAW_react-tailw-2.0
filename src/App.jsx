@@ -10,6 +10,7 @@ import {
   Login,
   Register,
   Dashboard,
+  Guides,
 } from "./components";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { testingProtectedRoute } from "./middleware/auth";
@@ -32,6 +33,7 @@ function App() {
     <main>
       <BrowserRouter>
         <div className="header-gradient">
+          {/* unprotected Routes */}
           <Routes>
             <Route
               path="/"
@@ -87,6 +89,22 @@ function App() {
             ]}
           />
 
+          <Route
+            path="/Guides"
+            element={[
+              <Nav
+                menuActive={menuActive}
+                setMenuActive={setMenuActive}
+                activeSession={activeSession}
+                setActiveSession={setActiveSession}
+                key="guides-nav"
+              />,
+              <Guides key="public-guides" />,
+            ]}
+          />
+          {/* end unprotected Routes */}
+
+          {/* here are protected Routes */}
           <Route
             path="/Dashboard"
             element={[
