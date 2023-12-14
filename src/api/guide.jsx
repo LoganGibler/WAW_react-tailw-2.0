@@ -21,19 +21,6 @@ const minutes = currentDate.getMinutes().toString().padStart(2, "0");
 const formattedDate = `${month}-${day}-${year} ${hours}:${minutes}`;
 const dayDate = `${month}-${day}-${year}`;
 
-// export async function getGuides() {
-//   try {
-//     const guides = await axios.get(`${URL}/getGuides`, {
-//       headers: {
-//         authorization: finalHeaders["AUTH_API"],
-//         user_id: finalHeaders["USER_ID"],
-//       },
-//     });
-//     return guides;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
 export async function getPublishedApprovedGuides() {
   const guides = await axios.get(`${URL}/guides/getPublishedApprovedGuides`);
   // console.log(guides);
@@ -42,3 +29,11 @@ export async function getPublishedApprovedGuides() {
 export async function createGuides() {}
 
 export async function deleteGuides() {}
+
+export async function searchGuides(searchData) {
+  const guides = await axios.post(`${URL}/guides/getSearchResult`, {
+    searchData: searchData,
+  });
+  // console.log("Searched Guides:", guides);
+  return guides.data.searchResult;
+}

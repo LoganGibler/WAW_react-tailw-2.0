@@ -30,7 +30,7 @@ function App() {
   }, []);
 
   return (
-    <main>
+    <main className="">
       <BrowserRouter>
         <div className="header-gradient">
           {/* unprotected Routes */}
@@ -92,14 +92,19 @@ function App() {
           <Route
             path="/Guides"
             element={[
-              <Nav
-                menuActive={menuActive}
-                setMenuActive={setMenuActive}
-                activeSession={activeSession}
-                setActiveSession={setActiveSession}
-                key="guides-nav"
-              />,
-              <Guides key="public-guides" />,
+              <div className="guides-gradient-bg min-h-screen" key="guide-bg">
+                <Nav
+                  menuActive={menuActive}
+                  setMenuActive={setMenuActive}
+                  activeSession={activeSession}
+                  setActiveSession={setActiveSession}
+                  key="guides-nav"
+                />
+                ,
+                <Guides key="public-guides" />,
+                <Footer key="guides-footer" />,
+                <FooterLinks key="guides-footerlinks" />
+              </div>,
             ]}
           />
           {/* end unprotected Routes */}

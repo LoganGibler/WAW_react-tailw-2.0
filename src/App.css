@@ -11,32 +11,33 @@
   padding: 0px;
   font-family: "Manrope", sans-serif;
   background: rgb(1, 0, 6);
-  background: linear-gradient(
-    180deg,
-    rgba(1, 0, 6, 1) 1%,
-    rgba(8, 11, 61, 1) 57%,
-    rgba(22, 25, 75, 1) 97%
-  );
+  background: linear-gradient(180deg,
+      rgba(1, 0, 6, 1) 1%,
+      rgba(8, 11, 61, 1) 57%,
+      rgba(22, 25, 75, 1) 97%);
 }
 
 .header-gradient {
   background: rgb(10, 2, 88);
-  background: linear-gradient(
-    353deg,
-    rgba(10, 2, 88, 1) 0%,
-    rgba(10, 10, 10, 1) 99%,
-    rgba(10, 10, 10, 244) 100%
-  );
+  background: linear-gradient(353deg,
+      rgba(10, 2, 88, 1) 0%,
+      rgba(10, 10, 10, 1) 99%,
+      rgba(10, 10, 10, 244) 100%);
+}
+
+.guides-gradient-bg {
+  background: rgb(10, 2, 88);
+  background: linear-gradient(85deg,
+      rgba(10, 2, 88, 1) 0%,
+      rgba(10, 10, 10, 1) 94%);
 }
 
 .hamburger-menu-gradient {
   background: rgb(10, 2, 88);
-  background: linear-gradient(
-    270deg,
-    rgba(10, 2, 88, 1) 0%,
-    rgba(10, 10, 10, 1) 99%,
-    rgba(255, 255, 255, 1) 100%
-  );
+  background: linear-gradient(270deg,
+      rgba(10, 2, 88, 1) 0%,
+      rgba(10, 10, 10, 1) 99%,
+      rgba(255, 255, 255, 1) 100%);
 }
 
 .transformation {
