@@ -37,3 +37,8 @@ export async function searchGuides(searchData) {
   // console.log("Searched Guides:", guides);
   return guides.data.searchResult;
 }
+
+export async function getFeaturedGuides() {
+  const guides = await axios.get(`${URL}/guides/getFeaturedGuides`);
+  return guides.data.featuredGuides;
+}

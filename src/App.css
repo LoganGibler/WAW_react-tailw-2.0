@@ -25,6 +25,17 @@
       rgba(10, 10, 10, 244) 100%);
 }
 
+.truncated-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  /* Number of lines to show before truncating */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
+  max-height: 100%;
+  /* Adjust the height based on the number of lines you want */
+}
+
 .guides-gradient-bg {
   background: rgb(10, 2, 88);
   background: linear-gradient(85deg,

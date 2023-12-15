@@ -24,7 +24,7 @@ const InfoHeader = () => {
             where education meets innovation, a nd mastery is just a click away.
           </p>
         </div>
-        <div className="flex justify-center pb-[4rem] m-0">
+        <div className="flex justify-center py-[2rem] m-0">
           <img
             src={lock}
             className="slide-in-effect w-1/2 h-auto max-w-[500px] opacity-100 transition-opacity duration-1000 ease-in-out"

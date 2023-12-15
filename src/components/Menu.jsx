@@ -45,7 +45,7 @@ const Menu = ({
         </div>
 
         <p
-          className="text-sm mb-2 pl-3 pb-0 pt-2 mt-[1px] border-orange-600 border-t-[1px]  hover:cursor-pointer"
+          className="text-sm mb-2 pl-6 pb-0 pt-2 mt-[1px] border-orange-600 border-t-[1px]  hover:cursor-pointer"
           onClick={() => {
             navigate("/");
             setMenuActive(false);
@@ -54,7 +54,7 @@ const Menu = ({
           Home
         </p>
         <p
-          className="text-sm mb-2 pl-3 pb-2 pt-2 mt-[1px] border-orange-600 border-b-[1px] border-t-[1px]  hover:cursor-pointer"
+          className="text-sm mb-2 pl-6 pb-2 pt-2 mt-[1px] border-orange-600 border-b-[1px] border-t-[1px]  hover:cursor-pointer"
           onClick={() => {
             navigate("/Guides");
             setMenuActive(false);
@@ -64,7 +64,7 @@ const Menu = ({
         </p>
         {activeSession && (
           <p
-            className="text-sm my-2 pl-3 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
+            className="text-sm my-2 pl-6 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
             onClick={() => {
               navigate("/Dashboard");
               setMenuActive(false);
@@ -75,7 +75,7 @@ const Menu = ({
         )}
         {activeSession && (
           <p
-            className="text-sm my-2 pl-3 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
+            className="text-sm my-2 pl-6 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
             onClick={() => {
               navigate("/CreateGuide");
               setMenuActive(false);
@@ -86,7 +86,7 @@ const Menu = ({
         )}
 
         <p
-          className="text-sm my-2 pl-3 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
+          className="text-sm my-2 pl-6 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
           onClick={() => {
             navigate("/AboutUs");
             setMenuActive(false);

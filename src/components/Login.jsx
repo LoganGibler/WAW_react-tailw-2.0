@@ -9,6 +9,7 @@ import { loginUser } from "../api/user";
 const Login = ({ setSessionActive }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showLoginError, setShowLoginError] = useState(false);
   const navigate = useNavigate();
 
   return (

@@ -7,8 +7,8 @@ const Header = () => {
   useEffect(() => {}, []);
 
   return (
-    <div className="w-full mt-4 pb-2 fade-in-effect sm:mt-8">
-      <div className="flex flex-row justify-center p-2">
+    <div className="w-full mt-4 pb-2 fade-in-effect sm:mt-8 ">
+      <div className="flex flex-row justify-center p-2 ">
         <img
           id="splash-img"
           src={splashImage}

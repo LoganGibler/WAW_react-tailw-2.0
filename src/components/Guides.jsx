@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getPublishedApprovedGuides, searchGuides } from "../api/guide";
-
+import {
+  getFeaturedGuides,
+  getPublishedApprovedGuides,
+  searchGuides,
+} from "../api/guide";
+import "../App.css";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebase";
 import { FcLinux } from "react-icons/fc";
 import { FaWindows } from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
@@ -11,13 +17,24 @@ import { FaSortAlphaUpAlt } from "react-icons/fa";
 import { FaSortAlphaDown } from "react-icons/fa";
 
 const Guides = () => {
+  let imageListReg = ref(storage, "/guidepfp/");
   const [guides, setGuides] = useState([]);
+  const [featuredGuides, setFeaturedGuides] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [urlList, setUrlList] = useState([]);
+
+  let list = [];
 
   async function fetchGuides() {
     const guides = await getPublishedApprovedGuides();
-    console.log(guides);
+    // console.log(guides);
     setGuides(guides);
+  }
+
+  async function fetchFeaturedGuides() {
+    const guides = await getFeaturedGuides();
+    console.log("Featured guides:", guides);
+    setFeaturedGuides(guides);
   }
 
   async function sortAlphaDown() {
@@ -78,12 +95,28 @@ const Guides = () => {
 
   useEffect(() => {
     fetchGuides();
+    fetchFeaturedGuides();
+    const fetchImages = async () => {
+      try {
+        const res = await listAll(imageListReg);
+        const urlPromises = res.items.map(async (item) => {
+          const url = await getDownloadURL(item);
+          return url;
+        });
+        const urls = await Promise.all(urlPromises);
+        setUrlList(urls);
+      } catch (error) {
+        console.error("Error fetching URLs:", error);
+      }
+    };
+
+    fetchImages();
   }, []);
 
   return (
     <div className="p-2 mt-[1rem] flex flex-wrap justify-center slide-in-effect">
-      <div className="w-full text-slate-400 border-t-[1px] border-slate-600 border-b-[1px] mb-3 text-sm xs:text-base md:text-[17px] fade-in-effect">
-        <div className="flex justify-center">
+      <div className="w-full text-slate-400 mb-3 text-sm xs:text-base md:text-[17px] fade-in-effect justify-center">
+        <div className="flex flex-start">
           <div className="flex pr-2">
             <FaSortAlphaDown
               className="mx-1 mt-1 hover:cursor-pointer hover:text-white"
@@ -134,7 +167,49 @@ const Guides = () => {
           </div>
         </div>
       </div>
-      <div className="max-w-[600px] md:max-w-[700px] lg:max-w-[980px] flex flex-wrap justify-center">
+      <div className="pb-5 max-w-[600px] md:max-w-[700px] lg:max-w-[800px] flex flex-col flex-wrap justify-center hover:cursor-pointer">
+        {featuredGuides.length &&
+          featuredGuides.map((featuredGuide) => {
+            if (featuredGuide.difficulty === "Easy") {
+              var diffClass = "text-sm md:text-sm text-green-400";
+            } else if (featuredGuide.difficulty === "Medium") {
+              var diffClass = "text-sm md:text-sm text-blue-300 ";
+            } else if (featuredGuide.difficulty === "Hard") {
+              var diffClass = "text-sm md:text-sm text-red-400 ";
+            } else if (featuredGuide.difficulty === "Insane") {
+              var diffClass = "text-sm md:text-sm text-purple-500";
+            }
+            return (
+              <div className="flex flex-col px-1 my-1">
+                <div className="flex flex-start">
+                  <label className="text-white bg-orange-600 pl-1 pr-4 text-sm rounded-tr-[10px]">
+                    Featured
+                  </label>
+                </div>
+
+                <div className="p-2 flex border-[1px] border-slate-600">
+                  <div>
+                    {" "}
+                    <img
+                      src={""}
+                      className="w-[100px] h-[100px] border-[1px] border-slate-600"
+                    ></img>
+                  </div>
+                  <div className="pl-3">
+                    <h1 className="text-white text-ellipsis overflow-hidden">
+                      {featuredGuide.vmtitle}
+                    </h1>
+                    <p className={diffClass}>{featuredGuide.difficulty}</p>
+                    <p className="text-slate-400 mt-1 text-xs truncated-text">
+                      {featuredGuide.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+      {/* <div className="max-w-[600px] md:max-w-[700px] lg:max-w-[900px] flex flex-wrap justify-center hover:cursor-pointer">
         {guides.length ? (
           guides.map((guide) => {
             if (guide.difficulty === "Easy") {
@@ -149,14 +224,30 @@ const Guides = () => {
               var diffClass =
                 "text-sm md:text-base text-purple-500 md:mt-[1.5px]";
             }
-
             return (
-              <div className="flex flex-col py-1.5 px-4 border-[1px] border-slate-500 w-[150px] md:w-[184px] lg:w-[235px] m-2 rounded-sm fade-in-effect hover:cursor-pointer">
+              <div className="flex flex-col py-1.5 px-4 border-[1px] border-slate-500 w-[150px] md:w-[180px] m-3 rounded-sm fade-in-effect hover:cursor-pointer">
                 <div className="flex justify-center">
-                  <img
-                    src=""
-                    className="border-[1px] border-slate-500 outline-none w-[100px] h-[100px] md:h-[130px] md:w-[130px] mt-1 mb-2 rounded-sm"
-                  ></img>
+                  {urlList.length &&
+                    urlList.map((image) => {
+                      let guide_id = image.split("_")[1];
+                      list.push(guide_id);
+                      if (guide_id === guide._id) {
+                        return (
+                          <img
+                            src={image}
+                            className="border-[1px] border-slate-500 outline-none w-[90px] h-[90px] md:h-[115px] md:w-[115px] mt-1 mb-2 rounded-sm"
+                          />
+                        );
+                      }
+                    })}
+                </div>
+                <div className="flex justify-center">
+                  {!list.includes(guide._id) && (
+                    <img
+                      src="https://www.ecpi.edu/sites/default/files/whitehat.png"
+                      className="border-[1px] border-slate-500 outline-none w-[90px] h-[90px] md:h-[115px] md:w-[115px] mt-1 mb-2 rounded-sm"
+                    />
+                  )}
                 </div>
 
                 <h1 className="text-white text-sm text-ellipsis font-semibold overflow-hidden md:text-base">
@@ -186,7 +277,7 @@ const Guides = () => {
         ) : (
           <div className="text-slate-300 min-h-screen">No Guides Found.</div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
