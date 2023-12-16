@@ -15,6 +15,7 @@ import { FaSortAmountDownAlt } from "react-icons/fa";
 import { FaSortAmountUp } from "react-icons/fa";
 import { FaSortAlphaUpAlt } from "react-icons/fa";
 import { FaSortAlphaDown } from "react-icons/fa";
+import { HiMiniMagnifyingGlassCircle } from "react-icons/hi2";
 
 const Guides = () => {
   let imageListReg = ref(storage, "/guidepfp/");
@@ -115,9 +116,10 @@ const Guides = () => {
 
   return (
     <div className="p-2 mt-[1rem] flex flex-wrap justify-center slide-in-effect">
-      <div className="w-full text-slate-400 mb-3 text-sm xs:text-base md:text-[17px] fade-in-effect justify-center">
-        <div className="flex flex-start">
-          <div className="flex pr-2">
+      <div className="w-full text-slate-400 mb-3 text-sm xs:text-base md:text-[17px] fade-in-effect justify-center"></div>
+      <div className="pb-5 max-w-[600px] md:max-w-[700px] lg:max-w-[800px] flex flex-col flex-wrap justify-center hover:cursor-pointer">
+        <div className="flex justify-end text-orange-400 max-h-[23px]">
+          <div className="flex pt-1.5">
             <FaSortAlphaDown
               className="mx-1 mt-1 hover:cursor-pointer hover:text-white"
               onClick={async () => {
@@ -130,28 +132,6 @@ const Guides = () => {
                 await sortAlphaUp();
               }}
             />
-          </div>
-          <input
-            placeholder="Search Guides Here"
-            className="border-l-[1px] border-r-[1px] border-slate-600 bg-inherit pl-2"
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }}
-          ></input>
-          <button
-            className="border-r-[2px] outline-none border-slate-600 ml-2 pr-2 "
-            onClick={async () => {
-              const searchedGuides = await searchGuides(searchTerm);
-              console.log(
-                "this is searched guides on frontend: ",
-                searchedGuides
-              );
-              setGuides(searchedGuides);
-            }}
-          >
-            Search
-          </button>
-          <div className="flex pl-2">
             <FaSortAmountDownAlt
               className="mx-1 mt-1 hover:cursor-pointer hover:text-white"
               onClick={async () => {
@@ -159,15 +139,38 @@ const Guides = () => {
               }}
             />
             <FaSortAmountUp
-              className="mx-1 mt-1 hover:cursor-pointer hover:text-white"
+              className="mx-1 mt-1 hover:cursor-pointer hover:text-white mr-2"
               onClick={async () => {
                 await sortDifficultyUp();
               }}
             />
+
+            <input
+              placeholder="Search Guides Here"
+              className="border-l-[1px] border-r-[1px] border-slate-600 bg-inherit pl-2 h-[23px]"
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            ></input>
+            <button
+              className="border-r-[2px] outline-none border-slate-600 ml-2 pr-2 mr-[38px] h-[23px]"
+              onClick={async () => {
+                const searchedGuides = await searchGuides(searchTerm);
+                setGuides(searchedGuides);
+              }}
+            >
+              Search
+            </button>
           </div>
+
+          <HiMiniMagnifyingGlassCircle
+            className="text-orange-400 text-4xl absolute"
+            onClick={async () => {
+              const searchedGuides = await searchGuides(searchTerm);
+              setGuides(searchedGuides);
+            }}
+          />
         </div>
-      </div>
-      <div className="pb-5 max-w-[600px] md:max-w-[700px] lg:max-w-[800px] flex flex-col flex-wrap justify-center hover:cursor-pointer">
         {featuredGuides.length &&
           featuredGuides.map((featuredGuide) => {
             if (featuredGuide.difficulty === "Easy") {
