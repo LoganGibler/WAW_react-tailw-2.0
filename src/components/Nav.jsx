@@ -62,7 +62,7 @@ const Nav = ({
           </p>
         )}
 
-        {activeSession && (
+        {/* {activeSession && (
           <p
             className="mx-1.5 lg:mx-3 text-sm   lg:text-[16px] hover:cursor-pointer hover:text-orange-600"
             onClick={() => {
@@ -71,7 +71,7 @@ const Nav = ({
           >
             Create Guide
           </p>
-        )}
+        )} */}
         <p
           className="mx-1.5 lg:mx-3 text-sm   lg:text-[16px] hover:cursor-pointer hover:text-orange-600"
           onClick={() => {

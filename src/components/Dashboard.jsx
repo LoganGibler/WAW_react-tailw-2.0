@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Dashboard = ({activeSession}) => {
+const Dashboard = ({ activeSession }) => {
   useEffect(() => {
     console.log("THIS IS activeSession on dash", activeSession);
   }, [activeSession]);

@@ -32,6 +32,17 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   /* text-overflow: ellipsis; */
+  /* max-height: 100%; */
+  /* Adjust the height based on the number of lines you want */
+}
+
+.truncated-text-sm {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* Number of lines to show before truncating */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
   max-height: 100%;
   /* Adjust the height based on the number of lines you want */
 }

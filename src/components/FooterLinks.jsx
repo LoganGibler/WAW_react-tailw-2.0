@@ -10,7 +10,7 @@ const FooterLinks = () => {
           <p>St. Augustine, FL</p>
           <p>Zip code: 32095</p>
           <p>Phone: (+1)757-739-7721</p>
-          <p>Email: Logan.Gibler5@gmail.com</p>
+          <p>Logan.Gibler5@gmail.com</p>
         </div>
         <div className="flex text-sm sm:text-base flex-col px-[2rem] border-b-[1px] sm:border-b-0 mx-[1rem] pb-[1rem] md:border-r-[1px] border-slate-600 lg:pr-[6rem] lg:pl-[5rem] mt-4 sm:mt-0">
           <h1 className="text-slate-200 font-semibold mt-1">Menu</h1>

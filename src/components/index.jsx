@@ -8,3 +8,4 @@ export {default as Login} from "./Login";
 export {default as Register} from "./Register";
 export {default as Dashboard} from "./Dashboard";
 export {default as Guides } from "./Guides"
+export {default as AboutUs} from "./AboutUs"
