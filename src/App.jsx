@@ -12,6 +12,7 @@ import {
   Dashboard,
   Guides,
   AboutUs,
+  GuideView,
 } from "./components";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { testingProtectedRoute } from "./middleware/auth";
@@ -124,6 +125,24 @@ function App() {
                 <AboutUs key="aboutus" />,
                 <Footer key="aboutus-footer" />,
                 <FooterLinks key="aboutus-footerlinks" />,
+              </div>,
+            ]}
+          />
+
+          <Route
+            path="/guide/:id"
+            element={[
+              <div className="guides-gradient-bg" key="guideview-bg">
+                <Nav
+                  menuActive={menuActive}
+                  setMenuActive={setMenuActive}
+                  activeSession={activeSession}
+                  setActiveSession={setActiveSession}
+                  key="guideview-nav"
+                />
+                ,
+                <GuideView key="guideview-guideview" />,
+                <FooterLinks key="guideview-footerlinks" />,
               </div>,
             ]}
           />

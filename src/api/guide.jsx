@@ -42,3 +42,11 @@ export async function getFeaturedGuides() {
   const guides = await axios.get(`${URL}/guides/getFeaturedGuides`);
   return guides.data.featuredGuides;
 }
+
+export function getGuideById(_id) {
+  const guide = axios.post(`${URL}/guides/getPublicGuideById`, {
+    _id: _id
+  });
+
+  return guide;
+}

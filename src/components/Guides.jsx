@@ -17,6 +17,7 @@ import { FaSortAlphaUpAlt } from "react-icons/fa";
 import { FaSortAlphaDown } from "react-icons/fa";
 import { HiMiniMagnifyingGlassCircle } from "react-icons/hi2";
 import defaultGuidePFP from "../imgs/default.jpg";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Guides = () => {
   let imageListReg = ref(storage, "/guidepfp/");
@@ -24,6 +25,7 @@ const Guides = () => {
   const [featuredGuides, setFeaturedGuides] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [urlList, setUrlList] = useState([]);
+  const navigate = useNavigate();
 
   let list = [];
 
@@ -35,7 +37,7 @@ const Guides = () => {
 
   async function fetchFeaturedGuides() {
     const guides = await getFeaturedGuides();
-    console.log("Featured guides:", guides);
+    // console.log("Featured guides:", guides);
     setFeaturedGuides(guides);
   }
 
@@ -182,7 +184,7 @@ const Guides = () => {
           {featuredGuides.length ? (
             <div className="pb-4 mt-2">
               {featuredGuides.length &&
-                featuredGuides.map((featuredGuide) => {
+                featuredGuides.map((featuredGuide, index) => {
                   if (featuredGuide.difficulty === "Easy") {
                     var diffClass = "text-[13px] sm:text-sm text-green-400";
                   } else if (featuredGuide.difficulty === "Medium") {
@@ -193,21 +195,27 @@ const Guides = () => {
                     var diffClass = "text-[13px] sm:text-sm text-purple-500";
                   }
                   return (
-                    <div className="flex flex-col px-1 mt-2 mb-0">
+                    <div className="flex flex-col px-1 mt-2 mb-0" key={index}>
                       <div className="flex flex-start">
                         <label className="text-white bg-orange-600 pl-1 pr-4 text-xs sm:text-sm rounded-tr-[10px] ">
                           Featured
                         </label>
                       </div>
 
-                      <div className="p-2 flex border-[1px] border-slate-600 text-slate-400 hover:cursor-pointer hover:text-slate-300 hover:border-slate-400">
+                      <div
+                        className="p-2 flex border-[1px] border-slate-600 text-slate-400 hover:cursor-pointer hover:text-slate-300 hover:border-slate-400"
+                        onClick={() => {
+                          navigate("/guide/" + featuredGuide._id);
+                        }}
+                      >
                         {urlList.length
-                          ? urlList.map((image) => {
+                          ? urlList.map((image, index) => {
                               let featuredGuide_id = image.split("_")[1];
                               list.push(featuredGuide_id);
                               if (featuredGuide_id === featuredGuide._id) {
                                 return (
                                   <img
+                                    key={index}
                                     src={image}
                                     className="border-[1px] border-slate-500 outline-none w-[72px] h-[72px] sm:w-[80px] sm:h-[80px]  mt-1 mb-2 rounded-sm"
                                   />
@@ -223,7 +231,7 @@ const Guides = () => {
                           />
                         ) : null}
 
-                        <div className="pl-3">
+                        <div className="pl-3 grow">
                           <div className="flex">
                             <div className="flex grow mt-0 mr-2">
                               <h1 className="text-white text-[15px] sm:text-base text-ellipsis overflow-hidden">
@@ -265,7 +273,7 @@ const Guides = () => {
 
         <div className="max-w-[600px] md:max-w-[695px] lg:max-w-[795px] flex flex-col sm:flex-wrap sm:flex-row  justify-center hover:cursor-pointer mt-3">
           {guides.length ? (
-            guides.map((guide) => {
+            guides.map((guide, index) => {
               if (guide.difficulty === "Easy") {
                 var diffClass =
                   "text-[13px] sm:text-sm text-green-400 md:mt-[1.5px]";
@@ -280,15 +288,22 @@ const Guides = () => {
                   "text-[13px] sm:text-sm text-purple-500 md:mt-[1.5px]";
               }
               return (
-                <div className="grow flex sm:w-[300px] flex-col py-1.5 sm:ml-1 my-1 px-4 border-[1px] border-slate-600 text-slate-400 rounded-sm fade-in-effect hover:cursor-pointer hover:text-slate-300 hover:border-slate-400">
+                <div
+                  key={index}
+                  className="grow flex sm:w-[300px] flex-col py-1.5 sm:ml-1 my-1 px-4 border-[1px] border-slate-600 text-slate-400 rounded-sm fade-in-effect hover:cursor-pointer hover:text-slate-300 hover:border-slate-400"
+                  onClick={() => {
+                    navigate("/guide/" + guide._id);
+                  }}
+                >
                   <div className="flex">
                     {urlList.length
-                      ? urlList.map((image) => {
+                      ? urlList.map((image, index) => {
                           let guide_id = image.split("_")[1];
                           list.push(guide_id);
                           if (guide_id === guide._id) {
                             return (
                               <img
+                                key={index}
                                 src={image}
                                 className="border-[1px] border-slate-500 outline-none w-[40px] h-[40px]  mt-1 mb-2 rounded-sm"
                               />
