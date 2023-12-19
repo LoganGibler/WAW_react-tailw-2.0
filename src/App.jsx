@@ -21,9 +21,12 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 function App() {
   const [menuActive, setMenuActive] = useState(false);
   const [activeSession, setActiveSession] = useState(false);
+  const [activeUser, setActiveUser] = useState("");
 
   const fetchSession = async () => {
     const sessionStatus = await testingProtectedRoute();
+    // console.log("THIS IS sessionStatus", sessionStatus);
+    setActiveUser(sessionStatus.userID);
     setActiveSession(sessionStatus);
   };
 
@@ -103,7 +106,12 @@ function App() {
                   key="guides-nav"
                 />
                 ,
-                <Guides key="public-guides" />,
+                <Guides
+                  key="public-guides"
+                  activeSession={activeSession}
+                  activeUser={activeUser}
+                />
+                ,
                 <Footer key="guides-footer" />,
                 <FooterLinks key="guides-footerlinks" />
               </div>,
@@ -152,14 +160,18 @@ function App() {
           <Route
             path="/Dashboard"
             element={[
-              <Nav
-                menuActive={menuActive}
-                setMenuActive={setMenuActive}
-                activeSession={activeSession}
-                setActiveSession={setActiveSession}
-                key="register-nav"
-              />,
-              <ProtectedRoute element={Dashboard} key="protected-Dash" />,
+              <div className="header-gradient" key="dashboard-div">
+                <Nav
+                  menuActive={menuActive}
+                  setMenuActive={setMenuActive}
+                  activeSession={activeSession}
+                  setActiveSession={setActiveSession}
+                  key="dash-nav"
+                />
+                ,
+                <ProtectedRoute element={Dashboard} key="protected-Dash" />,
+                <FooterLinks key="dashboard-footerlinks" />,
+              </div>,
             ]}
           ></Route>
         </Routes>

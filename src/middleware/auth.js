@@ -21,7 +21,7 @@ export async function testingProtectedRoute() {
       user_id: finalHeaders["USER_ID"],
     },
   });
-  console.log(response.data);
+  // console.log(response);
   return response.data;
 }
 //////////////////////////////

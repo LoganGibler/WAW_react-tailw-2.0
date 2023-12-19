@@ -29,6 +29,7 @@ const Login = ({ setSessionActive }) => {
               }
               // alert("Login Successful");
               localStorage.setItem("username", JSON.stringify(username));
+              setSessionActive(true);
               setUsername("");
               setPassword("");
               navigate("/");

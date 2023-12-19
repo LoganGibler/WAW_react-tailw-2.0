@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getGuideById } from "../api/guide";
 import defaultGuidePFP from "../imgs/default.jpg";
 import { FcLinux } from "react-icons/fc";
 import { FaWindows } from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
 import { storage } from "../firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { getGuideById } from "../api/guide";
 
 const GuideView = () => {
   const [guide, setGuide] = useState([]);

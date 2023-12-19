@@ -4,8 +4,6 @@ import splashImage from "../imgs/splash.png";
 import "../App.css";
 
 const Header = () => {
-  // useEffect(() => {}, []);
-
   return (
     <div className="w-full flex mt-4 pb-2 fade-in-effect sm:mt-8 justify-center">
       <div className="flex flex-row justify-center p-2 max-w-[820px]">
@@ -39,23 +37,4 @@ const Header = () => {
   );
 };
 
-{
-  /* <p className="text-white text-xs">
-            In an increasingly interconnected world, learning cybersecurity is
-            your key to safeguarding personal information, defending against
-            cyber threats, and ensuring the security of businesses and nations.
-            Discover the essential skills to protect data, preserve privacy, and
-            contribute to a secure digital landscape. Prepare for the challenges
-            of today and tomorrow by becoming a guardian of the digital realm
-            through cybersecurity education.
-
-            
-"WebAppWarfare: Your Gateway to Cybersecurity Mastery
-
-Unleash your potential with WebAppWarfare, a cutting-edge platform dedicated to empowering cybersecurity enthusiasts. 
-Dive into a world of interactive guides, expert insights, and hands-on learning experiences, designed to sharpen your skills in web application security. 
-Elevate your knowledge and become a formidable force in the realm of cybersecurity. Join us on a journey where education meets innovation, a
-nd mastery is just a click away."
-          </p> */
-}
 export default Header;

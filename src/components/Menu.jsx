@@ -73,7 +73,7 @@ const Menu = ({
             Dashboard
           </p>
         )}
-        {activeSession && (
+        {/* {activeSession && (
           <p
             className="text-sm my-2 pl-6 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
             onClick={() => {
@@ -83,7 +83,7 @@ const Menu = ({
           >
             Create Guide
           </p>
-        )}
+        )} */}
 
         <p
           className="text-sm my-2 pl-6 pb-2 border-orange-600 border-b-[1px] hover:cursor-pointer"
@@ -96,7 +96,7 @@ const Menu = ({
         </p>
         {!activeSession ? (
           <button
-            className="bg-orange-600 rounded-md text-sm justify-center ml-9 px-4 py-0.5"
+            className="bg-orange-600 rounded-md text-sm justify-center ml-9 px-4 py-0.5 hover:cursor-pointer"
             onClick={() => {
               navigate("/Login");
               setMenuActive(false);
@@ -106,7 +106,7 @@ const Menu = ({
           </button>
         ) : (
           <button
-            className="bg-orange-600 rounded-md text-sm justify-center ml-7 px-4 py-0.5"
+            className="bg-orange-600 rounded-md text-sm justify-center ml-7 px-4 py-0.5 hover:cursor-pointer"
             onClick={() => {
               navigate("/");
               setMenuActive(false);

@@ -1,43 +1,64 @@
 import React, { useEffect, useState } from "react";
-import {
-  getFeaturedGuides,
-  getPublishedApprovedGuides,
-  searchGuides,
-} from "../api/guide";
-import "../App.css";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import { FcLinux } from "react-icons/fc";
 import { FaWindows } from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
-import { FaLinux } from "react-icons/fa";
 import { FaSortAmountDownAlt } from "react-icons/fa";
 import { FaSortAmountUp } from "react-icons/fa";
 import { FaSortAlphaUpAlt } from "react-icons/fa";
 import { FaSortAlphaDown } from "react-icons/fa";
 import { HiMiniMagnifyingGlassCircle } from "react-icons/hi2";
+import { IoBookmarksSharp } from "react-icons/io5";
+import { IoBookmarksOutline } from "react-icons/io5";
 import defaultGuidePFP from "../imgs/default.jpg";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {
+  getFeaturedGuides,
+  getPublishedApprovedGuides,
+  searchGuides,
+} from "../api/guide";
+import {
+  addGuideToUserBookmarks,
+  getUsersBookmarkedGuides,
+  removeGuideFromBookmarks,
+} from "../api/user";
+import "../App.css";
 
-const Guides = () => {
+const Guides = ({ activeSession, activeUser }) => {
   let imageListReg = ref(storage, "/guidepfp/");
   const [guides, setGuides] = useState([]);
   const [featuredGuides, setFeaturedGuides] = useState([]);
+  const [usersBookmarkedGuides, setUsersBookmarkedGuides] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [urlList, setUrlList] = useState([]);
   const navigate = useNavigate();
 
   let list = [];
 
+  const handleClickButtonBookmark = async (event, activeUser, id) => {
+    event.stopPropagation();
+    await addGuideToUserBookmarks(activeUser, id);
+    await fetchUsersBookmarkedGuides(activeUser);
+  };
+
+  const handleClickButtonUnBookmark = async (event, activeUser, id) => {
+    event.stopPropagation();
+    await removeGuideFromBookmarks(activeUser, id);
+    await fetchUsersBookmarkedGuides(activeUser);
+  };
+
+  const handleClickGuideDiv = (event, id) => {
+    // navigate("/guide/" + id);
+  };
+
   async function fetchGuides() {
     const guides = await getPublishedApprovedGuides();
-    // console.log(guides);
     setGuides(guides);
   }
 
   async function fetchFeaturedGuides() {
     const guides = await getFeaturedGuides();
-    // console.log("Featured guides:", guides);
     setFeaturedGuides(guides);
   }
 
@@ -72,7 +93,6 @@ const Guides = () => {
       }
       return 0;
     });
-    // console.log(guides);
     setFeaturedGuides([]);
     setGuides(sortedGuides);
   }
@@ -101,7 +121,13 @@ const Guides = () => {
     setGuides(sortedGuides);
   }
 
+  async function fetchUsersBookmarkedGuides(activeUser) {
+    const usersBookmarkedGuides = await getUsersBookmarkedGuides(activeUser);
+    setUsersBookmarkedGuides(usersBookmarkedGuides.bookmarks);
+  }
+
   useEffect(() => {
+    // fetchUsersBookmarkedGuides() if user is logged in- put in array, !userBookMarkedGuides.includes() - filled in or outline
     fetchGuides();
     fetchFeaturedGuides();
     const fetchImages = async () => {
@@ -119,7 +145,8 @@ const Guides = () => {
     };
 
     fetchImages();
-  }, []);
+    activeSession && fetchUsersBookmarkedGuides(activeUser);
+  }, [activeSession, activeUser]);
 
   return (
     <div className="p-2 w-full min-h-screen mt-[0rem] flex justify-center slide-in-effect">
@@ -204,7 +231,7 @@ const Guides = () => {
 
                       <div
                         className="p-2 flex border-[1px] border-slate-600 text-slate-400 hover:cursor-pointer hover:text-slate-300 hover:border-slate-400"
-                        onClick={() => {
+                        onClick={(e) => {
                           navigate("/guide/" + featuredGuide._id);
                         }}
                       >
@@ -250,6 +277,35 @@ const Guides = () => {
                                 {!featuredGuide.system && (
                                   <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base md:mt-1.5" />
                                 )}
+                                {activeSession ? (
+                                  <>
+                                    {!usersBookmarkedGuides.includes(
+                                      featuredGuide._id
+                                    ) ? (
+                                      <IoBookmarksOutline
+                                        className="text-orange-500 mt-[2px] ml-2"
+                                        onClick={(e) =>
+                                          handleClickButtonBookmark(
+                                            e,
+                                            activeUser,
+                                            featuredGuide._id
+                                          )
+                                        }
+                                      />
+                                    ) : (
+                                      <IoBookmarksSharp
+                                        className="text-orange-500 mt-[2px] ml-2"
+                                        onClick={(e) =>
+                                          handleClickButtonUnBookmark(
+                                            e,
+                                            activeUser,
+                                            featuredGuide._id
+                                          )
+                                        }
+                                      />
+                                    )}
+                                  </>
+                                ) : null}
                               </div>
                             </div>
                           </div>
@@ -267,11 +323,9 @@ const Guides = () => {
                 })}
             </div>
           ) : null}
-
-          {/* </div> */}
         </div>
 
-        <div className="max-w-[600px] md:max-w-[695px] lg:max-w-[795px] flex flex-col sm:flex-wrap sm:flex-row  justify-center hover:cursor-pointer mt-3">
+        <div className="max-w-[600px] mb-[5rem] md:max-w-[695px] lg:max-w-[795px] flex flex-col sm:flex-wrap sm:flex-row  justify-center hover:cursor-pointer mt-3">
           {guides.length ? (
             guides.map((guide, index) => {
               if (guide.difficulty === "Easy") {
@@ -337,6 +391,33 @@ const Guides = () => {
                       {!guide.system && (
                         <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base md:mt-1.5" />
                       )}
+                      {activeSession ? (
+                        <>
+                          {!usersBookmarkedGuides.includes(guide._id) ? (
+                            <IoBookmarksOutline
+                              className="text-orange-500 mt-[2px] ml-2"
+                              onClick={(e) =>
+                                handleClickButtonBookmark(
+                                  e,
+                                  activeUser,
+                                  guide._id
+                                )
+                              }
+                            />
+                          ) : (
+                            <IoBookmarksSharp
+                              className="text-orange-500 mt-[2px] ml-2"
+                              onClick={(e) =>
+                                handleClickButtonUnBookmark(
+                                  e,
+                                  activeUser,
+                                  guide._id
+                                )
+                              }
+                            />
+                          )}
+                        </>
+                      ) : null}
                     </div>
                   </div>
                   <p className=" mt-1 text-xs truncated-text-sm">
