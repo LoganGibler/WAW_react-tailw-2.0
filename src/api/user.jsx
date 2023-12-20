@@ -54,9 +54,9 @@ export async function getUserDataByID(_id) {
 }
 
 export async function addGuideToUserBookmarks(_id, guide_id) {
-  console.log("This is the _id from guide", _id);
-  console.log(finalHeaders["AUTH_API"]);
-  console.log(finalHeaders["USER_ID"]);
+  // console.log("This is the _id from guide", _id);
+  // console.log(finalHeaders["AUTH_API"]);
+  // console.log(finalHeaders["USER_ID"]);
   const response = await axios.post(
     `${URL}/users/addGuideToBookmarks`,
     {
@@ -94,6 +94,27 @@ export async function getUsersBookmarkedGuides(activeUser) {
   }
 }
 
+export async function getUsersBookmarkedGuidesData(activeUser) {
+  try {
+    // console.log(activeUser);
+    const response = await axios.post(
+      `${URL}/users/getUsersBookmarkedGuides`,
+      {
+        _id: activeUser,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function removeGuideFromBookmarks(_id, guide_id) {
   try {
     const response = await axios.post(
@@ -101,6 +122,26 @@ export async function removeGuideFromBookmarks(_id, guide_id) {
       {
         _id: _id,
         guide_id: guide_id,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getUsersGuides(_id) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/getUsersGuides`,
+      {
+        _id: _id,
       },
       {
         headers: {

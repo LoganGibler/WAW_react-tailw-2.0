@@ -283,7 +283,7 @@ const Guides = ({ activeSession, activeUser }) => {
                                       featuredGuide._id
                                     ) ? (
                                       <IoBookmarksOutline
-                                        className="text-orange-500 mt-[2px] ml-2"
+                                        className="text-orange-500 text-lg mt-[3px] ml-2"
                                         onClick={(e) =>
                                           handleClickButtonBookmark(
                                             e,
@@ -294,7 +294,7 @@ const Guides = ({ activeSession, activeUser }) => {
                                       />
                                     ) : (
                                       <IoBookmarksSharp
-                                        className="text-orange-500 mt-[2px] ml-2"
+                                        className="text-orange-500 text-lg mt-[3px] ml-2"
                                         onClick={(e) =>
                                           handleClickButtonUnBookmark(
                                             e,
@@ -395,7 +395,7 @@ const Guides = ({ activeSession, activeUser }) => {
                         <>
                           {!usersBookmarkedGuides.includes(guide._id) ? (
                             <IoBookmarksOutline
-                              className="text-orange-500 mt-[2px] ml-2"
+                              className="text-orange-500 text-lg mt-[3px] ml-2"
                               onClick={(e) =>
                                 handleClickButtonBookmark(
                                   e,
@@ -406,7 +406,7 @@ const Guides = ({ activeSession, activeUser }) => {
                             />
                           ) : (
                             <IoBookmarksSharp
-                              className="text-orange-500 mt-[2px] ml-2"
+                              className="text-orange-500 text-lg mt-[3px] ml-2"
                               onClick={(e) =>
                                 handleClickButtonUnBookmark(
                                   e,
