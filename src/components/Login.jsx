@@ -21,19 +21,19 @@ const Login = ({ setSessionActive }) => {
           onSubmit={async (e) => {
             e.preventDefault();
             try {
-              console.log("form submitted");
+              // console.log("form submitted");
               let token = await loginUser(username, password);
               if (!token) {
                 alert("Login Failed.");
                 return;
               }
-              // alert("Login Successful");
+              console.log("this is token", token);
               localStorage.setItem("username", JSON.stringify(username));
               setSessionActive(true);
               setUsername("");
               setPassword("");
-              navigate("/");
-              window.location.reload();
+              // window.location.reload();
+              navigate("/Guides");
             } catch (error) {
               setShowLoginError(true);
             }
@@ -49,7 +49,7 @@ const Login = ({ setSessionActive }) => {
             <BiSolidUserRectangle className="bg-white p-0.5 text-[35px] outline-none rounded-tl-md rounded-bl-md mt-2" />
             <input
               placeholder="Username"
-              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px] lg:w-[300px]"
+              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px]"
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
@@ -60,7 +60,7 @@ const Login = ({ setSessionActive }) => {
             <input
               placeholder="Password"
               type="password"
-              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px] lg:w-[300px]"
+              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px]"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}

@@ -72,7 +72,7 @@ function App() {
                 setActiveSession={setActiveSession}
                 key={"login-nav"}
               />,
-              <Login key="login-form" />,
+              <Login key="login-form" setSessionActive={setActiveSession} />,
             ]}
           />
           <Route

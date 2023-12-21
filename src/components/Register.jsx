@@ -38,10 +38,7 @@ const Register = ({ activeSession, setActiveSession }) => {
                 alert("Please include one number in your password.");
                 return;
               } else {
-                // console.log("this is username", username);
-                // console.log("this is password", password)
                 let user = await createUser(username, password);
-                // console.log("this is user", user);
                 if (user.user) {
                   let token = await loginUser(username, password);
                   // console.log("this is token", token);
@@ -80,7 +77,7 @@ const Register = ({ activeSession, setActiveSession }) => {
               onClick={() => {
                 setShowPassRequirements(false);
               }}
-              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px] lg:w-[300px]"
+              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px]"
             ></input>
           </div>
           <div className="flex">
@@ -112,7 +109,7 @@ const Register = ({ activeSession, setActiveSession }) => {
               onClick={() => {
                 setShowPassRequirements(true);
               }}
-              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px] lg:w-[300px]"
+              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px]"
             ></input>
           </div>
           {showPassRequirements && (

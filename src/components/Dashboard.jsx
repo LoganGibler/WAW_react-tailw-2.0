@@ -35,8 +35,8 @@ const Dashboard = () => {
 
   async function fetchUsersPersonalGuides(userID) {
     const foundGuides = await getUsersGuides(userID);
-    console.log(foundGuides);
-    setUserGuides(foundGuides);
+    console.log(foundGuides.foundGuides);
+    setUserGuides(foundGuides.foundGuides);
   }
 
   async function fetchUsersBookmarkedGuides(userID) {
@@ -79,7 +79,61 @@ const Dashboard = () => {
               </button>
             </div>
           </div>
-        ) : null}
+        ) : (
+          userGuides.map((guide) => {
+            if (guide.difficulty === "Easy") {
+              var diffClass =
+                "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-green-400";
+            } else if (guide.difficulty === "Medium") {
+              var diffClass =
+                "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-blue-300 ";
+            } else if (guide.difficulty === "Hard") {
+              var diffClass =
+                "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-red-400 ";
+            } else if (guide.difficulty === "Insane") {
+              var diffClass =
+                "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-purple-500";
+            }
+
+            return (
+              <div className="flex">
+                <div className="flex px-2 py-1 mt-2  border-slate-600 border-[1px] grow sm:grow sm:min-w-[390px] sm:mx-1 sm:mt-3 hover:cursor-pointer hover:border-slate-400">
+                  <img
+                    className="w-[50px] h-[50px] border-orange-600 border-[1px]"
+                    src={defaultPFP}
+                  ></img>
+                  <div className="flex flex-col text-slate-400 px-2 grow">
+                    <div className="flex">
+                      <h1 className="text-white text-[15px] whitespace-nowrap">
+                        {guide.vmtitle}
+                      </h1>
+
+                      <div className="flex grow justify-end">
+                        <p className={diffClass}>{guide.difficulty}</p>
+                        {guide.system == "hidden" && (
+                          <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base" />
+                        )}
+                        {guide.system == "Linux" && (
+                          <FcLinux className="text-slate-100 text-[19px] mt-[0px] md:text-[24px]" />
+                        )}
+                        {guide.system == "Windows" && (
+                          <FaWindows className="text-slate-100 text-sm mt-1 md:text-lg md:mt-0.5" />
+                        )}
+                        {!guide.system && (
+                          <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base md:mt-1.5" />
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex text-sm">
+                      <p>{guide.author}</p>
+                      <p className="ml-3">{guide.date}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
 
         <div className="flex mt-[3rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
           ~/&nbsp;Dashboard&nbsp;/&nbsp;
