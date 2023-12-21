@@ -14,7 +14,7 @@ import { AiFillYoutube } from "react-icons/ai";
 const AboutUs = () => {
   return (
     <div className="w-full slide-in-effect">
-      <div className="flex justify-center mt-[5rem] fade-in-effect">
+      <div className="flex justify-center mt-[2rem] md:mt-[5rem] fade-in-effect">
         <div className="flex flex-col mx-2 px-2 max-w-[800px]">
           <div className="flex justify-center">
             <div className="flex flex-col md:mt-2 md:pl-[2rem]">
@@ -90,7 +90,7 @@ const AboutUs = () => {
                 src={office4}
                 className="max-h-[150px] rounded-full mr-2 xs:max-h-none slide-in-effect w-2/5 max-w-[190px] h-auto opacity-100 transition-opacity duration-1000 ease-in-out"
               ></img>
-              <div className="flex flex-col md:ml-3 border-b-[1px] border-slate-600">
+              <div className="flex flex-col md:ml-3 md:border-b-[1px] border-slate-600">
                 <h1 className="text-white text-sm xs:text-base sm:text-lg">
                   What Sets Us Apart
                 </h1>

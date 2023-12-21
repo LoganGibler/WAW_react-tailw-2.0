@@ -36,8 +36,9 @@ export async function loginUser(username, password) {
 }
 
 export async function getUserDataByID(_id) {
-  console.log(finalHeaders["AUTH_API"]);
-  console.log(finalHeaders["USER_ID"]);
+  // console.log(finalHeaders["AUTH_API"]);
+  // console.log(finalHeaders["USER_ID"]);
+  console.log(_id);
   const response = await axios.post(
     `${URL}/users/getUser`,
     {
@@ -96,9 +97,9 @@ export async function getUsersBookmarkedGuides(activeUser) {
 
 export async function getUsersBookmarkedGuidesData(activeUser) {
   try {
-    // console.log(activeUser);
+    // console.log("FronEND passed to bookmarkeddata user:", activeUser);
     const response = await axios.post(
-      `${URL}/users/getUsersBookmarkedGuides`,
+      `${URL}/users/getUsersBookmarkedData`,
       {
         _id: activeUser,
       },

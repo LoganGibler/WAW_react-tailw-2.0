@@ -43,10 +43,73 @@ export async function getFeaturedGuides() {
   return guides.data.featuredGuides;
 }
 
-export function getGuideById(_id) {
-  const guide = axios.post(`${URL}/guides/getPublicGuideById`, {
+export async function getGuideById(_id) {
+  const guide = await axios.post(`${URL}/guides/getPublicGuideById`, {
     _id: _id,
   });
 
   return guide;
+}
+
+export async function publishGuide(_id) {
+  try {
+    const updatedGuide = await axios.post(
+      `${URL}/guides/publishGuide`,
+      {
+        _id: _id,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+
+    return updatedGuide.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function unpublishGuide(_id) {
+  try {
+    const updatedGuide = await axios.post(
+      `${URL}/guides/unpublishGuide`,
+      {
+        _id: _id,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+
+    return updatedGuide.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getPublishedUnapprovedGuides(_id) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/getPublishedUnapprovedGuides`,
+      {
+        _id: _id,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 }

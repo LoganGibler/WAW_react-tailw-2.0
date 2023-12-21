@@ -5,10 +5,16 @@ import {
   removeGuideFromBookmarks,
   getUsersGuides,
 } from "../api/user";
+import {
+  getPublishedUnapprovedGuides,
+  publishGuide,
+  unpublishGuide,
+} from "../api/guide";
 import defaultPFP from "../imgs/default.jpg";
 import { FcLinux } from "react-icons/fc";
 import { FaWindows } from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
+import { CiSquareInfo } from "react-icons/ci";
 import { IoBookmarksSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +22,8 @@ const Dashboard = () => {
   const [userID, setUserID] = useState("");
   const [userGuides, setUserGuides] = useState([]);
   const [usersBookmarkedGuides, setUsersBookmarkedGuides] = useState([]);
+  const [anyGuidesPublic, setAnyGuidesPublic] = useState(false);
+  const [userDetails, setUserDetails] = useState([]);
   const user = JSON.parse(localStorage.getItem("username"));
   const cookieString = document.cookie;
   const cookies = {};
@@ -35,7 +43,7 @@ const Dashboard = () => {
 
   async function fetchUsersPersonalGuides(userID) {
     const foundGuides = await getUsersGuides(userID);
-    console.log(foundGuides.foundGuides);
+    // console.log(foundGuides.foundGuides);
     setUserGuides(foundGuides.foundGuides);
   }
 
@@ -44,21 +52,49 @@ const Dashboard = () => {
     setUsersBookmarkedGuides(fetchedBookmarkedGuides.foundGuides);
   }
 
-  const handleClickButtonUnBookmark = async (event, userID, guideID) => {
-    event.stopPropagation();
+  const handleClickButtonUnBookmark = async (e, userID, guideID) => {
+    e.stopPropagation();
     await removeGuideFromBookmarks(userID, guideID);
     await fetchUsersBookmarkedGuides(userID);
   };
 
+  const handlePublishClick = async (e, guideID) => {
+    e.stopPropagation();
+    await publishGuide(guideID);
+    await fetchUsersPersonalGuides(userID);
+  };
+
+  const handleUnpublishClick = async (e, guideID) => {
+    e.stopPropagation();
+    await unpublishGuide(guideID);
+    await fetchUsersPersonalGuides(userID);
+  };
+
+  async function fetchUserDetails() {
+    const fetchedUserDetails = await getUserDataByID(userID);
+    setUserDetails(fetchedUserDetails.foundUser);
+  }
+
+  async function fetchPublishedUnapprovedGuides() {
+    const guides = await getPublishedUnapprovedGuides(userID);
+  }
+
   useEffect(() => {
     getUserId(cookieArray);
+    fetchUserDetails(userID);
     fetchUsersBookmarkedGuides(userID);
     fetchUsersPersonalGuides(userID);
+
+    const hasAnyPublicGuides = userGuides.some(
+      (guide) => guide.published || guide.approved
+    );
+
+    setAnyGuidesPublic(hasAnyPublicGuides);
   }, [userID]);
 
   return (
     <div className="w-full flex justify-center px-2 text-slate-200 slide-in-effect mt-5">
-      <div className="flex flex-col mx-3 fade-in-effect max-w-[800px] min-h-[700px] border-b-[1px] border-orange-600">
+      <div className="flex flex-col grow mx-3 fade-in-effect max-w-[800px] min-h-[700px] border-b-[1px] border-orange-600">
         <div className="flex text-sm xs:text-base mt-[0rem] border-b-[1px] pb-2 border-slate-500">
           ~/&nbsp;Dashboard&nbsp;/&nbsp;{" "}
           <p className="text-orange-400">{user}</p>&nbsp;/&nbsp;Guides
@@ -80,60 +116,128 @@ const Dashboard = () => {
             </div>
           </div>
         ) : (
-          userGuides.map((guide) => {
+          userGuides.map((guide, index) => {
+            {
+              /* console.log(guide) */
+            }
             if (guide.difficulty === "Easy") {
               var diffClass =
-                "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-green-400";
+                "text-[14px] mx-[1.5rem] sm:text-sm md:text-[15px] md:mt-0.5 text-green-400";
             } else if (guide.difficulty === "Medium") {
               var diffClass =
-                "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-blue-300 ";
+                "text-[14px] mx-[1.5rem] sm:text-sm md:text-[15px] md:mt-0.5 text-blue-300 ";
             } else if (guide.difficulty === "Hard") {
               var diffClass =
-                "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-red-400 ";
+                "text-[14px] mx-[1.5rem] sm:text-sm md:text-[15px] md:mt-0.5 text-red-400 ";
             } else if (guide.difficulty === "Insane") {
               var diffClass =
-                "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-purple-500";
+                "text-[14px] mx-[1.5rem] sm:text-sm md:text-[15px] md:mt-0.5 text-purple-500";
             }
 
             return (
-              <div className="flex">
-                <div className="flex px-2 py-1 mt-2  border-slate-600 border-[1px] grow sm:grow sm:min-w-[390px] sm:mx-1 sm:mt-3 hover:cursor-pointer hover:border-slate-400">
-                  <img
-                    className="w-[50px] h-[50px] border-orange-600 border-[1px]"
-                    src={defaultPFP}
-                  ></img>
-                  <div className="flex flex-col text-slate-400 px-2 grow">
-                    <div className="flex">
-                      <h1 className="text-white text-[15px] whitespace-nowrap">
-                        {guide.vmtitle}
-                      </h1>
+              <div className="flex flex-col" key={index}>
+                <div
+                  className="flex flex-col px-2 py-1 mt-2 rounded-sm  border-slate-600 border-[1px] grow sm:grow sm:min-w-[390px] sm:mx-1 sm:mt-3 hover:cursor-pointer hover:border-slate-400"
+                  onClick={() => {
+                    if (guide.approved || guide.published) {
+                      navigate("/guide/" + guide._id);
+                    } else {
+                      navigate("/editGuide/" + guide._id);
+                    }
+                  }}
+                >
+                  <div className="flex">
+                    <img
+                      className="w-[50px] rounded-sm h-[50px] mt-0.5 sm:mt-0 sm:w-[62px] sm:h-[62px] border-orange-600 border-[1px]"
+                      src={defaultPFP}
+                    ></img>
+                    <div className="flex flex-col text-slate-400 px-2 grow">
+                      <div className="flex">
+                        <h1 className="text-white text-[15px] sm:text-base whitespace-nowrap">
+                          {guide.vmtitle}
+                        </h1>
 
-                      <div className="flex grow justify-end">
-                        <p className={diffClass}>{guide.difficulty}</p>
-                        {guide.system == "hidden" && (
-                          <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base" />
-                        )}
-                        {guide.system == "Linux" && (
-                          <FcLinux className="text-slate-100 text-[19px] mt-[0px] md:text-[24px]" />
-                        )}
-                        {guide.system == "Windows" && (
-                          <FaWindows className="text-slate-100 text-sm mt-1 md:text-lg md:mt-0.5" />
-                        )}
-                        {!guide.system && (
-                          <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base md:mt-1.5" />
-                        )}
+                        <div className="flex grow justify-end">
+                          <p className={diffClass}>{guide.difficulty}</p>
+                          {guide.system == "hidden" && (
+                            <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base" />
+                          )}
+                          {guide.system == "Linux" && (
+                            <FcLinux className="text-slate-100 text-[19px] mt-[0px] md:text-[24px]" />
+                          )}
+                          {guide.system == "Windows" && (
+                            <FaWindows className="text-slate-100 text-sm mt-1 md:text-lg md:mt-0.5" />
+                          )}
+                          {!guide.system && (
+                            <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base md:mt-1.5" />
+                          )}
+                        </div>
+                      </div>
+                      <div className="mt-0 flex text-sm">
+                        <p className="truncated-text-sm text-xs sm:text-sm">
+                          {guide.description}
+                        </p>
                       </div>
                     </div>
-                    <div className="flex text-sm">
-                      <p>{guide.author}</p>
-                      <p className="ml-3">{guide.date}</p>
-                    </div>
+                  </div>
+                  <div className="flex text-xs text-slate-400 mb-0.5 mt-1 sm:text-sm">
+                    <div className="flex mt-[2px]">{guide.date}</div>
+                    {guide.published && guide.approved ? (
+                      <div className="mt-[1px] ml-2">
+                        <p className="rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap">
+                          Public
+                        </p>
+                      </div>
+                    ) : null}
+                    {!guide.published && !guide.approved ? (
+                      <div className="mt-[1px] ml-2">
+                        <p className="rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap">
+                          Private
+                        </p>
+                      </div>
+                    ) : null}
+                    {guide.published && guide.approved === false ? (
+                      <div className="mt-[1px] ml-2">
+                        <p className=" rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap">
+                          Under review
+                        </p>
+                      </div>
+                    ) : null}
+                    {guide.published ? (
+                      <div className="flex grow justify-end">
+                        <button
+                          className="text-white bg-orange-800  px-2 text-xs rounded-md py-[1px] hover:cursor-pointer"
+                          onClick={(e) => handleUnpublishClick(e, guide._id)}
+                        >
+                          Unpublish
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex grow justify-end">
+                        <button
+                          className="text-white bg-orange-600 px-2 text-xs rounded-md py-[1px] hover:cursor-pointer"
+                          onClick={(e) => handlePublishClick(e, guide._id)}
+                        >
+                          Publish
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             );
           })
         )}
+        {anyGuidesPublic ? (
+          <div className="flex justify-center mt-1">
+            <p>
+              <CiSquareInfo className="text-orange-400 text-xl" />
+            </p>
+            <p className="text-xs text-slate-400 ml-1 mt-[1px]">
+              Published guides must be unpublished to be edited
+            </p>
+          </div>
+        ) : null}
 
         <div className="flex mt-[3rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
           ~/&nbsp;Dashboard&nbsp;/&nbsp;
@@ -143,7 +247,11 @@ const Dashboard = () => {
 
         <div className="flex flex-wrap mt-1">
           {usersBookmarkedGuides.length ? (
-            usersBookmarkedGuides.map((guide) => {
+            usersBookmarkedGuides.map((guide, index) => {
+              if (guide === null) {
+                return;
+              }
+              console.log(usersBookmarkedGuides);
               if (guide.difficulty === "Easy") {
                 var diffClass =
                   "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-green-400";
@@ -159,13 +267,14 @@ const Dashboard = () => {
               }
               return (
                 <div
-                  className="flex px-2 py-1 mt-2  border-slate-600 border-[1px] grow sm:grow sm:min-w-[390px] sm:mx-1 sm:mt-3 hover:cursor-pointer hover:border-slate-400"
+                  key={index}
+                  className="flex px-2 py-1 mt-2 rounded-sm  border-slate-600 border-[1px] grow sm:grow sm:min-w-[390px] sm:mx-1 sm:mt-3 hover:cursor-pointer hover:border-slate-400"
                   onClick={() => {
                     navigate("/guide/" + guide._id);
                   }}
                 >
                   <img
-                    className="w-[50px] h-[50px] border-orange-600 border-[1px]"
+                    className="w-[50px] rounded-sm h-[50px] border-orange-600 border-[1px]"
                     src={defaultPFP}
                   ></img>
                   <div className="flex flex-col text-slate-400 px-2 grow">
@@ -205,8 +314,8 @@ const Dashboard = () => {
               );
             })
           ) : (
-            <div className="flex justify-center text-center">
-              <h1 className="mt-3 text-sm text-slate-400">
+            <div className="flex justify-center grow">
+              <h1 className="mt-3 text-sm text-slate-400 text-center">
                 You have no bookmarked Guides.
               </h1>
             </div>
@@ -219,6 +328,15 @@ const Dashboard = () => {
         <div className="flex p-2 justify-center text-sm text-slate-400">
           <p className="mt-5">Feature Coming soon.</p>
         </div>
+
+        <div className="flex mt-[2rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
+          ~/&nbsp;Dev /&nbsp;Tasks&nbsp;/&nbsp;
+          <p className="text-orange-400">Review</p>
+        </div>
+
+        {userDetails.admin ? (
+          <div>{fetchPublishedUnapprovedGuides()}</div>
+        ) : null}
       </div>
     </div>
   );

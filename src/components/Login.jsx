@@ -29,11 +29,12 @@ const Login = ({ setSessionActive }) => {
               }
               console.log("this is token", token);
               localStorage.setItem("username", JSON.stringify(username));
-              setSessionActive(true);
+              // setSessionActive(true);
               setUsername("");
               setPassword("");
-              // window.location.reload();
+
               navigate("/Guides");
+              window.location.reload();
             } catch (error) {
               setShowLoginError(true);
             }
@@ -41,7 +42,7 @@ const Login = ({ setSessionActive }) => {
         >
           <div className="flex justify-center mb-2">
             <img src={logo} className="w-[50px] h-auto"></img>
-            <h1 className="text-white font-semibold mt-1 mx-4 text-lg md:text-xl lg:text-2xl">
+            <h1 className="text-white font-semibold mt-1 mx-4 text-lg md:text-xl">
               Sign in
             </h1>
           </div>

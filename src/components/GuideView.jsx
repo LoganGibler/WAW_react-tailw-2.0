@@ -10,11 +10,11 @@ import { getGuideById } from "../api/guide";
 
 const GuideView = () => {
   const [guide, setGuide] = useState([]);
+  const [steps, setSteps] = useState([]);
   const [pfpList, setPFPList] = useState([]);
   const [stepImagesList, setStepImagesList] = useState([]);
   const { id } = useParams();
   const pfpListCheck = [];
-  const steps = guide.steps;
   let stepIndex = 0;
   let counter = 0;
   let stepCounter = 0;
@@ -22,9 +22,10 @@ const GuideView = () => {
   const guidePFPRef = ref(storage, "/guidepfp/");
   const navigate = useNavigate();
 
-  async function fetchGuide() {
+  async function fetchGuide(id) {
     const fetchedGuide = await getGuideById(id);
     setGuide(fetchedGuide.data.guide[0]);
+    setSteps(fetchedGuide.data.guide[0].steps);
   }
 
   function breakLongWords(text, maxLength) {
@@ -44,7 +45,7 @@ const GuideView = () => {
   }
 
   useEffect(() => {
-    fetchGuide();
+    fetchGuide(id);
     const fetchPFPImages = async () => {
       try {
         const res = await listAll(guidePFPRef);
@@ -76,8 +77,7 @@ const GuideView = () => {
     fetchStepImages();
   }, []);
 
-  // console.log(guide);
-  if (!guide._id) {
+  if (guide === undefined) {
     return (
       <div className="w-full flex justify-center">
         <div className="flex justify-center text-center h-screen">
@@ -101,8 +101,8 @@ const GuideView = () => {
   }
 
   return (
-    <div className="w-full flex justify-center text-slate-400 mt-5">
-      <div className="flex flex-col mx-2 px-1 text-sm max-w-[800px]">
+    <div className="w-full flex justify-center text-slate-300 mt-5 slide-in-effect">
+      <div className="flex flex-col mx-2 px-1 text-sm max-w-[800px] fade-in-effect">
         <div className="flex px-1">
           {pfpList.length
             ? pfpList.map((pfp, index) => {
