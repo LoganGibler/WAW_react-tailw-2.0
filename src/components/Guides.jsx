@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ref, listAll, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase";
 import { FcLinux } from "react-icons/fc";
 import { FaWindows } from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
@@ -25,13 +23,11 @@ import {
 } from "../api/user";
 import "../App.css";
 
-const Guides = ({ activeSession, activeUser }) => {
-  let imageListReg = ref(storage, "/guidepfp/");
+const Guides = ({ activeSession, activeUser, pfps }) => {
   const [guides, setGuides] = useState([]);
   const [featuredGuides, setFeaturedGuides] = useState([]);
   const [usersBookmarkedGuides, setUsersBookmarkedGuides] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [urlList, setUrlList] = useState([]);
   const navigate = useNavigate();
 
   let list = [];
@@ -46,10 +42,6 @@ const Guides = ({ activeSession, activeUser }) => {
     event.stopPropagation();
     await removeGuideFromBookmarks(activeUser, id);
     await fetchUsersBookmarkedGuides(activeUser);
-  };
-
-  const handleClickGuideDiv = (event, id) => {
-    // navigate("/guide/" + id);
   };
 
   async function fetchGuides() {
@@ -127,24 +119,8 @@ const Guides = ({ activeSession, activeUser }) => {
   }
 
   useEffect(() => {
-    // fetchUsersBookmarkedGuides() if user is logged in- put in array, !userBookMarkedGuides.includes() - filled in or outline
     fetchGuides();
     fetchFeaturedGuides();
-    const fetchImages = async () => {
-      try {
-        const res = await listAll(imageListReg);
-        const urlPromises = res.items.map(async (item) => {
-          const url = await getDownloadURL(item);
-          return url;
-        });
-        const urls = await Promise.all(urlPromises);
-        setUrlList(urls);
-      } catch (error) {
-        console.error("Error fetching URLs:", error);
-      }
-    };
-
-    fetchImages();
     activeSession && fetchUsersBookmarkedGuides(activeUser);
   }, [activeSession, activeUser]);
 
@@ -235,8 +211,8 @@ const Guides = ({ activeSession, activeUser }) => {
                           navigate("/guide/" + featuredGuide._id);
                         }}
                       >
-                        {urlList.length
-                          ? urlList.map((image, index) => {
+                        {pfps.length
+                          ? pfps.map((image, index) => {
                               let featuredGuide_id = image.split("_")[1];
                               list.push(featuredGuide_id);
                               if (featuredGuide_id === featuredGuide._id) {
@@ -244,7 +220,7 @@ const Guides = ({ activeSession, activeUser }) => {
                                   <img
                                     key={index}
                                     src={image}
-                                    className="border-[1px] border-slate-500 outline-none w-[72px] h-[72px] sm:w-[80px] sm:h-[80px]  mt-1 mb-2 rounded-sm"
+                                    className="border-[1px] border-slate-500 outline-none w-[70px] h-[70px] sm:w-[74px] sm:h-[74px]  mt-1 mb-0 rounded-sm"
                                   />
                                 );
                               }
@@ -254,7 +230,7 @@ const Guides = ({ activeSession, activeUser }) => {
                         {!list.includes(featuredGuide._id) ? (
                           <img
                             src={defaultGuidePFP}
-                            className="border-[1px] border-slate-500 outline-none w-[72px] h-[72px] sm:w-[80px] sm:h-[80px]  mt-1 mb-2 rounded-sm"
+                            className="border-[1px] border-slate-500 outline-none w-[70px] h-[70px] sm:w-[74px] sm:h-[74px]  mt-1 mb-0 rounded-sm"
                           />
                         ) : null}
 
@@ -350,8 +326,8 @@ const Guides = ({ activeSession, activeUser }) => {
                   }}
                 >
                   <div className="flex">
-                    {urlList.length
-                      ? urlList.map((image, index) => {
+                    {pfps.length
+                      ? pfps.map((image, index) => {
                           let guide_id = image.split("_")[1];
                           list.push(guide_id);
                           if (guide_id === guide._id) {

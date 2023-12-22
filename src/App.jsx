@@ -13,25 +13,44 @@ import {
   Guides,
   AboutUs,
   GuideView,
+  EditGuide,
 } from "./components";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { testingProtectedRoute } from "./middleware/auth";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { storage } from "./firebase";
 
 function App() {
+  let guidePFPRef = ref(storage, "/guidepfp/");
   const [menuActive, setMenuActive] = useState(false);
   const [activeSession, setActiveSession] = useState(false);
   const [activeUser, setActiveUser] = useState("");
+  const [pfps, setPfps] = useState([]);
 
   const fetchSession = async () => {
     const sessionStatus = await testingProtectedRoute();
-    // console.log("THIS IS sessionStatus", sessionStatus);
     setActiveUser(sessionStatus.userID);
     setActiveSession(sessionStatus);
   };
 
+  const fetchPfpImgs = async () => {
+    try {
+      const res = await listAll(guidePFPRef);
+      const urlPromises = res.items.map(async (item) => {
+        const url = await getDownloadURL(item);
+        return url;
+      });
+      const urls = await Promise.all(urlPromises);
+      setPfps(urls);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   useEffect(() => {
     fetchSession();
+    fetchPfpImgs();
   }, []);
 
   return (
@@ -110,6 +129,7 @@ function App() {
                   key="public-guides"
                   activeSession={activeSession}
                   activeUser={activeUser}
+                  pfps={pfps}
                 />
                 ,
                 <Footer key="guides-footer" />,
@@ -149,7 +169,7 @@ function App() {
                   key="guideview-nav"
                 />
                 ,
-                <GuideView key="guideview-guideview" />,
+                <GuideView key="guideview-guideview" pfps={pfps} />,
                 <FooterLinks key="guideview-footerlinks" />,
               </div>,
             ]}
@@ -169,7 +189,36 @@ function App() {
                   key="dash-nav"
                 />
                 ,
-                <ProtectedRoute element={Dashboard} key="protected-Dash" />,
+                <ProtectedRoute
+                  element={Dashboard}
+                  key="protected-Dash"
+                  activeUser={activeUser}
+                  pfps={pfps}
+                />
+                ,
+                <FooterLinks key="dashboard-footerlinks" />,
+              </div>,
+            ]}
+          ></Route>
+          <Route
+            path="/editGuide/:id"
+            element={[
+              <div className="guides-gradient-bg" key="editguide-div">
+                <Nav
+                  menuActive={menuActive}
+                  setMenuActive={setMenuActive}
+                  activeSession={activeSession}
+                  setActiveSession={setActiveSession}
+                  key="dash-nav"
+                />
+                ,
+                <ProtectedRoute
+                  element={EditGuide}
+                  key="protected-Dash1"
+                  pfps={pfps}
+                  activeUser={activeUser}
+                />
+                ,
                 <FooterLinks key="dashboard-footerlinks" />,
               </div>,
             ]}

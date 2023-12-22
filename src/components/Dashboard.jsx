@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import defaultGuidePFP from "../imgs/default.jpg";
 import {
   getUserDataByID,
   getUsersBookmarkedGuidesData,
@@ -6,6 +7,7 @@ import {
   getUsersGuides,
 } from "../api/user";
 import {
+  approveGuide,
   getPublishedUnapprovedGuides,
   publishGuide,
   unpublishGuide,
@@ -18,7 +20,7 @@ import { CiSquareInfo } from "react-icons/ci";
 import { IoBookmarksSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-const Dashboard = () => {
+const Dashboard = ({ activeUser, pfps }) => {
   const [userID, setUserID] = useState("");
   const [userGuides, setUserGuides] = useState([]);
   const [usersBookmarkedGuides, setUsersBookmarkedGuides] = useState([]);
@@ -26,21 +28,9 @@ const Dashboard = () => {
   const [userDetails, setUserDetails] = useState([]);
   const [reviewGuides, setReviewGuides] = useState([]);
   const user = JSON.parse(localStorage.getItem("username"));
-  const cookieString = document.cookie;
-  const cookies = {};
-  const cookieArray = cookieString.split(";");
+  let list = [];
+
   const navigate = useNavigate();
-
-  function getUserId(cookiesArray) {
-    const userIdCookie = cookiesArray.find((cookie) =>
-      cookie.startsWith(" USER_ID=")
-    );
-
-    if (userIdCookie) {
-      const userId = userIdCookie.split("=")[1];
-      setUserID(userId);
-    }
-  }
 
   async function fetchUsersPersonalGuides(userID) {
     const foundGuides = await getUsersGuides(userID);
@@ -71,6 +61,18 @@ const Dashboard = () => {
     await fetchUsersPersonalGuides(userID);
   };
 
+  const handleApproval = async (e, guideID) => {
+    e.stopPropagation();
+    await approveGuide(guideID);
+    fetchPublishedUnapprovedGuides();
+  };
+
+  const handleRejection = async (e, guideID) => {
+    e.stopPropagation();
+    await unpublishGuide(guideID);
+    fetchPublishedUnapprovedGuides();
+  };
+
   async function fetchUserDetails() {
     const fetchedUserDetails = await getUserDataByID(userID);
     fetchedUserDetails.foundUser.admin && fetchPublishedUnapprovedGuides();
@@ -83,17 +85,11 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    getUserId(cookieArray);
-    fetchUserDetails(userID);
-    fetchUsersBookmarkedGuides(userID);
-    fetchUsersPersonalGuides(userID);
-
-    const hasAnyPublicGuides = userGuides.some(
-      (guide) => guide.published || guide.approved
-    );
-
-    setAnyGuidesPublic(hasAnyPublicGuides);
-  }, [userID]);
+    setUserID(activeUser);
+    fetchUserDetails(activeUser);
+    fetchUsersBookmarkedGuides(activeUser);
+    fetchUsersPersonalGuides(activeUser);
+  }, [activeUser]);
 
   return (
     <div className="w-full flex justify-center px-2 text-slate-200 slide-in-effect mt-5">
@@ -120,21 +116,18 @@ const Dashboard = () => {
           </div>
         ) : (
           userGuides.map((guide, index) => {
-            {
-              /* console.log(guide) */
-            }
             if (guide.difficulty === "Easy") {
               var diffClass =
-                "text-[14px] mx-[1.5rem] sm:text-sm md:text-[15px] md:mt-0.5 text-green-400";
+                "text-[14px] mr-[15px] sm:text-sm md:text-[15px] md:mt-0.5 text-green-400";
             } else if (guide.difficulty === "Medium") {
               var diffClass =
-                "text-[14px] mx-[1.5rem] sm:text-sm md:text-[15px] md:mt-0.5 text-blue-300 ";
+                "text-[14px] mr-[15px] sm:text-sm md:text-[15px] md:mt-0.5 text-blue-300 ";
             } else if (guide.difficulty === "Hard") {
               var diffClass =
-                "text-[14px] mx-[1.5rem] sm:text-sm md:text-[15px] md:mt-0.5 text-red-400 ";
+                "text-[14px] mr-[15px] sm:text-sm md:text-[15px] md:mt-0.5 text-red-400 ";
             } else if (guide.difficulty === "Insane") {
               var diffClass =
-                "text-[14px] mx-[1.5rem] sm:text-sm md:text-[15px] md:mt-0.5 text-purple-500";
+                "text-[14px] mr-[15px] sm:text-sm md:text-[15px] md:mt-0.5 text-purple-500";
             }
 
             return (
@@ -150,10 +143,28 @@ const Dashboard = () => {
                   }}
                 >
                   <div className="flex">
-                    <img
-                      className="w-[50px] rounded-sm h-[50px] mt-0.5 sm:mt-0 sm:w-[62px] sm:h-[62px] border-orange-600 border-[1px]"
-                      src={defaultPFP}
-                    ></img>
+                    {pfps.length
+                      ? pfps.map((image, index) => {
+                          let guide_id = image.split("_")[1];
+                          list.push(guide_id);
+                          if (guide_id === guide._id) {
+                            return (
+                              <img
+                                key={index}
+                                src={image}
+                                className="border-[1px] border-slate-500 outline-none w-[55px] h-[55px] sm:w-[60px] sm:h-[60px]  mt-1 mb-1 rounded-sm"
+                              />
+                            );
+                          }
+                        })
+                      : null}
+
+                    {!list.includes(guide._id) ? (
+                      <img
+                        src={defaultGuidePFP}
+                        className="border-[1px] border-slate-500 outline-none w-[55px] h-[55px] sm:w-[60px] sm:h-[60px]  mt-1 mb-1 rounded-sm"
+                      />
+                    ) : null}
                     <div className="flex flex-col text-slate-400 px-2 grow">
                       <div className="flex">
                         <h1 className="text-white text-[15px] sm:text-base whitespace-nowrap">
@@ -183,7 +194,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex text-xs text-slate-400 mb-0.5 mt-1 sm:text-sm">
+                  <div className="flex text-xs text-slate-400 mb-0.5 mt-0 sm:text-sm">
                     <div className="flex mt-[2px]">{guide.date}</div>
                     {guide.published && guide.approved ? (
                       <div className="mt-[1px] ml-2">
@@ -256,16 +267,16 @@ const Dashboard = () => {
               // console.log(usersBookmarkedGuides);
               if (guide.difficulty === "Easy") {
                 var diffClass =
-                  "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-green-400";
+                  "text-[14px] mr-[10px] sm:text-sm md:mt-0.5 text-green-400";
               } else if (guide.difficulty === "Medium") {
                 var diffClass =
-                  "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-blue-300 ";
+                  "text-[14px] mr-[10px] sm:text-sm md:mt-0.5 text-blue-300 ";
               } else if (guide.difficulty === "Hard") {
                 var diffClass =
-                  "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-red-400 ";
+                  "text-[14px] mr-[10px] sm:text-sm md:mt-0.5 text-red-400 ";
               } else if (guide.difficulty === "Insane") {
                 var diffClass =
-                  "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-purple-500";
+                  "text-[14px] mr-[10px] sm:text-sm md:mt-0.5 text-purple-500";
               }
               return (
                 <div
@@ -281,7 +292,7 @@ const Dashboard = () => {
                   ></img>
                   <div className="flex flex-col text-slate-400 px-2 grow">
                     <div className="flex">
-                      <h1 className="text-white text-[15px] whitespace-nowrap">
+                      <h1 className="text-white text-[15px] max-w-[135px] sm:max-w-[300px] overflow-hidden whitespace-nowrap overflow-ellipsis">
                         {guide.vmtitle}
                       </h1>
 
@@ -342,17 +353,31 @@ const Dashboard = () => {
             {reviewGuides.length
               ? reviewGuides.map((guide) => {
                   return (
-                    <div className="flex text-sm text-slate-400 mt-2 border-[1px] border-slate-600 px-1 py-1 sm:py-2 rounded-sm">
+                    <div
+                      className="flex text-sm text-slate-400 mt-2 border-[1px] border-slate-600 px-1 py-2 sm:py-2 rounded-sm"
+                      onClick={() => {
+                        navigate("/guide/" + guide._id);
+                      }}
+                    >
                       <h1 className="text-white ml-1 sm:text-base">
                         {guide.vmtitle}
                       </h1>
-                      <p className="ml-4 sm:text-base">{guide.author}</p>
+                      {/* <p className="ml-4 sm:text-base">{guide.author}</p> */}
                       <div className="grow flex justify-end text-white">
-                        <button className="bg-orange-600 px-2 mx-1 rounded-md sm:text-base" onClick={(e)=>{}}>
-                          {/* handleApproveButton, "approveGuide(guide._id)" */}
-                          Publish
+                        <button
+                          className="bg-orange-600 px-2 mx-1 rounded-md sm:text-base"
+                          onClick={(e) => {
+                            handleApproval(e, guide._id);
+                          }}
+                        >
+                          Approve
                         </button>
-                        <button className="bg-red-800 px-2 mx-1 rounded-md sm:text-base">
+                        <button
+                          className="bg-red-800 px-2 mx-1 rounded-md sm:text-base"
+                          onClick={(e) => {
+                            handleRejection(e, guide._id);
+                          }}
+                        >
                           {/* handleUnpublishButton, "unpublishGuide(guide._id)" */}
                           Reject
                         </button>

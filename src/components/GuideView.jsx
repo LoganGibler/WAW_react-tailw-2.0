@@ -8,10 +8,10 @@ import { storage } from "../firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { getGuideById } from "../api/guide";
 
-const GuideView = () => {
+const GuideView = ({ pfps }) => {
+  // console.log(pfps)
   const [guide, setGuide] = useState([]);
   const [steps, setSteps] = useState([]);
-  const [pfpList, setPFPList] = useState([]);
   const [stepImagesList, setStepImagesList] = useState([]);
   const { id } = useParams();
   const pfpListCheck = [];
@@ -19,7 +19,6 @@ const GuideView = () => {
   let counter = 0;
   let stepCounter = 0;
   const stepImagesRef = ref(storage, "/images/" + id);
-  const guidePFPRef = ref(storage, "/guidepfp/");
   const navigate = useNavigate();
 
   async function fetchGuide(id) {
@@ -46,20 +45,6 @@ const GuideView = () => {
 
   useEffect(() => {
     fetchGuide(id);
-    const fetchPFPImages = async () => {
-      try {
-        const res = await listAll(guidePFPRef);
-        const urlPromises = res.items.map(async (item) => {
-          const url = await getDownloadURL(item);
-          return url;
-        });
-        const urls = await Promise.all(urlPromises);
-        setPFPList(urls);
-      } catch (error) {
-        console.error("Error fetching URLs:", error);
-      }
-    };
-
     const fetchStepImages = async () => {
       try {
         const res = await listAll(stepImagesRef);
@@ -73,7 +58,6 @@ const GuideView = () => {
         console.error("Error fetching URLs:", error);
       }
     };
-    fetchPFPImages();
     fetchStepImages();
   }, []);
 
@@ -104,8 +88,8 @@ const GuideView = () => {
     <div className="w-full flex justify-center text-slate-300 mt-5 slide-in-effect">
       <div className="flex flex-col mx-2 px-1 text-sm max-w-[800px] fade-in-effect">
         <div className="flex px-1">
-          {pfpList.length
-            ? pfpList.map((pfp, index) => {
+          {pfps.length
+            ? pfps.map((pfp, index) => {
                 let guide_id = pfp.split("_")[1];
                 // console.log(guide_id);
                 pfpListCheck.push(guide_id);
@@ -166,8 +150,6 @@ const GuideView = () => {
               return;
             }
 
-            // counter = counter + 1;
-            // var index = counter - 1;
             var stepCounterIndex = stepCounter;
             stepCounter += 1;
             stepIndex += 1;

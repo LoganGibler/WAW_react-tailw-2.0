@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { BiSolidUserRectangle } from "react-icons/bi";
 import { FaEyeSlash } from "react-icons/fa";
 import { loginUser } from "../api/user";
+import { IoIosWarning } from "react-icons/io";
 
 const Login = ({ setSessionActive }) => {
   const [username, setUsername] = useState("");
@@ -29,7 +30,6 @@ const Login = ({ setSessionActive }) => {
               }
               console.log("this is token", token);
               localStorage.setItem("username", JSON.stringify(username));
-              // setSessionActive(true);
               setUsername("");
               setPassword("");
 
@@ -46,6 +46,16 @@ const Login = ({ setSessionActive }) => {
               Sign in
             </h1>
           </div>
+          {showLoginError ? (
+            <div className="flex justify-center">
+              <p className="flex justify-center">
+                <IoIosWarning className="text-orange-500 text-xl" />
+              </p>
+              <p className="text-xs ml-1 mt-[2px] text-slate-300">
+                Username or password not found.
+              </p>
+            </div>
+          ) : null}
           <div className="flex">
             <BiSolidUserRectangle className="bg-white p-0.5 text-[35px] outline-none rounded-tl-md rounded-bl-md mt-2" />
             <input
@@ -75,9 +85,9 @@ const Login = ({ setSessionActive }) => {
           </button>
 
           <div className="flex justify-center mt-5">
-            <p className="text-slate-100 text-sm pt-[3px]">Need an account?</p>
+            <p className="text-slate-300 text-sm pt-[3px]">Need an account?</p>
             <button
-              className="text-slate-100 text-sm border-[1px] border-slate-100 mr-1.5 rounded-md py-[2px] ml-2 px-1 hover:cursor-pointer"
+              className="text-slate-300 text-sm border-[1px] border-slate-300 mr-1.5 rounded-md py-[2px] ml-2 px-1 hover:cursor-pointer"
               onClick={() => {
                 navigate("/Register");
               }}

@@ -129,3 +129,24 @@ export async function approveGuide(_id) {
     throw error;
   }
 }
+
+export async function getUsersGuideByID(_id, guide_id) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/getUsersGuideByID`,
+      {
+        _id: _id,
+        guide_id: guide_id,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error;
+  }
+}
