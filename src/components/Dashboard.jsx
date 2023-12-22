@@ -24,6 +24,7 @@ const Dashboard = () => {
   const [usersBookmarkedGuides, setUsersBookmarkedGuides] = useState([]);
   const [anyGuidesPublic, setAnyGuidesPublic] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
+  const [reviewGuides, setReviewGuides] = useState([]);
   const user = JSON.parse(localStorage.getItem("username"));
   const cookieString = document.cookie;
   const cookies = {};
@@ -72,11 +73,13 @@ const Dashboard = () => {
 
   async function fetchUserDetails() {
     const fetchedUserDetails = await getUserDataByID(userID);
+    fetchedUserDetails.foundUser.admin && fetchPublishedUnapprovedGuides();
     setUserDetails(fetchedUserDetails.foundUser);
   }
 
   async function fetchPublishedUnapprovedGuides() {
     const guides = await getPublishedUnapprovedGuides(userID);
+    setReviewGuides(guides.publishedUnapprovedGuides);
   }
 
   useEffect(() => {
@@ -229,7 +232,7 @@ const Dashboard = () => {
           })
         )}
         {anyGuidesPublic ? (
-          <div className="flex justify-center mt-1">
+          <div className="flex justify-center mt-3">
             <p>
               <CiSquareInfo className="text-orange-400 text-xl" />
             </p>
@@ -244,14 +247,13 @@ const Dashboard = () => {
           <p className="text-orange-400">{user}</p>
           &nbsp;/&nbsp;BookmarkedGuides
         </div>
-
         <div className="flex flex-wrap mt-1">
           {usersBookmarkedGuides.length ? (
             usersBookmarkedGuides.map((guide, index) => {
               if (guide === null) {
                 return;
               }
-              console.log(usersBookmarkedGuides);
+              // console.log(usersBookmarkedGuides);
               if (guide.difficulty === "Easy") {
                 var diffClass =
                   "text-[14px] mx-[1.5rem] sm:text-sm md:mt-0.5 text-green-400";
@@ -329,13 +331,37 @@ const Dashboard = () => {
           <p className="mt-5">Feature Coming soon.</p>
         </div>
 
-        <div className="flex mt-[2rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
-          ~/&nbsp;Dev /&nbsp;Tasks&nbsp;/&nbsp;
-          <p className="text-orange-400">Review</p>
-        </div>
-
         {userDetails.admin ? (
-          <div>{fetchPublishedUnapprovedGuides()}</div>
+          <div>
+            {console.log(reviewGuides)}
+            <div className="flex mt-[2rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
+              ~/&nbsp;Dev /&nbsp;Tasks&nbsp;/&nbsp;
+              <p className="text-orange-400">Review</p>
+            </div>
+
+            {reviewGuides.length
+              ? reviewGuides.map((guide) => {
+                  return (
+                    <div className="flex text-sm text-slate-400 mt-2 border-[1px] border-slate-600 px-1 py-1 sm:py-2 rounded-sm">
+                      <h1 className="text-white ml-1 sm:text-base">
+                        {guide.vmtitle}
+                      </h1>
+                      <p className="ml-4 sm:text-base">{guide.author}</p>
+                      <div className="grow flex justify-end text-white">
+                        <button className="bg-orange-600 px-2 mx-1 rounded-md sm:text-base" onClick={(e)=>{}}>
+                          {/* handleApproveButton, "approveGuide(guide._id)" */}
+                          Publish
+                        </button>
+                        <button className="bg-red-800 px-2 mx-1 rounded-md sm:text-base">
+                          {/* handleUnpublishButton, "unpublishGuide(guide._id)" */}
+                          Reject
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+              : null}
+          </div>
         ) : null}
       </div>
     </div>

@@ -36,9 +36,6 @@ export async function loginUser(username, password) {
 }
 
 export async function getUserDataByID(_id) {
-  // console.log(finalHeaders["AUTH_API"]);
-  // console.log(finalHeaders["USER_ID"]);
-  console.log(_id);
   const response = await axios.post(
     `${URL}/users/getUser`,
     {
@@ -55,9 +52,6 @@ export async function getUserDataByID(_id) {
 }
 
 export async function addGuideToUserBookmarks(_id, guide_id) {
-  // console.log("This is the _id from guide", _id);
-  // console.log(finalHeaders["AUTH_API"]);
-  // console.log(finalHeaders["USER_ID"]);
   const response = await axios.post(
     `${URL}/users/addGuideToBookmarks`,
     {

@@ -93,10 +93,27 @@ export async function unpublishGuide(_id) {
   }
 }
 
-export async function getPublishedUnapprovedGuides(_id) {
+export async function getPublishedUnapprovedGuides() {
+  try {
+    const response = await axios.get(
+      `${URL}/guides/getPublishedUnapprovedGuides`,
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function approveGuide(_id) {
   try {
     const response = await axios.post(
-      `${URL}/guides/getPublishedUnapprovedGuides`,
+      `${URL}/guides/approveGuide`,
       {
         _id: _id,
       },
@@ -107,7 +124,6 @@ export async function getPublishedUnapprovedGuides(_id) {
         },
       }
     );
-
     return response.data;
   } catch (error) {
     throw error;
