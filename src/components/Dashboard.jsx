@@ -96,7 +96,18 @@ const Dashboard = ({ activeUser, pfps }) => {
       <div className="flex flex-col grow mx-3 fade-in-effect max-w-[800px] min-h-[700px] border-b-[1px] border-orange-600">
         <div className="flex text-sm xs:text-base mt-[0rem] border-b-[1px] pb-2 border-slate-500">
           ~/&nbsp;Dashboard&nbsp;/&nbsp;{" "}
-          <p className="text-orange-400">{user}</p>&nbsp;/&nbsp;Guides
+          <p className="text-orange-400 whitespace-nowrap max-w-[80px] xs:max-w-none overflow-hidden text-ellipsis">
+            {user}
+          </p>
+          &nbsp;/&nbsp;Guides
+          <div className="flex grow justify-end">
+            <button
+              className="bg-orange-600 px-1 xs:px-2 rounded-md"
+              onClick={() => navigate("/createGuide")}
+            >
+              Create Guide
+            </button>
+          </div>
         </div>
         {!userGuides.length ? (
           <div className="flex flex-col p-2 justify-center text-sm text-slate-400">

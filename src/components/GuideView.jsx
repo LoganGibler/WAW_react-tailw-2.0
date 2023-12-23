@@ -91,7 +91,6 @@ const GuideView = ({ pfps }) => {
           {pfps.length
             ? pfps.map((pfp, index) => {
                 let guide_id = pfp.split("_")[1];
-                // console.log(guide_id);
                 pfpListCheck.push(guide_id);
                 if (guide._id === guide_id) {
                   return (
@@ -111,7 +110,7 @@ const GuideView = ({ pfps }) => {
             ></img>
           ) : null}
           <div className="flex flex-col ml-3 grow">
-            <div className="flex ">
+            <div className="flex">
               <h1 className="text-xl xs:text-2xl xs:mt-1.5 mt-2.5 text-white">
                 {guide.vmtitle}
               </h1>
@@ -133,7 +132,9 @@ const GuideView = ({ pfps }) => {
 
             <div className="flex mt-2">
               <p className={diffClass}>{guide.difficulty}</p>
-              <p className="px-5">{guide.hostedby}</p>
+              <p className="px-5 whitespace-nowrap max-w-[130px] xs:max-w-[250px] overflow-hidden text-ellipsis">
+                {guide.hostedby}
+              </p>
               <p>{guide.author}</p>
             </div>
           </div>
@@ -180,7 +181,7 @@ const GuideView = ({ pfps }) => {
                         return (
                           <img
                             key={index}
-                            className="border-[1px] border-orange-500 outline-none h-auto mt-1 mb-2 rounded-sm"
+                            className="md:p-4 outline-none h-auto mt-1 mb-2 rounded-sm"
                             src={image}
                           ></img>
                         );

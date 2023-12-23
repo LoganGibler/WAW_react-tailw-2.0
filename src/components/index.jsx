@@ -11,3 +11,4 @@ export { default as Guides } from "./Guides";
 export { default as AboutUs } from "./AboutUs";
 export { default as GuideView } from "./GuideView";
 export { default as EditGuide } from "./EditGuide";
+export { default as CreateGuide } from "./CreateGuide";

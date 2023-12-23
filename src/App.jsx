@@ -14,6 +14,7 @@ import {
   AboutUs,
   GuideView,
   EditGuide,
+  CreateGuide,
 } from "./components";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { testingProtectedRoute } from "./middleware/auth";
@@ -216,6 +217,28 @@ function App() {
                   element={EditGuide}
                   key="protected-Dash1"
                   pfps={pfps}
+                  activeUser={activeUser}
+                />
+                ,
+                <FooterLinks key="dashboard-footerlinks" />,
+              </div>,
+            ]}
+          ></Route>
+          <Route
+            path="/createGuide"
+            element={[
+              <div className="guides-gradient-bg" key="editguide-div">
+                <Nav
+                  menuActive={menuActive}
+                  setMenuActive={setMenuActive}
+                  activeSession={activeSession}
+                  setActiveSession={setActiveSession}
+                  key="dash-nav"
+                />
+                ,
+                <ProtectedRoute
+                  element={CreateGuide}
+                  key="protected-Dash1"
                   activeUser={activeUser}
                 />
                 ,
