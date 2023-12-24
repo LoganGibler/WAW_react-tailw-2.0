@@ -20,12 +20,11 @@ import { CiSquareInfo } from "react-icons/ci";
 import { IoBookmarksSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-const Dashboard = ({ activeUser, pfps }) => {
+const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
   const [userID, setUserID] = useState("");
   const [userGuides, setUserGuides] = useState([]);
   const [usersBookmarkedGuides, setUsersBookmarkedGuides] = useState([]);
   const [anyGuidesPublic, setAnyGuidesPublic] = useState(false);
-  const [userDetails, setUserDetails] = useState([]);
   const [reviewGuides, setReviewGuides] = useState([]);
   const user = JSON.parse(localStorage.getItem("username"));
   let list = [];
@@ -73,20 +72,39 @@ const Dashboard = ({ activeUser, pfps }) => {
     fetchPublishedUnapprovedGuides();
   };
 
-  async function fetchUserDetails() {
-    const fetchedUserDetails = await getUserDataByID(userID);
-    fetchedUserDetails.foundUser.admin && fetchPublishedUnapprovedGuides();
-    setUserDetails(fetchedUserDetails.foundUser);
-  }
+  // async function fetchUserDetails() {
+  //   const fetchedUserDetails = await getUserDataByID(userID);
+  //   fetchedUserDetails.foundUser.admin && fetchPublishedUnapprovedGuides();
+  //   setUserDetails(fetchedUserDetails.foundUser);
+  // }
 
   async function fetchPublishedUnapprovedGuides() {
     const guides = await getPublishedUnapprovedGuides(userID);
     setReviewGuides(guides.publishedUnapprovedGuides);
   }
 
+  function breakLongWords(text, maxLength) {
+    if (text === undefined) {
+      return;
+    }
+    const words = text.split(" ");
+    const result = words.map((word) =>
+      word.length > maxLength ? breakLongWord(word, maxLength) : word
+    );
+    return result.join(" ");
+  }
+
+  function breakLongWord(word, maxLength) {
+    const result = [];
+    for (let i = 0; i < word.length; i += maxLength) {
+      result.push(word.substr(i, maxLength));
+    }
+    return result.join(" ");
+  }
+
   useEffect(() => {
     setUserID(activeUser);
-    fetchUserDetails(activeUser);
+    adminStatus && fetchPublishedUnapprovedGuides();
     fetchUsersBookmarkedGuides(activeUser);
     fetchUsersPersonalGuides(activeUser);
   }, [activeUser]);
@@ -141,6 +159,8 @@ const Dashboard = ({ activeUser, pfps }) => {
                 "text-[14px] mr-[15px] sm:text-sm md:text-[15px] md:mt-0.5 text-purple-500";
             }
 
+            let guideDescription = breakLongWords(guide.description, 40);
+
             return (
               <div className="flex flex-col" key={index}>
                 <div
@@ -178,13 +198,13 @@ const Dashboard = ({ activeUser, pfps }) => {
                     ) : null}
                     <div className="flex flex-col text-slate-400 px-2 grow">
                       <div className="flex">
-                        <h1 className="text-white text-[15px] sm:text-base whitespace-nowrap">
+                        <h1 className="text-white text-[15px] sm:text-base whitespace-nowrap max-w-[135px] overflow-hidden text-ellipsis sm:max-w-[300px]">
                           {guide.vmtitle}
                         </h1>
 
                         <div className="flex grow justify-end">
                           <p className={diffClass}>{guide.difficulty}</p>
-                          {guide.system == "hidden" && (
+                          {guide.system == "" && (
                             <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base" />
                           )}
                           {guide.system == "Linux" && (
@@ -200,7 +220,7 @@ const Dashboard = ({ activeUser, pfps }) => {
                       </div>
                       <div className="mt-0 flex text-sm">
                         <p className="truncated-text-sm text-xs sm:text-sm">
-                          {guide.description}
+                          {guideDescription}
                         </p>
                       </div>
                     </div>
@@ -353,7 +373,7 @@ const Dashboard = ({ activeUser, pfps }) => {
           <p className="mt-5">Feature Coming soon.</p>
         </div>
 
-        {userDetails.admin ? (
+        {adminStatus ? (
           <div>
             {console.log(reviewGuides)}
             <div className="flex mt-[2rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
@@ -362,9 +382,10 @@ const Dashboard = ({ activeUser, pfps }) => {
             </div>
 
             {reviewGuides.length
-              ? reviewGuides.map((guide) => {
+              ? reviewGuides.map((guide, index) => {
                   return (
                     <div
+                      key={index}
                       className="flex text-sm text-slate-400 mt-2 border-[1px] border-slate-600 px-1 py-2 sm:py-2 rounded-sm"
                       onClick={() => {
                         navigate("/guide/" + guide._id);

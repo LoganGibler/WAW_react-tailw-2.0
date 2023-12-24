@@ -118,6 +118,25 @@ const Guides = ({ activeSession, activeUser, pfps }) => {
     setUsersBookmarkedGuides(usersBookmarkedGuides.bookmarks);
   }
 
+  function breakLongWords(text, maxLength) {
+    if (text === undefined) {
+      return;
+    }
+    const words = text.split(" ");
+    const result = words.map((word) =>
+      word.length > maxLength ? breakLongWord(word, maxLength) : word
+    );
+    return result.join(" ");
+  }
+
+  function breakLongWord(word, maxLength) {
+    const result = [];
+    for (let i = 0; i < word.length; i += maxLength) {
+      result.push(word.substr(i, maxLength));
+    }
+    return result.join(" ");
+  }
+
   useEffect(() => {
     fetchGuides();
     fetchFeaturedGuides();
@@ -317,6 +336,8 @@ const Guides = ({ activeSession, activeUser, pfps }) => {
                 var diffClass =
                   "text-[13px] sm:text-sm text-purple-500 md:mt-[1.5px]";
               }
+
+              let guideDescription = breakLongWords(guide.description, 40);
               return (
                 <div
                   key={index}
@@ -397,7 +418,7 @@ const Guides = ({ activeSession, activeUser, pfps }) => {
                     </div>
                   </div>
                   <p className=" mt-1 text-xs truncated-text-sm">
-                    {guide.description}
+                    {guideDescription}
                   </p>
                 </div>
               );

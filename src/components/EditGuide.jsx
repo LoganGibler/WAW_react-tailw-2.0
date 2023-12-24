@@ -36,6 +36,9 @@ const EditGuide = ({ activeUser, pfps }) => {
   }
 
   function breakLongWords(text, maxLength) {
+    if (text === undefined) {
+      return;
+    }
     const words = text.split(" ");
     const result = words.map((word) =>
       word.length > maxLength ? breakLongWord(word, maxLength) : word
@@ -133,7 +136,10 @@ const EditGuide = ({ activeUser, pfps }) => {
     var diffClass = "text-purple-500";
   }
 
-  let guideDescription = guide.description;
+  let guideDescription = breakLongWords(guide.description, 40);
+  console.log(guideDescription);
+
+  // const wrappedText = breakLongWords(guideDescription, 40);
 
   return (
     <div className="w-full flex justify-center text-slate-300 mt-5 slide-in-effect min-h-screen">
@@ -262,7 +268,7 @@ const EditGuide = ({ activeUser, pfps }) => {
             className="flex mt-3 text-sm sm:text-base text-slate-400 hover:cursor-pointer hover:text-slate-200"
             onClick={() => setEditDescription(true)}
           >
-            <p className="">{guide.description}</p>
+            <p className="">{guideDescription}</p>
           </div>
         ) : (
           <div className="flex mt-3 w-full text-sm sm:text-base">

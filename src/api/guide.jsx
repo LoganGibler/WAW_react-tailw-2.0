@@ -26,9 +26,6 @@ export async function getPublishedApprovedGuides() {
   // console.log(guides);
   return guides.data.publicGuides;
 }
-export async function createGuides() {}
-
-export async function deleteGuides() {}
 
 export async function searchGuides(searchData) {
   const guides = await axios.post(`${URL}/guides/getSearchResult`, {
@@ -149,4 +146,36 @@ export async function getUsersGuideByID(_id, guide_id) {
   } catch (error) {
     console.error;
   }
+}
+
+export async function createGuide(
+  vmtitle,
+  difficulty,
+  hostedby,
+  system,
+  description,
+  activeUser
+) {
+  const response = await axios.post(
+    `${URL}/guides/createGuide`,
+    {
+      vmtitle: vmtitle,
+      difficulty: difficulty,
+      system: system,
+      hostedby: hostedby,
+      description: description,
+      date: dayDate,
+      approved: false,
+      published: false,
+      author_id: activeUser,
+    },
+    {
+      headers: {
+        authorization: finalHeaders["AUTH_API"],
+        user_id: finalHeaders["USER_ID"],
+      },
+    }
+  );
+
+  return response.data;
 }

@@ -27,11 +27,16 @@ function App() {
   const [menuActive, setMenuActive] = useState(false);
   const [activeSession, setActiveSession] = useState(false);
   const [activeUser, setActiveUser] = useState("");
+  const [userDetails, setUserDetails] = useState({});
+  const [adminStatus, setAdminStatus] = useState(false);
   const [pfps, setPfps] = useState([]);
 
   const fetchSession = async () => {
     const sessionStatus = await testingProtectedRoute();
+    console.log(sessionStatus);
     setActiveUser(sessionStatus.userID);
+    setUserDetails(sessionStatus.username);
+    setAdminStatus(sessionStatus.adminStatus);
     setActiveSession(sessionStatus);
   };
 
@@ -195,6 +200,7 @@ function App() {
                   key="protected-Dash"
                   activeUser={activeUser}
                   pfps={pfps}
+                  adminStatus={adminStatus}
                 />
                 ,
                 <FooterLinks key="dashboard-footerlinks" />,
@@ -240,6 +246,7 @@ function App() {
                   element={CreateGuide}
                   key="protected-Dash1"
                   activeUser={activeUser}
+                  userDetails={userDetails}
                 />
                 ,
                 <FooterLinks key="dashboard-footerlinks" />,
