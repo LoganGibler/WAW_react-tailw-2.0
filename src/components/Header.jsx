@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className="w-full flex mt-4 pb-2 fade-in-effect sm:mt-8 justify-center">
+    <div className="w-full flex mt-4 pb-6 fade-in-effect sm:mt-8 justify-center">
       <div className="flex flex-row justify-center p-2 max-w-[820px]">
         <img
           id="splash-img"

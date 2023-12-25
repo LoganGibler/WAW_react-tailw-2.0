@@ -154,7 +154,8 @@ export async function createGuide(
   hostedby,
   system,
   description,
-  activeUser
+  activeUser,
+  author
 ) {
   const response = await axios.post(
     `${URL}/guides/createGuide`,
@@ -168,6 +169,7 @@ export async function createGuide(
       approved: false,
       published: false,
       author_id: activeUser,
+      author: author,
     },
     {
       headers: {
@@ -178,4 +180,23 @@ export async function createGuide(
   );
 
   return response.data;
+}
+
+export async function deleteGuide(_id) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/deleteGuide`,
+      {
+        _id: _id,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+  } catch (error) {
+    throw error;
+  }
 }

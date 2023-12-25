@@ -159,7 +159,7 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
                 "text-[14px] mr-[15px] sm:text-sm md:text-[15px] md:mt-0.5 text-purple-500";
             }
 
-            let guideDescription = breakLongWords(guide.description, 40);
+            let guideDescription = breakLongWords(guide.description, 35);
 
             return (
               <div className="flex flex-col" key={index}>
@@ -198,7 +198,7 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
                     ) : null}
                     <div className="flex flex-col text-slate-400 px-2 grow">
                       <div className="flex">
-                        <h1 className="text-white text-[15px] sm:text-base whitespace-nowrap max-w-[135px] overflow-hidden text-ellipsis sm:max-w-[300px]">
+                        <h1 className="text-white text-[15px] sm:text-base whitespace-nowrap max-w-[120px] overflow-hidden text-ellipsis sm:max-w-[300px]">
                           {guide.vmtitle}
                         </h1>
 

@@ -10,6 +10,8 @@ import { AiFillEdit } from "react-icons/ai";
 import { RiUploadCloudLine } from "react-icons/ri";
 import { FaImage } from "react-icons/fa";
 import { BiSolidCommentAdd } from "react-icons/bi";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { deleteGuide } from "../api/guide";
 
 const EditGuide = ({ activeUser, pfps }) => {
   const { id } = useParams();
@@ -136,8 +138,7 @@ const EditGuide = ({ activeUser, pfps }) => {
     var diffClass = "text-purple-500";
   }
 
-  let guideDescription = breakLongWords(guide.description, 40);
-  console.log(guideDescription);
+  let guideDescription = breakLongWords(guide.description, 44);
 
   // const wrappedText = breakLongWords(guideDescription, 40);
 
@@ -195,10 +196,10 @@ const EditGuide = ({ activeUser, pfps }) => {
                 <div className="flex text-black mt-1 mr-0">
                   <input
                     defaultValue={guide.vmtitle}
-                    className=" ml-1 bg-inherit pb-1 text-white border-b-[1px] border-slate-400 text-base sm:text-lg"
+                    className=" ml-1 bg-inherit pb-1 text-white border-b-[1px] border-slate-400 text-base max-w-[140px] xs:max-w-[240px] sm:text-lg"
                   ></input>
                   <div className="flex grow justify-end">
-                    <div>
+                    <div className="pr-0">
                       <button className="bg-orange-600 px-2 text-sm rounded-md mr-0 py-0.5 text-white flex">
                         <p className="sm:mt-[0px]">Update</p>
                         <RiUploadCloudLine className="text-lg sm:mt-[1px] ml-1" />
@@ -226,7 +227,7 @@ const EditGuide = ({ activeUser, pfps }) => {
                   </select>
 
                   <input
-                    className="bg-inherit w-[100px] border-b-[1px] pl-1 mx-1 sm:mx-4 border-slate-400 sm:w-[200px]"
+                    className="bg-inherit w-[116px] border-b-[1px] pl-1 mx-1 sm:mx-4 border-slate-400 sm:w-[200px]"
                     defaultValue={guide.hostedby}
                   ></input>
                   <select
@@ -389,15 +390,29 @@ const EditGuide = ({ activeUser, pfps }) => {
           </div>
         ) : null}
         {!newStepCreation ? (
-          <div className="flex grow justify-end mb-[13rem]">
-            <div>
-              <button
-                className="flex bg-orange-600 text-white px-2 py-0.5 rounded-md"
-                onClick={() => setNewStepCreation(true)}
-              >
-                New Step
-                <BiSolidCommentAdd className="text-lg ml-1 mt-0.5" />
-              </button>
+          <div className="flex grow justify-end mb-[0rem]">
+            <div className="flex flex-col">
+              <div className="flex justify-end">
+                <button
+                  className="flex bg-orange-600 text-white px-2 py-1 rounded-md"
+                  onClick={() => setNewStepCreation(true)}
+                >
+                  New Step
+                  <BiSolidCommentAdd className="text-lg ml-1 mt-0.5" />
+                </button>
+              </div>
+              <div className="mt-10">
+                <button
+                  className="bg-red-700 px-2 py-1 text-white rounded-md flex"
+                  onClick={async (e) => {
+                    await deleteGuide(guide._id);
+                    navigate("/Dashboard");
+                  }}
+                >
+                  Delete Guide{" "}
+                  <FaRegTrashAlt className="text-[16px] mt-0.5 ml-1" />
+                </button>
+              </div>
             </div>
           </div>
         ) : null}
