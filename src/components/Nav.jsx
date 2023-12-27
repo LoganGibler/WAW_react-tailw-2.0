@@ -101,11 +101,11 @@ const Nav = ({
             </div>
             <button
               className="border-[1.5px] rounded-md border-orange-600 bg-orange-600 px-2 py-[1px]"
-              onClick={() => {
-                navigate("/");
-                setActiveSession(false);
-                setMenuActive(false);
+              onClick={async () => {
                 deleteAllCookies();
+                await setActiveSession(false);
+                await setMenuActive(false);
+                navigate("/");
                 window.location.reload();
               }}
             >

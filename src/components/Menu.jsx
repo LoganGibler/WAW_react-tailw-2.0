@@ -13,7 +13,7 @@ const Menu = ({
 }) => {
   const navigate = useNavigate();
 
-  function deleteAllCookies() {
+  async function deleteAllCookies() {
     const cookies = document.cookie.split(";");
 
     for (let i = 0; i < cookies.length; i++) {
@@ -107,11 +107,12 @@ const Menu = ({
         ) : (
           <button
             className="bg-orange-600 rounded-md text-sm justify-center ml-7 px-4 py-0.5 hover:cursor-pointer"
-            onClick={() => {
+            onClick={async () => {
+              await deleteAllCookies();
+              await setMenuActive(false);
+              await setActiveSession(false);
               navigate("/");
-              setMenuActive(false);
-              setActiveSession(false);
-              deleteAllCookies();
+
               window.location.reload();
             }}
           >

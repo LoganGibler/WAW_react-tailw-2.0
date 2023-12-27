@@ -19,9 +19,9 @@ const Register = ({ activeSession, setActiveSession }) => {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className="flex justify-center">
+      <div className="flex justify-center slide-in-effect">
         <form
-          className="flex flex-col pb-[15rem] mt-[5rem] lg:mt-[7rem]"
+          className="flex flex-col pb-[15rem] mt-[5rem] lg:mt-[7rem] fade-in-effect"
           onSubmit={async (e) => {
             e.preventDefault();
             try {

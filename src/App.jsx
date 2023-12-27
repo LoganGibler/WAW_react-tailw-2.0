@@ -33,7 +33,7 @@ function App() {
 
   const fetchSession = async () => {
     const sessionStatus = await testingProtectedRoute();
-    console.log(sessionStatus);
+    // console.log(sessionStatus);
     setActiveUser(sessionStatus.userID);
     setUserDetails(sessionStatus.username);
     setAdminStatus(sessionStatus.adminStatus);
@@ -175,7 +175,7 @@ function App() {
                   key="guideview-nav"
                 />
                 ,
-                <GuideView key="guideview-guideview" pfps={pfps} />,
+                <GuideView key="guideview-guideview" pfps={pfps} adminStatus={adminStatus} />,
                 <FooterLinks key="guideview-footerlinks" />,
               </div>,
             ]}

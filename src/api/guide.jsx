@@ -48,6 +48,25 @@ export async function getGuideById(_id) {
   return guide;
 }
 
+export async function forceGetGuideById(id) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/forceGetGuideById`,
+      { _id: id },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+    console.log("REsponse from forceGetGuide:", response);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function publishGuide(_id) {
   try {
     const updatedGuide = await axios.post(

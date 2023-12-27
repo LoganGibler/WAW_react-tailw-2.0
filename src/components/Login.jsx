@@ -14,10 +14,10 @@ const Login = ({ setSessionActive }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col justify-center">
-      <div className="flex justify-center">
+    <div className="flex flex-col justify-center ">
+      <div className="flex justify-center slide-in-effect">
         <form
-          className="flex flex-col pb-[15rem] mt-[5rem] lg:mt-[7rem]"
+          className="flex flex-col pb-[15rem] mt-[5rem] lg:mt-[7rem] fade-in-effect"
           type="submit"
           onSubmit={async (e) => {
             e.preventDefault();

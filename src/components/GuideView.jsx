@@ -6,9 +6,9 @@ import { FaWindows } from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
 import { storage } from "../firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
-import { getGuideById } from "../api/guide";
+import { getGuideById, forceGetGuideById } from "../api/guide";
 
-const GuideView = ({ pfps }) => {
+const GuideView = ({ pfps, adminStatus }) => {
   // console.log(pfps)
   const [guide, setGuide] = useState([]);
   const [steps, setSteps] = useState([]);
@@ -23,6 +23,14 @@ const GuideView = ({ pfps }) => {
 
   async function fetchGuide(id) {
     const fetchedGuide = await getGuideById(id);
+    setGuide(fetchedGuide.data.guide[0]);
+    setSteps(fetchedGuide.data.guide[0].steps);
+  }
+
+  async function forceFetchGuide(id) {
+    console.log("force get is running.");
+    const fetchedGuide = await forceGetGuideById(id);
+    // console.log(fetchedGuide.data.guide[0]);
     setGuide(fetchedGuide.data.guide[0]);
     setSteps(fetchedGuide.data.guide[0].steps);
   }
@@ -44,7 +52,8 @@ const GuideView = ({ pfps }) => {
   }
 
   useEffect(() => {
-    fetchGuide(id);
+    // console.log("adminStatus:", adminStatus);
+    !adminStatus ? fetchGuide(id) : forceFetchGuide(id);
     const fetchStepImages = async () => {
       try {
         const res = await listAll(stepImagesRef);

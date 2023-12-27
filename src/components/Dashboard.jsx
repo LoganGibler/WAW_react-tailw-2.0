@@ -119,12 +119,14 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
           </p>
           &nbsp;/&nbsp;Guides
           <div className="flex grow justify-end">
-            <button
-              className="bg-orange-600 px-1 xs:px-2 rounded-md"
-              onClick={() => navigate("/createGuide")}
-            >
-              Create Guide
-            </button>
+            {userGuides.length ? (
+              <button
+                className="bg-orange-600 px-1 xs:px-2 rounded-md"
+                onClick={() => navigate("/createGuide")}
+              >
+                Create Guide
+              </button>
+            ) : null}
           </div>
         </div>
         {!userGuides.length ? (
@@ -138,7 +140,10 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
             </p>
             <div className="flex mt-[2rem] justify-center">
               <p className="mt-[3px] mr-2">Create your first guide here:</p>
-              <button className="bg-orange-600 text-white px-2 py-1 rounded-sm">
+              <button
+                className="bg-orange-600 text-white px-2 py-1 rounded-sm"
+                onClick={(e) => navigate("/createGuide")}
+              >
                 Create Guide
               </button>
             </div>
@@ -228,21 +233,21 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
                   <div className="flex text-xs text-slate-400 mb-0.5 mt-0 sm:text-sm">
                     <div className="flex mt-[2px]">{guide.date}</div>
                     {guide.published && guide.approved ? (
-                      <div className="mt-[1px] ml-2">
+                      <div className="mt-[1px] ml-2 sm:mt-[3px]">
                         <p className="rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap">
                           Public
                         </p>
                       </div>
                     ) : null}
                     {!guide.published && !guide.approved ? (
-                      <div className="mt-[1px] ml-2">
+                      <div className="mt-[1px] ml-2 sm:mt-[3px]">
                         <p className="rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap">
                           Private
                         </p>
                       </div>
                     ) : null}
                     {guide.published && guide.approved === false ? (
-                      <div className="mt-[1px] ml-2">
+                      <div className="mt-[1px] ml-2 sm:mt-[3px]">
                         <p className=" rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap">
                           Under review
                         </p>
@@ -386,7 +391,7 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
                   return (
                     <div
                       key={index}
-                      className="flex text-sm text-slate-400 mt-2 border-[1px] border-slate-600 px-1 py-2 sm:py-2 rounded-sm"
+                      className="flex text-sm text-slate-400 mt-2 border-[1px] border-slate-600 px-1 py-2 sm:py-2 rounded-sm hover:cursor-pointer"
                       onClick={() => {
                         navigate("/guide/" + guide._id);
                       }}

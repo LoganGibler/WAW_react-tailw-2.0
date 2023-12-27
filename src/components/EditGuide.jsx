@@ -354,16 +354,16 @@ const EditGuide = ({ activeUser, pfps }) => {
                       setEditDifficulty(selected_difficulty1);
                     }}
                   >
-                    <option value="easy" className="text-black">
+                    <option value="Easy" className="text-black">
                       Easy
                     </option>
-                    <option value="medium" className="text-black">
+                    <option value="Medium" className="text-black">
                       Medium
                     </option>
-                    <option value="hard" className="text-black">
+                    <option value="Hard" className="text-black">
                       Hard
                     </option>
-                    <option value="insane" className="text-black">
+                    <option value="Insane" className="text-black">
                       Insane
                     </option>
                   </select>
@@ -482,8 +482,8 @@ const EditGuide = ({ activeUser, pfps }) => {
                           accept="image/jpg, image/jpeg, image/png"
                           className="mt-0.5 file:rounded-md file:bg-inherit file:outline-none file:border-[1px] file:border-slate-400 file:text-slate-200 w-[180px]"
                           onChange={async (e) => {
-                            handleImageChange(e, stepCounterIndex);
-                            fetchStepImages();
+                            await handleImageChange(e, stepCounterIndex);
+                            await fetchStepImages();
                           }}
                         ></input>
                       </div>
@@ -540,13 +540,6 @@ const EditGuide = ({ activeUser, pfps }) => {
               id="newStep-textarea"
             ></textarea>
             <div className="flex grow justify-end text-white text-xs mb-3 mt-2">
-              <p className="text-[23px] mr-1">
-                <FaImage className="" />
-              </p>
-              <input
-                type="file"
-                className="mt-0.5 file:rounded-md file:bg-inherit file:outline-none file:border-[1px] file:border-slate-400 file:text-slate-200 w-[170px] file:hover:cursor-pointer"
-              ></input>
               <div className="mt-0.5">
                 <button
                   className="bg-orange-600 px-2 py-0.5 rounded-md"
