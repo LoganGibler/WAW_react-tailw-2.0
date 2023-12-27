@@ -200,3 +200,113 @@ export async function deleteGuide(_id) {
     throw error;
   }
 }
+
+export async function addStep(_id, step) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/addStep`,
+      {
+        _id: _id,
+        step: step,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteStep(_id, stepIndex) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/deleteStep`,
+      {
+        _id: _id,
+        index: stepIndex,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateHeader(_id, vmtitle, difficulty, system, hostedby) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/updateHeader`,
+      {
+        _id: _id,
+        vmtitle: vmtitle,
+        difficulty: difficulty,
+        system: system,
+        hostedby: hostedby,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateDescription(_id, description) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/editDescription`,
+      {
+        _id: _id,
+        newData: description,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateStep(_id, stepIndex, step) {
+  try {
+    const response = await axios.post(
+      `${URL}/guides/editStep`,
+      {
+        _id: _id,
+        index: stepIndex,
+        newStepData: step,
+      },
+      {
+        headers: {
+          authorization: finalHeaders["AUTH_API"],
+          user_id: finalHeaders["USER_ID"],
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
