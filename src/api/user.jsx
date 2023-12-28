@@ -1,10 +1,8 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-const URL = "http://localhost:8000";
-// const URL = "https://ops-dashboard-node-js-api.onrender.com";
-
-const domain = "http://localhost:5173";
+// const URL = "http://localhost:8000";
+const URL = "https://waw-api-node-js.onrender.com";
 
 const headersTemp = document.cookie.split(";");
 const finalHeaders = {};
@@ -150,5 +148,3 @@ export async function getUsersGuides(_id) {
     throw error;
   }
 }
-
-

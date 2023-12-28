@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const URL = "http://localhost:8000";
+// const URL = "http://localhost:8000";
+const URL = "https://waw-api-node-js.onrender.com"
 // const URL = "https://ops-dashboard-node-js-api.onrender.com";
 const headersTemp = document.cookie.split(";");
 const finalHeaders = {};
