@@ -12,9 +12,9 @@ import { useNavigate } from "react-router-dom";
 
 const CreateGuide = ({ activeUser, userDetails }) => {
   const [vmtitle, setVmtitle] = useState("");
-  const [difficulty, setDifficulty] = useState("");
-  const [system, setSystem] = useState("");
-  const [hostedby, setHostedby] = useState("");
+  const [difficulty, setDifficulty] = useState("Easy");
+  const [system, setSystem] = useState("Hidden");
+  const [hostedby, setHostedby] = useState("Anonymous");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
 
@@ -37,15 +37,15 @@ const CreateGuide = ({ activeUser, userDetails }) => {
           className="flex flex-col text-slate-300 grow"
           onSubmit={async (e) => {
             e.preventDefault();
-            console.log(
-              vmtitle,
-              difficulty,
-              hostedby,
-              system,
-              description,
-              activeUser,
-              userDetails
-            );
+            // console.log(
+            //   vmtitle,
+            //   difficulty,
+            //   hostedby,
+            //   system,
+            //   description,
+            //   activeUser,
+            //   userDetails
+            // );
             try {
               if (
                 vmtitle === "" ||
@@ -66,7 +66,7 @@ const CreateGuide = ({ activeUser, userDetails }) => {
                 activeUser,
                 userDetails
               );
-              console.log(createdGuide);
+              // console.log(createdGuide);
               createdGuide
                 ? navigate("/Dashboard")
                 : Alert("Error creating guide.");
@@ -145,7 +145,7 @@ const CreateGuide = ({ activeUser, userDetails }) => {
               setSystem(selected_system);
             }}
           >
-            <option value="" className="text-black">
+            <option value="Hidden" className="text-black">
               Hidden
             </option>
             <option value="Linux" className="text-black">

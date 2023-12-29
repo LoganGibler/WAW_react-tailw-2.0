@@ -1,8 +1,8 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-// const URL = "http://localhost:8000";
-const URL = "https://waw-api-node-js.onrender.com";
+const URL = "http://localhost:8000";
+// const URL = "https://waw-api-node-js.onrender.com";
 
 const headersTemp = document.cookie.split(";");
 const finalHeaders = {};

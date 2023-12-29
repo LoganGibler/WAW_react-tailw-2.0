@@ -18,6 +18,11 @@ import { FaWindows } from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
 import { CiSquareInfo } from "react-icons/ci";
 import { IoBookmarksSharp } from "react-icons/io5";
+import { HiOutlineDocumentAdd } from "react-icons/hi";
+import { FaLock } from "react-icons/fa";
+import { IoEyeOutline } from "react-icons/io5";
+<IoEyeOutline />;
+
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
@@ -111,8 +116,8 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
 
   return (
     <div className="w-full flex justify-center px-2 text-slate-200 slide-in-effect mt-5">
-      <div className="flex flex-col grow mx-3 fade-in-effect max-w-[800px] min-h-[700px] border-b-[1px] border-orange-600">
-        <div className="flex text-sm xs:text-base mt-[0rem] border-b-[1px] pb-2 border-slate-500">
+      <div className="flex flex-col grow mx-3 fade-in-effect max-w-[800px] min-h-[700px] border-b-[1px] border-orange-600 pb-[8rem]">
+        <div className="flex text-sm xs:text-base mt-[0rem] border-b-[1px] pb-2 pt-2 border-slate-500">
           ~/&nbsp;Dashboard&nbsp;/&nbsp;{" "}
           <p className="text-orange-400 whitespace-nowrap max-w-[80px] xs:max-w-none overflow-hidden text-ellipsis">
             {user}
@@ -121,10 +126,11 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
           <div className="flex grow justify-end">
             {userGuides.length ? (
               <button
-                className="bg-orange-600 px-1 xs:px-2 rounded-md"
+                className="bg-orange-600 px-1 xs:px-2 rounded-md flex"
                 onClick={() => navigate("/createGuide")}
               >
-                Create Guide
+                Create
+                <HiOutlineDocumentAdd className="text-base mt-0.5 ml-1 xs:text-xl" />
               </button>
             ) : null}
           </div>
@@ -233,24 +239,27 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
                   <div className="flex text-xs text-slate-400 mb-0.5 mt-0 sm:text-sm">
                     <div className="flex mt-[2px]">{guide.date}</div>
                     {guide.published && guide.approved ? (
-                      <div className="mt-[1px] ml-2 sm:mt-[3px]">
-                        <p className="rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap">
+                      <div className="mt-[1px] ml-2 sm:mt-[3px] flex">
+                        <p className="rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap md:text-sm md:mt-[0px]">
                           Public
                         </p>
+                        <FaLock className="mt-0.5 text-slate-400" />
+                        <IoEyeOutline className="mt-[1px] ml-1.5 text-base text-slate-400" />
                       </div>
                     ) : null}
                     {!guide.published && !guide.approved ? (
                       <div className="mt-[1px] ml-2 sm:mt-[3px]">
-                        <p className="rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap">
+                        <p className="rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap md:text-sm md:mt-[0px]">
                           Private
                         </p>
                       </div>
                     ) : null}
                     {guide.published && guide.approved === false ? (
-                      <div className="mt-[1px] ml-2 sm:mt-[3px]">
-                        <p className=" rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap">
+                      <div className="mt-[1px] ml-2 sm:mt-[3px] flex">
+                        <p className=" rounded-lg px-2 font-semibold mt-[1px] text-orange-500 text-xs whitespace-nowrap md:text-sm md:mt-[0px]">
                           Under review
                         </p>
+                        <FaLock className="mt-0.5 text-slate-400" />
                       </div>
                     ) : null}
                     {guide.published ? (
@@ -380,7 +389,7 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
 
         {adminStatus ? (
           <div>
-            {console.log(reviewGuides)}
+            {/* {console.log(reviewGuides)} */}
             <div className="flex mt-[2rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
               ~/&nbsp;Dev /&nbsp;Tasks&nbsp;/&nbsp;
               <p className="text-orange-400">Review</p>
@@ -431,36 +440,3 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
 };
 
 export default Dashboard;
-
-// User Profile Overview:
-// Display a snapshot of the user's profile, including their username, profile picture, and a brief bio. Allow users to update their profile information directly from the dashboard.
-
-// Guide Overview:
-// As you currently have, display a list of guides the user has created. Include key details like guide titles, publication date, and status (e.g., draft, published). Implement sorting and filtering options for better organization.
-
-// Recent Activity Feed:
-// Showcase a feed of the user's recent activities, such as guide creations, comments, or interactions with other users. This provides a dynamic and real-time view of their engagement on the platform.
-
-// Notification Center:
-// Implement a notification center to alert users about relevant updates, comments on their guides, or new followers. Notifications enhance user engagement and keep them informed about platform activities.
-
-// Achievements and Badges:
-// Recognize and reward users for their accomplishments. Implement an achievement system or badges based on guide creation milestones, community participation, or other notable achievements.
-
-// Progress Tracking:
-// For guides in progress, incorporate a progress tracker to help users visualize their completion status. This feature can include a percentage completion bar or checklist of steps to finish a guide.
-
-// User Analytics:
-// Provide users with analytics related to their guides, such as views, likes, and comments. Analytics can help users understand the impact of their content and guide them in improving their contributions.
-
-// Recommended Guides:
-// Utilize an algorithm to suggest guides that align with the user's interests and expertise. This feature encourages exploration and discovery within the platform.
-
-// Community Insights:
-// Offer insights into the broader community, such as popular guides, trending topics, or featured contributors. This keeps users engaged with the larger platform ecosystem.
-
-// Settings and Preferences:
-// Allow users to manage their account settings and preferences directly from the dashboard. This includes privacy settings, notification preferences, and account security options.
-
-// Feedback and Support:
-// Provide a channel for users to submit feedback, report issues, or seek assistance. A user-friendly support system enhances the overall user experience.

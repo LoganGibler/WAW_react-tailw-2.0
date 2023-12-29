@@ -1,6 +1,6 @@
 import axios from "axios";
-// const URL = "http://localhost:8000";
-const URL = "https://waw-api-node-js.onrender.com"
+const URL = "http://localhost:8000";
+// const URL = "https://waw-api-node-js.onrender.com"
 
 const headersTemp = document.cookie.split(";"); // <-- this get all cookies saves and splits them in the array.
 const finalHeaders = {};

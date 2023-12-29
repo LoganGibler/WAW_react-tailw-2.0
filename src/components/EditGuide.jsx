@@ -61,42 +61,45 @@ const EditGuide = ({ activeUser, pfps }) => {
     } else {
       inputed_img = e.target.files[0];
       if (value === "pfp") {
-        uploadImagePFP(id);
+        await uploadImagePFP(id);
         await fetchStepImages();
+
         return;
       } else {
         // console.log("this is value and image id", value, id);
-        uploadImage(id, value);
+        await uploadImage(id, value);
         await fetchStepImages();
       }
     }
   };
 
-  function uploadImage(id, index) {
+  async function uploadImage(id, index) {
     const imageRef = ref(
       storage,
       `${"images/" + id + "/" + "!" + index + "!"}`
     );
-    uploadBytes(imageRef, inputed_img, metadata).then((snapshot) => {});
+    await uploadBytes(imageRef, inputed_img, metadata).then((snapshot) => {});
   }
 
-  function uploadImagePFP(id) {
+  async function uploadImagePFP(id) {
     if (inputed_img === undefined) {
       // console.log("IMAGE NULL");
       alert("Please select an image to upload.");
       return;
     } else {
       const deleteRef = ref(storage, "/guidepfp/" + "_" + id + "_");
-      deleteObject(deleteRef).then(() => {
+      await deleteObject(deleteRef).then(async () => {
         // deletes existing pfp
       });
       // console.log("this is image upload", imageUpload)
       const imageRef = ref(storage, "guidepfp/" + "_" + id + "_");
       // console.log("this is imageRef",imageRef)
-      uploadBytes(imageRef, inputed_img, metadata).then((snapshot) => {
-        // alert("Guide PFP uploaded.");
-        window.location.reload();
-      });
+      await uploadBytes(imageRef, inputed_img, metadata).then(
+        async (snapshot) => {
+          // alert("Guide PFP uploaded.");
+          window.location.reload();
+        }
+      );
     }
   }
 
@@ -187,8 +190,8 @@ const EditGuide = ({ activeUser, pfps }) => {
   function AutoStretchTextareaStep({ defaultValue, stepCounter }) {
     const textareaRef = useRef(null);
 
-    console.log("on editstep click:", defaultValue);
-    console.log("on editstep click index:", stepCounter);
+    // console.log("on editstep click:", defaultValue);
+    // console.log("on editstep click index:", stepCounter);
 
     useEffect(() => {
       if (textareaRef.current) {
@@ -321,12 +324,12 @@ const EditGuide = ({ activeUser, pfps }) => {
                       <button
                         className="bg-orange-600 px-2 text-sm rounded-md mr-0 py-0.5 text-white flex"
                         onClick={async () => {
-                          console.log(
-                            editVmtitle,
-                            editDifficulty,
-                            editSystem,
-                            editHostedby
-                          );
+                          // console.log(
+                          //   editVmtitle,
+                          //   editDifficulty,
+                          //   editSystem,
+                          //   editHostedby
+                          // );
                           await updateHeader(
                             guide._id,
                             editVmtitle,
