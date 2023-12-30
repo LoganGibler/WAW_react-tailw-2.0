@@ -119,7 +119,7 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
       <div className="flex flex-col grow mx-3 fade-in-effect max-w-[800px] min-h-[700px] border-b-[1px] border-orange-600 pb-[8rem]">
         <div className="flex text-sm xs:text-base mt-[0rem] border-b-[1px] pb-2 pt-2 border-slate-500">
           ~/&nbsp;Dashboard&nbsp;/&nbsp;{" "}
-          <p className="text-orange-400 whitespace-nowrap max-w-[80px] xs:max-w-none overflow-hidden text-ellipsis">
+          <p className="text-orange-400 whitespace-nowrap max-w-[95px] xs:max-w-none overflow-hidden text-ellipsis">
             {user}
           </p>
           &nbsp;/&nbsp;Guides
@@ -215,7 +215,7 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
 
                         <div className="flex grow justify-end">
                           <p className={diffClass}>{guide.difficulty}</p>
-                          {guide.system == "" && (
+                          {guide.system == "Hidden" && (
                             <FaQuestion className="text-slate-100 text-xs mt-1 mr-[2px] md:text-base" />
                           )}
                           {guide.system == "Linux" && (
@@ -300,7 +300,9 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
 
         <div className="flex mt-[3rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
           ~/&nbsp;Dashboard&nbsp;/&nbsp;
-          <p className="text-orange-400">{user}</p>
+          <p className="text-orange-400 whitespace-nowrap text-ellipsis overflow-hidden max-w-[100px]">
+            {user}
+          </p>
           &nbsp;/&nbsp;BookmarkedGuides
         </div>
         <div className="flex flex-wrap mt-1">

@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div className="bottom-0 flex bg-orange-600 justify-center">
-      <div className="flex flex-col p-4 md:max-w-[800px] xl:max-w-[890px] justify-center">
+      <div className="flex flex-col p-4 md:max-w-[770px] xl:max-w-[770px] justify-center">
         <h1 className="text-white text-base font-semibold">
           Threats are on the rise. Start learning now.
         </h1>

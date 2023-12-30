@@ -95,7 +95,7 @@ const GuideView = ({ pfps, adminStatus }) => {
 
   return (
     <div className="w-full flex justify-center text-slate-300 mt-5 slide-in-effect">
-      <div className="flex flex-col mx-2 px-1 text-sm max-w-[800px] fade-in-effect">
+      <div className="flex flex-col mx-2 px-1 text-sm max-w-[900px] fade-in-effect">
         <div className="flex px-1">
           {pfps.length
             ? pfps.map((pfp, index) => {

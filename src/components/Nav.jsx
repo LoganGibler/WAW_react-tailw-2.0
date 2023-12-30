@@ -17,7 +17,7 @@ const Nav = ({
 
   const navigate = useNavigate();
 
-  function deleteAllCookies() {
+  async function deleteAllCookies() {
     const cookies = document.cookie.split(";");
 
     for (let i = 0; i < cookies.length; i++) {
@@ -102,7 +102,7 @@ const Nav = ({
             <button
               className="border-[1.5px] rounded-md border-orange-600 bg-orange-600 px-2 py-[1px]"
               onClick={async () => {
-                deleteAllCookies();
+                await deleteAllCookies();
                 await setActiveSession(false);
                 await setMenuActive(false);
                 navigate("/");

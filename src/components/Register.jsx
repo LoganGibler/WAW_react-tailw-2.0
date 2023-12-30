@@ -7,16 +7,19 @@ import { FaEyeSlash } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { BiX } from "react-icons/bi";
 import { MdEmail } from "react-icons/md";
+import { IoIosWarning } from "react-icons/io";
 
 import { createUser, loginUser } from "../api/user";
 
 const Register = ({ activeSession, setActiveSession }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [showPassRequirements, setShowPassRequirements] = useState(false);
   const [passLength, setPassLength] = useState(false);
   const [passNum, setPassNum] = useState(false);
   const [passUpperChar, setPassUpperChar] = useState(false);
+  const [showRegistrationError, setRegistrationError] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -41,6 +44,7 @@ const Register = ({ activeSession, setActiveSession }) => {
                 return;
               } else {
                 let user = await createUser(username, password);
+                console.log(user);
                 if (user.user) {
                   let token = await loginUser(username, password);
                   // console.log("this is token", token);
@@ -52,7 +56,7 @@ const Register = ({ activeSession, setActiveSession }) => {
                   navigate("/");
                   window.location.reload();
                 } else {
-                  alert("Sign up failed. Please use another username.");
+                  setRegistrationError(true);
                 }
               }
             } catch (error) {
@@ -66,13 +70,23 @@ const Register = ({ activeSession, setActiveSession }) => {
               Sign up
             </h1>
           </div>
+          {showRegistrationError ? (
+            <div className="flex justify-center">
+              <p className="flex justify-center">
+                <IoIosWarning className="text-orange-500 text-xl" />
+              </p>
+              <p className="text-xs ml-1 mt-[2px] text-slate-300">
+                Username already in use.
+              </p>
+            </div>
+          ) : null}
           <div className="flex bg-white mt-1.5 rounded-sm">
             <MdEmail className="p-[3px] text-[35px] outline-none mt-0" />
             <input
               type="text"
               placeholder="Email"
               maxLength={20}
-              value={username}
+              value={email}
               onChange={(e) => {
                 setUsername(e.target.value);
               }}

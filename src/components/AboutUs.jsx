@@ -15,7 +15,7 @@ const AboutUs = () => {
   return (
     <div className="w-full slide-in-effect">
       <div className="flex justify-center mt-[2rem] md:mt-[3.5rem] fade-in-effect">
-        <div className="flex flex-col mx-2 px-2 max-w-[800px]">
+        <div className="flex flex-col mx-2 px-2 max-w-[900px]">
           <div className="flex justify-center">
             <div className="flex flex-col md:mt-2 md:pl-[2rem]">
               <h1 className="whitespace-nowrap text-white xs:text-lg sm:text-lg md:text-2xl">

@@ -61,7 +61,7 @@ const EditGuide = ({ activeUser, pfps }) => {
     } else {
       inputed_img = e.target.files[0];
       if (value === "pfp") {
-        await uploadImagePFP(id);
+        uploadImagePFP(id);
         await fetchStepImages();
 
         return;
@@ -81,25 +81,23 @@ const EditGuide = ({ activeUser, pfps }) => {
     await uploadBytes(imageRef, inputed_img, metadata).then((snapshot) => {});
   }
 
-  async function uploadImagePFP(id) {
+  function uploadImagePFP(id) {
     if (inputed_img === undefined) {
       // console.log("IMAGE NULL");
       alert("Please select an image to upload.");
       return;
     } else {
       const deleteRef = ref(storage, "/guidepfp/" + "_" + id + "_");
-      await deleteObject(deleteRef).then(async () => {
+      deleteObject(deleteRef).then(() => {
         // deletes existing pfp
       });
       // console.log("this is image upload", imageUpload)
       const imageRef = ref(storage, "guidepfp/" + "_" + id + "_");
       // console.log("this is imageRef",imageRef)
-      await uploadBytes(imageRef, inputed_img, metadata).then(
-        async (snapshot) => {
-          // alert("Guide PFP uploaded.");
-          window.location.reload();
-        }
-      );
+      uploadBytes(imageRef, inputed_img, metadata).then((snapshot) => {
+        // alert("Guide PFP uploaded.");
+        window.location.reload();
+      });
     }
   }
 
@@ -264,7 +262,7 @@ const EditGuide = ({ activeUser, pfps }) => {
 
   return (
     <div className="w-full flex justify-center text-slate-300 mt-10 slide-in-effect min-h-screen">
-      <div className="flex flex-col mx-2 px-1 text-sm max-w-[800px] fade-in-effect grow">
+      <div className="flex flex-col mx-2 px-1 text-sm max-w-[900px] fade-in-effect grow">
         <div className="flex">
           {pfps.length
             ? pfps.map((pfp, index) => {
@@ -317,6 +315,7 @@ const EditGuide = ({ activeUser, pfps }) => {
                   <input
                     onChange={(e) => setEditVmtitle(e.target.value)}
                     defaultValue={guide.vmtitle}
+                    maxLength={15}
                     className=" ml-1 bg-inherit pb-1 text-white border-b-[1px] border-slate-400 text-base max-w-[140px] xs:max-w-[240px] sm:text-lg"
                   ></input>
                   <div className="flex grow justify-end">
@@ -373,6 +372,7 @@ const EditGuide = ({ activeUser, pfps }) => {
 
                   <input
                     onChange={(e) => setEditHostedby(e.target.value)}
+                    maxLength={15}
                     className="bg-inherit w-[116px] border-b-[1px] pl-1 mx-1 sm:mx-4 border-slate-400 sm:w-[200px]"
                     defaultValue={guide.hostedby}
                   ></input>

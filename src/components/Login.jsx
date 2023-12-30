@@ -53,7 +53,7 @@ const Login = ({ setSessionActive }) => {
                 <IoIosWarning className="text-orange-500 text-xl" />
               </p>
               <p className="text-xs ml-1 mt-[2px] text-slate-300">
-                Username or password not found.
+                Username or password incorrect.
               </p>
             </div>
           ) : null}
