@@ -28,7 +28,7 @@ const Login = ({ setSessionActive }) => {
                 alert("Login Failed.");
                 return;
               }
-              console.log("this is token", token);
+              // console.log("this is token", token);
               localStorage.setItem("username", JSON.stringify(username));
               setUsername("");
               setPassword("");

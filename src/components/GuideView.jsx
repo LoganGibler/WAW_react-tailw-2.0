@@ -28,7 +28,7 @@ const GuideView = ({ pfps, adminStatus }) => {
   }
 
   async function forceFetchGuide(id) {
-    console.log("force get is running.");
+    // console.log("force get is running.");
     const fetchedGuide = await forceGetGuideById(id);
     // console.log(fetchedGuide.data.guide[0]);
     setGuide(fetchedGuide.data.guide[0]);

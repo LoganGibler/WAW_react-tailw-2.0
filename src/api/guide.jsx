@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const URL = "http://localhost:8000";
-// const URL = "https://waw-api-node-js.onrender.com"
-// const URL = "https://ops-dashboard-node-js-api.onrender.com";
+// const URL = "http://localhost:8000";
+const URL = "https://waw-api-node-js.onrender.com"
+
 const headersTemp = document.cookie.split(";");
 const finalHeaders = {};
 if (headersTemp[0] !== "") {
@@ -61,7 +61,7 @@ export async function forceGetGuideById(id) {
         },
       }
     );
-    console.log("REsponse from forceGetGuide:", response);
+    // console.log("REsponse from forceGetGuide:", response);
     return response;
   } catch (error) {
     throw error;
