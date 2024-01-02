@@ -18,7 +18,7 @@ function ProtectedRoute({ element: Element, ...rest }) {
 
   if (isAuthenticated === null) {
     return (
-      <div className="flex justify-center text-slate-400">
+      <div className="flex justify-center text-slate-400 min-h-screen">
         Bad Auth. Please log out to refresh your token.
       </div>
     );

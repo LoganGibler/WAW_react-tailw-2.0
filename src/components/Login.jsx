@@ -28,7 +28,7 @@ const Login = ({ setSessionActive }) => {
                 alert("Login Failed.");
                 return;
               }
-              console.log("this is token", token);
+              // console.log("this is token", token);
               localStorage.setItem("username", JSON.stringify(username));
               setUsername("");
               setPassword("");
@@ -41,8 +41,9 @@ const Login = ({ setSessionActive }) => {
           }}
         >
           <div className="flex justify-center mb-2">
-            <img src={logo} className="w-[50px] h-auto"></img>
-            <h1 className="text-white font-semibold mt-1 mx-4 text-lg md:text-xl">
+            <img src={logo} className="w-[50px] h-auto ml-4"></img>
+
+            <h1 className="text-white font-semibold mt-0 mx-4 text-lg md:text-xl border-b-[1px] border-slate-400 pb-1 px-3">
               Sign in
             </h1>
           </div>
@@ -52,33 +53,33 @@ const Login = ({ setSessionActive }) => {
                 <IoIosWarning className="text-orange-500 text-xl" />
               </p>
               <p className="text-xs ml-1 mt-[2px] text-slate-300">
-                Username or password not found.
+                Username or password incorrect.
               </p>
             </div>
           ) : null}
-          <div className="flex">
-            <BiSolidUserRectangle className="bg-white p-0.5 text-[35px] outline-none rounded-tl-md rounded-bl-md mt-2" />
+          <div className="flex bg-white mt-1.5 rounded-sm">
+            <BiSolidUserRectangle className="p-0.5 text-[35px] outline-none  mt-0" />
             <input
               placeholder="Username"
-              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px]"
+              className="border-2 border-gray-400 border-none p-1 mt-0 md:w-[250px]"
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
             ></input>
           </div>
-          <div className="flex">
-            <FaEyeSlash className="bg-white text-[34px] p-1 outline-none rounded-tl-md rounded-bl-md mt-2" />
+          <div className="flex bg-white mt-2 rounded-sm">
+            <FaEyeSlash className="bg-white text-[34px] p-1 outline-none  mt-0" />
             <input
               placeholder="Password"
               type="password"
-              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px]"
+              className="border-2 border-gray-400 border-none  p-1 mt-0 md:w-[250px]"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             ></input>
           </div>
           <button
-            className="border-none rounded-md p-1 mt-2 text-white bg-orange-600"
+            className="border-none rounded-sm p-1 mt-2 text-white bg-orange-600"
             type="submit"
           >
             Login

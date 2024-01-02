@@ -6,15 +6,20 @@ import { BiSolidUserRectangle } from "react-icons/bi";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { BiX } from "react-icons/bi";
+import { MdEmail } from "react-icons/md";
+import { IoIosWarning } from "react-icons/io";
+
 import { createUser, loginUser } from "../api/user";
 
 const Register = ({ activeSession, setActiveSession }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [showPassRequirements, setShowPassRequirements] = useState(false);
   const [passLength, setPassLength] = useState(false);
   const [passNum, setPassNum] = useState(false);
   const [passUpperChar, setPassUpperChar] = useState(false);
+  const [showRegistrationError, setRegistrationError] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -39,6 +44,7 @@ const Register = ({ activeSession, setActiveSession }) => {
                 return;
               } else {
                 let user = await createUser(username, password);
+                console.log(user);
                 if (user.user) {
                   let token = await loginUser(username, password);
                   // console.log("this is token", token);
@@ -50,7 +56,7 @@ const Register = ({ activeSession, setActiveSession }) => {
                   navigate("/");
                   window.location.reload();
                 } else {
-                  alert("Sign up failed. Please use another username.");
+                  setRegistrationError(true);
                 }
               }
             } catch (error) {
@@ -60,15 +66,41 @@ const Register = ({ activeSession, setActiveSession }) => {
         >
           <div className="flex justify-center mb-2">
             <img src={logo} className="w-[50px] h-auto"></img>
-            <h1 className="text-white font-semibold mt-1 mx-4 text-lg md:text-xl lg:text-2xl">
-              Sign Up
+            <h1 className="text-white font-semibold mt-0 mx-4 text-lg md:text-xl border-b-[1px] border-slate-400 pb-1 px-3">
+              Sign up
             </h1>
           </div>
-          <div className="flex">
-            <BiSolidUserRectangle className="bg-white p-0.5 text-[35px] outline-none rounded-tl-md rounded-bl-md mt-2" />
+          {showRegistrationError ? (
+            <div className="flex justify-center">
+              <p className="flex justify-center">
+                <IoIosWarning className="text-orange-500 text-xl" />
+              </p>
+              <p className="text-xs ml-1 mt-[2px] text-slate-300">
+                Username already in use.
+              </p>
+            </div>
+          ) : null}
+          <div className="flex bg-white mt-1.5 rounded-sm">
+            <MdEmail className="p-[3px] text-[35px] outline-none mt-0" />
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Email"
+              maxLength={20}
+              value={email}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+              onClick={() => {
+                setShowPassRequirements(false);
+              }}
+              className="grow p-0 mt-0 md:w-[250px] indent-1"
+            ></input>
+          </div>
+          <div className="flex bg-white mt-2 rounded-sm">
+            <BiSolidUserRectangle className="p-[3px] text-[35px] outline-none mt-0" />
+            <input
+              type="text"
+              placeholder="*Username"
               maxLength={12}
               value={username}
               onChange={(e) => {
@@ -77,13 +109,13 @@ const Register = ({ activeSession, setActiveSession }) => {
               onClick={() => {
                 setShowPassRequirements(false);
               }}
-              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px]"
+              className="p-0 indent-1 grow mt-0 md:w-[250px]"
             ></input>
           </div>
-          <div className="flex">
-            <FaEyeSlash className="bg-white text-[34px] p-1 outline-none rounded-tl-md rounded-bl-md mt-2" />
+          <div className="flex bg-white mt-2 rounded-sm">
+            <FaEyeSlash className="text-[34px] p-[4px] outline-none mt-0" />
             <input
-              placeholder="Password"
+              placeholder="*Password"
               type="password"
               maxLength={50}
               value={password}
@@ -109,7 +141,7 @@ const Register = ({ activeSession, setActiveSession }) => {
               onClick={() => {
                 setShowPassRequirements(true);
               }}
-              className="border-2 border-gray-400 rounded-tr-md border-none rounded-br-md p-1 mt-2 md:w-[250px]"
+              className="indent-1 p-0 mt-0 md:w-[250px]"
             ></input>
           </div>
           {showPassRequirements && (
@@ -144,7 +176,7 @@ const Register = ({ activeSession, setActiveSession }) => {
             </div>
           )}
           <button
-            className="border-none rounded-md p-1 mt-2 text-white bg-orange-600"
+            className="border-none rounded-sm p-1 mt-2 text-white bg-orange-600"
             type="submit"
           >
             Register

@@ -14,15 +14,15 @@ import { AiFillYoutube } from "react-icons/ai";
 const AboutUs = () => {
   return (
     <div className="w-full slide-in-effect">
-      <div className="flex justify-center mt-[2rem] md:mt-[5rem] fade-in-effect">
-        <div className="flex flex-col mx-2 px-2 max-w-[800px]">
+      <div className="flex justify-center mt-[2rem] md:mt-[3.5rem] fade-in-effect">
+        <div className="flex flex-col mx-2 px-2 max-w-[900px]">
           <div className="flex justify-center">
             <div className="flex flex-col md:mt-2 md:pl-[2rem]">
-              <h1 className="text-sm text-white xs:text-base sm:text-lg md:text-lg">
+              <h1 className="whitespace-nowrap text-white xs:text-lg sm:text-lg md:text-2xl">
                 {" "}
                 Welcome to WebAppWarfare
               </h1>
-              <p className="text-xs text-slate-400 xs:mt-2 sm:pr-5  xs:text-sm sm:text-base sm:mt-1 md:text-[16px] md:mt-4">
+              <p className="text-xs text-slate-400 pr-2 xs:mt-2 sm:pr-5  xs:text-sm sm:text-base sm:mt-1 md:text-[16px] md:mt-4">
                 Your go-to platform for comprehensive training and expert guides
                 in the world of web applications. We are passionate about
                 empowering individuals with the knowledge and skills to navigate
