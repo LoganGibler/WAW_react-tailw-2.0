@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { CiSquareInfo } from "react-icons/ci";
 
 const Footer = () => {
+  const [showFooterError, setShowFooterError] = useState(false);
   return (
     <div className="bottom-0 flex bg-orange-600 justify-center">
       <div className="flex flex-col p-4 md:max-w-[800px] xl:max-w-[890px] justify-center">
@@ -16,10 +18,25 @@ const Footer = () => {
             placeholder="Your email address"
             className="px-1 py-0.5 rounded-md grow max-w-[500px]"
           ></input>
-          <button className=" ml-2 w-[100px] header-gradient text-white rounded-md py-0.5">
+          <button
+            className=" ml-2 w-[100px] header-gradient text-white rounded-md py-0.5"
+            onClick={(e) => {
+              setShowFooterError(true);
+            }}
+          >
             Subscribe
           </button>
         </div>
+        {showFooterError ? (
+          <div className="flex text-xs text-white px-1 mt-1">
+            {/* <CiSquareInfo className="xl" /> */}
+            <p>
+              This is a fake subscription box for a mock website. Your email has
+              not been saved and you will not be receiving any newsletters, but
+              thank you for attempting to subscribe.
+            </p>
+          </div>
+        ) : null}
         <div className="ml-1 text-xs text-white mt-1 p-0">
           We're commited to your privacy. WebAppWarfare uses the information you
           provide to us to contact you regarding the lastest news regarding
