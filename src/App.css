@@ -25,6 +25,10 @@
       rgba(10, 10, 10, 244) 100%);
 }
 
+.border-gradient {
+  background: rgb(10, 2, 88);
+}
+
 .truncated-text {
   display: -webkit-box;
   -webkit-line-clamp: 3;

@@ -8,6 +8,7 @@ import { FaCheck } from "react-icons/fa";
 import { BiX } from "react-icons/bi";
 import { MdEmail } from "react-icons/md";
 import { IoIosWarning } from "react-icons/io";
+import { IoPersonCircleSharp } from "react-icons/io5";
 
 import { createUser, loginUser } from "../api/user";
 
@@ -26,7 +27,7 @@ const Register = ({ activeSession, setActiveSession }) => {
     <div className="flex flex-col justify-center">
       <div className="flex justify-center slide-in-effect">
         <form
-          className="flex flex-col pb-[15rem] mt-[5rem] lg:mt-[7rem] fade-in-effect"
+          className="bg-white px-7 pt-4 pb-8 rounded-sm shadow-lg flex flex-col mt-[3rem] lg:mt-[5rem] fade-in-effect"
           onSubmit={async (e) => {
             e.preventDefault();
             try {
@@ -53,7 +54,7 @@ const Register = ({ activeSession, setActiveSession }) => {
                   setActiveSession(true);
                   setUsername("");
                   setPassword("");
-                  navigate("/");
+                  navigate("/Dashboard");
                   window.location.reload();
                 } else {
                   setRegistrationError(true);
@@ -64,23 +65,16 @@ const Register = ({ activeSession, setActiveSession }) => {
             }
           }}
         >
-          <div className="flex justify-center mb-2">
-            <img src={logo} className="w-[50px] h-auto"></img>
-            <h1 className="text-white font-semibold mt-0 mx-4 text-lg md:text-xl border-b-[1px] border-slate-400 pb-1 px-3">
+          <div className="flex justify-center">
+            <IoPersonCircleSharp className="text-[80px] rounded-full" />
+          </div>
+          <div className="flex justify-center ">
+            <h1 className="text-black font-bold mt-0 mx-4 text-lg border-slate-400 pb-1 px-3">
               Sign up
             </h1>
           </div>
-          {showRegistrationError ? (
-            <div className="flex justify-center">
-              <p className="flex justify-center">
-                <IoIosWarning className="text-orange-500 text-xl" />
-              </p>
-              <p className="text-xs ml-1 mt-[2px] text-slate-300">
-                Username already in use.
-              </p>
-            </div>
-          ) : null}
-          <div className="flex bg-white mt-1.5 rounded-sm">
+
+          <div className="flex bg-white mt-1.5 border-b-[2px] pb-0.5 border-slate-400">
             <MdEmail className="p-[3px] text-[35px] outline-none mt-0" />
             <input
               type="text"
@@ -88,15 +82,15 @@ const Register = ({ activeSession, setActiveSession }) => {
               maxLength={20}
               value={email}
               onChange={(e) => {
-                setUsername(e.target.value);
+                setEmail(e.target.value);
               }}
               onClick={() => {
                 setShowPassRequirements(false);
               }}
-              className="grow p-0 mt-0 md:w-[250px] indent-1"
+              className="grow p-0 mt-0 md:w-[250px] indent-1 outline-none border-none"
             ></input>
           </div>
-          <div className="flex bg-white mt-2 rounded-sm">
+          <div className="flex bg-white mt-2 border-b-[2px] pb-0.5 border-slate-400">
             <BiSolidUserRectangle className="p-[3px] text-[35px] outline-none mt-0" />
             <input
               type="text"
@@ -109,10 +103,10 @@ const Register = ({ activeSession, setActiveSession }) => {
               onClick={() => {
                 setShowPassRequirements(false);
               }}
-              className="p-0 indent-1 grow mt-0 md:w-[250px]"
+              className="p-0 indent-1 grow mt-0 md:w-[250px] outline-none border-none"
             ></input>
           </div>
-          <div className="flex bg-white mt-2 rounded-sm">
+          <div className="flex bg-white mt-2 border-b-[2px] pb-0.5 border-slate-400">
             <FaEyeSlash className="text-[34px] p-[4px] outline-none mt-0" />
             <input
               placeholder="*Password"
@@ -141,11 +135,21 @@ const Register = ({ activeSession, setActiveSession }) => {
               onClick={() => {
                 setShowPassRequirements(true);
               }}
-              className="indent-1 p-0 mt-0 md:w-[250px]"
+              className="indent-1 p-0 mt-0 md:w-[250px] outline-none border-none"
             ></input>
           </div>
+          {showRegistrationError ? (
+            <div className="flex justify-center">
+              <p className="flex justify-center">
+                <IoIosWarning className="text-orange-500 text-xl" />
+              </p>
+              <p className="text-xs ml-1 mt-[2px] text-slate-500">
+                Username already in use.
+              </p>
+            </div>
+          ) : null}
           {showPassRequirements && (
-            <div className="flex flex-col mt-2 text-slate-100">
+            <div className="flex flex-col mt-2 text-slate-500">
               {/* <p className="ml-2">Please include the below in your password:</p> */}
               <div className="flex">
                 <li className="mt-[4px] text-sm">At least 7 characters long</li>
@@ -183,9 +187,9 @@ const Register = ({ activeSession, setActiveSession }) => {
           </button>
 
           <div className="flex justify-center mt-5">
-            <p className="text-slate-100 text-sm pt-[3px]">Have an account?</p>
+            <p className="text-slate-400 text-sm pt-[3px]">Have an account?</p>
             <button
-              className="text-slate-100 text-sm border-[1px] border-slate-100 mr-1.5 rounded-md py-[2px] ml-2 px-1 hover:cursor-pointer"
+              className="text-orange-600 text-sm border-[1px] border-orange-600 mr-1.5 rounded-md py-[2px] ml-2 px-1 hover:cursor-pointer"
               onClick={() => {
                 navigate("/Login");
               }}
