@@ -3,6 +3,8 @@ import { Navigate, Route } from "react-router-dom";
 
 import { testingProtectedRoute } from "../middleware/auth";
 
+import Spinner from "../components/Spinner";
+
 function ProtectedRoute({ element: Element, ...rest }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
@@ -18,8 +20,16 @@ function ProtectedRoute({ element: Element, ...rest }) {
 
   if (isAuthenticated === null) {
     return (
-      <div className="flex justify-center text-slate-400 min-h-screen">
-        Bad Auth. Please log out to refresh your token.
+      <div className="flex text-slate-400 justify-center grow min-h-screen">
+        <div className="flex flex-col">
+          <p className="text-sm xs:text-base">
+            {" "}
+            Bad Auth. Please log out to refresh your token.
+          </p>
+          <div className="flex justify-center mt-5">
+            <Spinner />
+          </div>
+        </div>
       </div>
     );
   } else {

@@ -11,6 +11,8 @@ import { AiFillFacebook } from "react-icons/ai";
 import { AiFillLinkedin } from "react-icons/ai";
 import { AiFillYoutube } from "react-icons/ai";
 
+import Spinner from "./Spinner";
+
 const AboutUs = () => {
   return (
     <div className="w-full slide-in-effect">
