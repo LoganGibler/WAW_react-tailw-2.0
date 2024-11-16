@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import office1 from "../imgs/office1.png";
 import office2 from "../imgs/office2.png";
 import office3 from "../imgs/office3.png";
@@ -11,7 +11,7 @@ import { AiFillFacebook } from "react-icons/ai";
 import { AiFillLinkedin } from "react-icons/ai";
 import { AiFillYoutube } from "react-icons/ai";
 
-import Spinner from "./Spinner";
+
 
 const AboutUs = () => {
   return (

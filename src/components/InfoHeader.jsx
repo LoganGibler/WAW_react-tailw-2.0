@@ -34,7 +34,7 @@ const InfoHeader = () => {
           </div>
         </div>
       </div>
-      <div className="flex text-white justify-center pb-2">
+      <div className="flex text-orange-400 justify-center pb-2">
         <div className="flex">
           <a href="https://www.linkedin.com/in/logan-gibler/">
             <AiFillLinkedin className="mx-2 mb-2  text-lg xs:text-xl sm:text-2xl md:4xl hover:cursor-pointer" />
