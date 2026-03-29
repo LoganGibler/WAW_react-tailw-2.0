@@ -15,25 +15,22 @@ const Login = ({ setSessionActive }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col justify-center ">
-      <div className="flex justify-center slide-in-effect">
+    <div className="flex flex-col justify-center min-h-[calc(100vh-60px)]">
+      <div className="flex justify-center slide-in-effect px-4">
         <form
-          className="bg-white px-7 pt-4 pb-8 rounded-sm shadow-lg flex flex-col mt-[3rem] lg:mt-[5rem] fade-in-effect"
+          className="login-card px-7 pt-6 pb-8 rounded-xl flex flex-col mt-[2rem] lg:mt-[3rem] fade-in-effect w-full max-w-[340px]"
           type="submit"
           onSubmit={async (e) => {
             e.preventDefault();
             try {
-              // console.log("form submitted");
               let token = await loginUser(username, password);
               if (!token) {
                 alert("Login Failed.");
                 return;
               }
-              // console.log("this is token", token);
               localStorage.setItem("username", JSON.stringify(username));
               setUsername("");
               setPassword("");
-
               navigate("/Dashboard");
               window.location.reload();
             } catch (error) {
@@ -41,77 +38,69 @@ const Login = ({ setSessionActive }) => {
             }
           }}
         >
-          <div className="flex justify-center mb-2">
-            {/* <img src={logo} className="w-[50px] h-auto ml-2"></img> */}
-            <IoPersonCircleSharp className="text-[80px] rounded-full" />
-            {/* <h1 className="pb-1 px-3  font-semibold mt-0 mx-4 text-black text-xl md:text-xl border-b-[1px] border-slate-400">
-              Login
-            </h1> */}
+          <div className="flex justify-center mb-3">
+            <IoPersonCircleSharp className="text-[70px] text-orange-500/80" />
           </div>
-          <div className="flex justify-center mt-0">
-            <h2 className="font-bold text-lg">Sign in</h2>
+          <div className="flex justify-center mt-0 mb-4">
+            <h2 className="font-bold text-xl text-white tracking-wide">Sign in</h2>
           </div>
 
-          <div className="flex bg-inherit mt-1.5 border-b-[2px] pb-0.5 border-slate-400">
-            <BiSolidUserRectangle className="p-0.5 text-[33px] outline-none  mt-0" />
+          <div className="flex items-center input-dark mt-1.5 px-3 py-2 gap-2">
+            <BiSolidUserRectangle className="text-slate-400 text-[22px] flex-shrink-0" />
             <input
               placeholder="Username"
-              className=" border-none outline-none bg-inherit p-1 mt-0 md:w-[250px]"
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
+              className="border-none outline-none bg-transparent text-white text-sm w-full placeholder:text-slate-500"
+              onChange={(e) => setUsername(e.target.value)}
             ></input>
           </div>
-          <div className="flex bg-inherit mt-2 border-b-[2px] pb-0.5 border-slate-400">
-            <FaEyeSlash className="bg-inherit text-[34px] p-1 outline-none  mt-0" />
+          <div className="flex items-center input-dark mt-3 px-3 py-2 gap-2">
+            <FaEyeSlash className="text-slate-400 text-[20px] flex-shrink-0" />
             <input
               placeholder="Password"
               type="password"
-              className="outline-none border-none  p-1 mt-0 md:w-[250px] bg-inherit"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              className="outline-none border-none bg-transparent text-white text-sm w-full placeholder:text-slate-500"
+              onChange={(e) => setPassword(e.target.value)}
             ></input>
           </div>
+
           {showLoginError ? (
-            <div className="flex justify-center mt-3">
-              <p className="flex justify-center">
-                <IoIosWarning className="text-orange-500 text-xl" />
-              </p>
-              <p className="text-xs ml-1 mt-[2px] text-slate-400">
+            <div className="flex items-center justify-center mt-3 gap-1.5 bg-red-900/20 border border-red-700/30 rounded-md px-3 py-2">
+              <IoIosWarning className="text-orange-400 text-base flex-shrink-0" />
+              <p className="text-xs text-slate-300">
                 Username or password incorrect.
               </p>
             </div>
           ) : null}
+
           <button
-            className="border-none rounded-sm p-1 mt-2 text-white bg-orange-600"
+            className="btn-primary w-full py-2 mt-4 text-sm"
             type="submit"
           >
             Login
           </button>
 
-          <div className="flex justify-center mt-4">
-            <div className="flex flex-col text-[12px] sm:text-[16px] text-slate-400">
-              <p>SampleUser: SampleUser1</p>
-              <p>SamplePass: SampleUserPass1</p>
+          <div className="mt-4 rounded-md bg-slate-800/50 border border-slate-700/50 px-3 py-2">
+            <p className="text-[11px] text-slate-500 text-center mb-1">Demo credentials</p>
+            <div className="flex flex-col text-[11px] text-slate-400 text-center gap-0.5">
+              <p>User: <span className="text-slate-300">SampleUser1</span></p>
+              <p>Pass: <span className="text-slate-300">SampleUserPass1</span></p>
             </div>
           </div>
 
-          <div className="flex justify-center mt-5 ">
-            <p className="text-slate-400 text-sm pt-[3px]">Need an account?</p>
+          <div className="flex justify-center items-center mt-5 gap-2">
+            <p className="text-slate-500 text-sm">Need an account?</p>
             <button
-              className="text-orange-600 text-sm border-[1px] border-orange-600 mr-1.5 rounded-md py-[2px] ml-2 px-1 hover:cursor-pointer"
-              onClick={() => {
-                navigate("/Register");
-              }}
+              className="text-orange-500 text-sm font-medium hover:text-orange-400 transition-colors"
+              type="button"
+              onClick={() => navigate("/Register")}
             >
-              Sign up
+              Sign up →
             </button>
           </div>
         </form>
       </div>
-      <div className="absolute bottom-4 text-center w-full">
-        <p className="text-slate-100 text-xs sm:text-base">
+      <div className="text-center w-full mt-6 pb-4">
+        <p className="text-slate-600 text-xs">
           © 2023 WebAppWarfare. All rights reserved.
         </p>
       </div>

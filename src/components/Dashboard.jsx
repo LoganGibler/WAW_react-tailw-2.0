@@ -125,12 +125,12 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
           </div>
         ) : (
           <div>
-            <div className="flex text-sm xs:text-base mt-[0rem] border-b-[1px] pb-2 pt-2 border-slate-500">
-              ~/&nbsp;Dashboard&nbsp;/&nbsp;{" "}
+            <div className="flex text-sm xs:text-base mt-[0rem] border-b-[1px] pb-2 pt-2 border-slate-700/60 section-header">
+              <span className="text-slate-500">~/</span>&nbsp;Dashboard&nbsp;<span className="text-slate-500">/</span>&nbsp;
               <p className="text-orange-400 whitespace-nowrap max-w-[95px] xs:max-w-none overflow-hidden text-ellipsis">
                 {user}
               </p>
-              &nbsp;/&nbsp;Guides
+              &nbsp;<span className="text-slate-500">/</span>&nbsp;<span className="text-slate-300">Guides</span>
               <div className="flex grow justify-end">
                 {userGuides.length ? (
                   <button
@@ -183,7 +183,7 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
                 return (
                   <div className="flex flex-col" key={index}>
                     <div
-                      className="flex flex-col px-2 py-1 mt-2 rounded-sm  border-slate-600 border-[1px] grow sm:grow sm:min-w-[390px] sm:mx-1 sm:mt-3 hover:cursor-pointer hover:border-slate-400"
+                      className="guide-card flex flex-col px-3 py-2 mt-2 rounded-lg grow sm:grow sm:min-w-[390px] sm:mx-1 sm:mt-3 hover:cursor-pointer hover:text-slate-300"
                       onClick={() => {
                         if (guide.approved || guide.published) {
                           navigate("/guide/" + guide._id);
@@ -308,12 +308,12 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
               </div>
             ) : null}
 
-            <div className="flex mt-[3rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
-              ~/&nbsp;Dashboard&nbsp;/&nbsp;
+            <div className="flex mt-[3rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-700/60 section-header">
+              <span className="text-slate-500">~/</span>&nbsp;Dashboard&nbsp;<span className="text-slate-500">/</span>&nbsp;
               <p className="text-orange-400 whitespace-nowrap text-ellipsis overflow-hidden max-w-[100px]">
                 {user}
               </p>
-              &nbsp;/&nbsp;BookmarkedGuides
+              &nbsp;<span className="text-slate-500">/</span>&nbsp;<span className="text-slate-300">Bookmarks</span>
             </div>
             <div className="flex flex-wrap mt-1">
               {usersBookmarkedGuides.length ? (
@@ -338,7 +338,7 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
                   return (
                     <div
                       key={index}
-                      className="flex px-2 py-1 mt-2 rounded-sm  border-slate-600 border-[1px] grow sm:grow sm:min-w-[390px] sm:mx-1 sm:mt-3 hover:cursor-pointer hover:border-slate-400"
+                      className="guide-card flex px-3 py-2 mt-2 rounded-lg grow sm:grow sm:min-w-[390px] sm:mx-1 sm:mt-3 hover:cursor-pointer hover:text-slate-300"
                       onClick={() => {
                         navigate("/guide/" + guide._id);
                       }}
@@ -396,8 +396,8 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
               )}
             </div>
 
-            <div className="flex mt-[3rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
-              ~/&nbsp;Dashboard /&nbsp;RecentlyPosted
+            <div className="flex mt-[3rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-700/60 section-header">
+              <span className="text-slate-500">~/</span>&nbsp;Dashboard&nbsp;<span className="text-slate-500">/</span>&nbsp;<span className="text-slate-300">RecentlyPosted</span>
             </div>
             <div className="flex p-2 justify-center text-sm text-slate-400">
               <p className="mt-5">Feature Coming soon.</p>
@@ -406,8 +406,8 @@ const Dashboard = ({ activeUser, pfps, userDetails, adminStatus }) => {
             {adminStatus ? (
               <div>
                 {/* {console.log(reviewGuides)} */}
-                <div className="flex mt-[2rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-500">
-                  ~/&nbsp;Dev /&nbsp;Tasks&nbsp;/&nbsp;
+                <div className="flex mt-[2rem] text-sm xs:text-base border-b-[1px] pb-2 border-slate-700/60 section-header">
+                  <span className="text-slate-500">~/</span>&nbsp;Dev&nbsp;<span className="text-slate-500">/</span>&nbsp;Tasks&nbsp;<span className="text-slate-500">/</span>&nbsp;
                   <p className="text-orange-400">Review</p>
                 </div>
 

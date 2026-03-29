@@ -29,11 +29,11 @@ const Nav = ({
   }
 
   return (
-    <div className="w-full px-2 flex sm:px-8 lg:px-[6rem] pt-4">
-      <div className="text-white flex ml-6">
-        <img className="w-[33px] h-auto md:w-[42px]" src={logo}></img>
+    <div className="nav-glass w-full sticky top-0 z-50 px-4 sm:px-8 lg:px-[6rem] py-3 flex items-center">
+      <div className="text-white flex items-center">
+        <img className="w-[30px] h-auto md:w-[38px]" src={logo}></img>
         <h1
-          className="ml-2 font-semibold lg:text-lg lg:pl-5 hover:cursor-pointer hover:text-orange-600"
+          className="ml-2.5 font-bold text-sm md:text-base tracking-wide hover:cursor-pointer hover:text-orange-400 transition-colors duration-150"
           onClick={() => {
             navigate("/");
           }}
@@ -42,65 +42,39 @@ const Nav = ({
         </h1>
       </div>
 
-      <div className="hidden md:flex grow mr-6 mt-[2px] py-[2px] justify-end text-white">
-        <p
-          className="mx-1.5  lg:mx-3 text-sm  lg:text-[16px] hover:cursor-pointer hover:text-orange-600"
-          onClick={() => {
-            navigate("/Guides");
-          }}
-        >
-          Guides
-        </p>
-        {activeSession && (
+      <div className="hidden md:flex grow mr-4 justify-end items-center gap-1 lg:gap-2">
+        {[
+          { label: "Guides", path: "/Guides" },
+          ...(activeSession ? [{ label: "Dashboard", path: "/Dashboard" }] : []),
+          { label: "About Us", path: "/AboutUs" },
+        ].map(({ label, path }) => (
           <p
-            className="mx-1.5 lg:mx-3 text-sm lg:text-[16px]  hover:cursor-pointer hover:text-orange-600"
-            onClick={() => {
-              navigate("/Dashboard");
-            }}
+            key={path}
+            className="px-3 py-1 text-slate-300 text-sm lg:text-[15px] rounded-md hover:cursor-pointer hover:text-white hover:bg-white/5 transition-all duration-150"
+            onClick={() => navigate(path)}
           >
-            Dashboard
+            {label}
           </p>
-        )}
-
-        {/* {activeSession && (
-          <p
-            className="mx-1.5 lg:mx-3 text-sm   lg:text-[16px] hover:cursor-pointer hover:text-orange-600"
-            onClick={() => {
-              navigate("/CreateGuide");
-            }}
-          >
-            Create Guide
-          </p>
-        )} */}
-        <p
-          className="mx-1.5 lg:mx-3 text-sm   lg:text-[16px] hover:cursor-pointer hover:text-orange-600"
-          onClick={() => {
-            navigate("/AboutUs");
-          }}
-        >
-          About Us
-        </p>
+        ))}
       </div>
-      <div className="text-white text-sm flex grow justify-end mr-2 md:grow-0">
+
+      <div className="text-white text-sm flex items-center gap-2 md:gap-3 ml-auto md:ml-0">
         {!activeSession ? (
           <button
-            className="border-[1.5px] rounded-md border-orange-600 bg-orange-600 px-2 py-[1px] mt-[1px]"
-            onClick={() => {
-              navigate("/Login");
-            }}
+            className="btn-primary px-3 py-1 text-sm"
+            onClick={() => navigate("/Login")}
           >
             Sign in
           </button>
         ) : (
-          <div className="mr-1 flex">
-            {/* grab user from local */}
-            <div className="hidden xs:flex mt-[2px] md:mt-[3.5px] mr-1.5 sm:">
-              <p className="font-semibold text-orange-400">
+          <div className="flex items-center gap-2">
+            <div className="hidden xs:block">
+              <p className="font-semibold text-orange-400 text-sm">
                 {JSON.parse(localStorage.getItem("username"))}
               </p>
             </div>
             <button
-              className="border-[1.5px] rounded-md border-orange-600 bg-orange-600 px-2 py-[1px]"
+              className="px-3 py-1 text-sm rounded-md border border-orange-600/60 text-orange-400 hover:bg-orange-600 hover:text-white hover:border-orange-600 transition-all duration-150"
               onClick={async () => {
                 await deleteAllCookies();
                 await setActiveSession(false);
@@ -114,15 +88,16 @@ const Nav = ({
           </div>
         )}
       </div>
-      <div className="flex mr-2 mt-0.5 md:hidden">
+
+      <div className="flex items-center ml-3 md:hidden">
         {!menuActive ? (
           <RiMenu3Line
-            className="text-white text-xl"
+            className="text-slate-300 text-xl hover:text-white cursor-pointer transition-colors"
             onClick={handleMenuChange}
           />
         ) : (
           <RiCloseLine
-            className="text-white text-xl"
+            className="text-slate-300 text-xl hover:text-white cursor-pointer transition-colors"
             onClick={handleMenuChange}
           />
         )}

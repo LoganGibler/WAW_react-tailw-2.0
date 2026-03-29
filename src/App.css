@@ -3,18 +3,42 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+:root {
+  --orange-primary: #ea580c;
+  --orange-light: #fb923c;
+  --slate-card: rgba(15, 23, 42, 0.7);
+  --border-subtle: rgba(100, 116, 139, 0.3);
+  --border-hover: rgba(234, 88, 12, 0.4);
+  --glow-orange: rgba(234, 88, 12, 0.15);
+}
+
 #root {
-  /* max-width: 1280px; */
-  height: 100vh;
+  min-height: 100vh;
   scroll-behavior: smooth;
   margin: 0px;
   padding: 0px;
   font-family: "Manrope", sans-serif;
-  background: rgb(1, 0, 6);
-  background: linear-gradient(180deg,
-      rgba(1, 0, 6, 1) 1%,
-      rgba(8, 11, 61, 1) 57%,
-      rgba(22, 25, 75, 1) 97%);
+  background: #02040f;
+  background: linear-gradient(160deg,
+      #02040f 0%,
+      #060b2e 40%,
+      #0a0f3d 70%,
+      #06081f 100%);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0f3d;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(234, 88, 12, 0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(234, 88, 12, 0.7);
 }
 
 .header-gradient {
@@ -32,23 +56,16 @@
 .truncated-text {
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  /* Number of lines to show before truncating */
   -webkit-box-orient: vertical;
   overflow: hidden;
-  /* text-overflow: ellipsis; */
-  /* max-height: 100%; */
-  /* Adjust the height based on the number of lines you want */
 }
 
 .truncated-text-sm {
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  /* Number of lines to show before truncating */
   -webkit-box-orient: vertical;
   overflow: hidden;
-  /* text-overflow: ellipsis; */
   max-height: 100%;
-  /* Adjust the height based on the number of lines you want */
 }
 
 .guides-gradient-bg {
@@ -59,11 +76,11 @@
 }
 
 .hamburger-menu-gradient {
-  background: rgb(10, 2, 88);
-  background: linear-gradient(270deg,
-      rgba(10, 2, 88, 1) 0%,
-      rgba(10, 10, 10, 1) 99%,
-      rgba(255, 255, 255, 1) 100%);
+  background: #060b2e;
+  background: linear-gradient(180deg,
+      #060b2e 0%,
+      #02040f 100%);
+  border-left: 1px solid rgba(100, 116, 139, 0.2);
 }
 
 .transformation {
@@ -76,27 +93,17 @@
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 100;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .slide-in-effect {
-  animation: slide-in 1.3s;
+  animation: slide-in 0.8s ease-out;
 }
 
 @keyframes slide-in {
-  from {
-    transform: translateY(10%);
-  }
-
-  to {
-    transform: translateY(0%);
-  }
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0%); opacity: 1; }
 }
 
 .box-shadow {
@@ -104,5 +111,102 @@
   box-shadow: 0px 2px 8px 1px rgba(0, 0, 0, 0.62);
 }
 
-/* background: rgb(10, 2, 88);
-background: linear-gradient(353deg, rgba(10, 2, 88, 1) 0%, rgba(10, 10, 10, 1) 99%, rgba(255, 255, 255, 1) 100%); */
+/* ── New utility classes ── */
+
+/* Nav glassmorphism */
+.nav-glass {
+  background: rgba(2, 4, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+/* Guide cards */
+.guide-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(100, 116, 139, 0.25);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+.guide-card:hover {
+  border-color: rgba(234, 88, 12, 0.45);
+  box-shadow: 0 0 18px rgba(234, 88, 12, 0.08), 0 4px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Featured card left accent */
+.featured-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(100, 116, 139, 0.25);
+  border-left: 3px solid #ea580c;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.featured-card:hover {
+  border-color: rgba(234, 88, 12, 0.6);
+  border-left-color: #ea580c;
+  box-shadow: 0 0 20px rgba(234, 88, 12, 0.1), 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark input */
+.input-dark {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  color: #e2e8f0;
+  border-radius: 6px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.input-dark::placeholder {
+  color: rgba(148, 163, 184, 0.5);
+}
+.input-dark:focus {
+  outline: none;
+  border-color: rgba(234, 88, 12, 0.5);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.08);
+}
+
+/* Login dark card */
+.login-card {
+  background: rgba(6, 11, 46, 0.9);
+  border: 1px solid rgba(100, 116, 139, 0.25);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(10, 2, 88, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+/* Gradient headline text */
+.gradient-text {
+  background: linear-gradient(135deg, #fff 30%, #fb923c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section header terminal style */
+.section-header {
+  border-left: 3px solid #ea580c;
+  padding-left: 10px;
+  color: #e2e8f0;
+}
+
+/* Orange glow button */
+.btn-primary {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  color: white;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 12px rgba(234, 88, 12, 0.3);
+}
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(234, 88, 12, 0.4);
+}
+
+/* Sort icon buttons */
+.sort-btn {
+  color: rgba(251, 146, 60, 0.8);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+.sort-btn:hover {
+  color: #fff;
+  transform: scale(1.15);
+}

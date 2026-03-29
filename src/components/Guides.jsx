@@ -157,42 +157,55 @@ const Guides = ({ activeSession, activeUser, pfps }) => {
         ) : (
           <div>
             <div className="pb-0  max-w-[600px] md:max-w-[700px] lg:max-w-[800px] flex flex-col justify-center hover:cursor-pointer">
-              <div className="flex justify-end text-orange-400 max-h-[23px] mb-1">
-                <div className="flex pt-1.5 text-sm sm:text-base">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-1 bg-slate-800/60 border border-slate-700/50 rounded-lg px-2 py-1">
+                  <span className="text-[10px] text-slate-500 mr-1 hidden sm:inline">Sort:</span>
                   <FaSortAlphaDown
-                    className="mx-1 mt-1 hover:cursor-pointer hover:text-white"
-                    onClick={async () => {
-                      await sortAlphaDown();
-                    }}
+                    className="sort-btn text-base cursor-pointer"
+                    title="A → Z"
+                    onClick={async () => await sortAlphaDown()}
                   />
                   <FaSortAlphaUpAlt
-                    className="mx-1 mt-1 hover:cursor-pointer hover:text-white"
-                    onClick={async () => {
-                      await sortAlphaUp();
-                    }}
+                    className="sort-btn text-base cursor-pointer"
+                    title="Z → A"
+                    onClick={async () => await sortAlphaUp()}
                   />
+                  <span className="w-px h-4 bg-slate-600 mx-1"></span>
                   <FaSortAmountDownAlt
-                    className="mx-1 mt-1 hover:cursor-pointer hover:text-white"
-                    onClick={async () => {
-                      await sortDifficultyDown();
-                    }}
+                    className="sort-btn text-base cursor-pointer"
+                    title="Easy → Hard"
+                    onClick={async () => await sortDifficultyDown()}
                   />
                   <FaSortAmountUp
-                    className="mx-1 mt-1 hover:cursor-pointer hover:text-white mr-2"
+                    className="sort-btn text-base cursor-pointer"
+                    title="Hard → Easy"
+                    onClick={async () => await sortDifficultyUp()}
+                  />
+                </div>
+
+                <div className="flex flex-1 items-center input-dark px-3 py-1.5 gap-2">
+                  <HiMiniMagnifyingGlassCircle
+                    className="text-orange-500 text-lg flex-shrink-0 cursor-pointer"
                     onClick={async () => {
-                      await sortDifficultyUp();
+                      const searchedGuides = await searchGuides(searchTerm);
+                      setFeaturedGuides([]);
+                      setGuides(searchedGuides);
                     }}
                   />
-
                   <input
-                    placeholder="Search Guides Here"
-                    className="border-l-[1px] border-r-[1px] w-[140px] sm:w-[180px] border-slate-600 bg-inherit pl-2 h-[23px]"
-                    onChange={(e) => {
-                      setSearchTerm(e.target.value);
+                    placeholder="Search guides..."
+                    className="border-none outline-none bg-transparent text-white text-sm w-full placeholder:text-slate-500"
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") {
+                        const searchedGuides = await searchGuides(searchTerm);
+                        setFeaturedGuides([]);
+                        setGuides(searchedGuides);
+                      }
                     }}
                   ></input>
                   <button
-                    className="border-r-[2px] outline-none border-slate-600 ml-2 pr-2 mr-[38px] h-[23px]"
+                    className="text-xs text-orange-400 hover:text-orange-300 font-medium whitespace-nowrap transition-colors"
                     onClick={async () => {
                       const searchedGuides = await searchGuides(searchTerm);
                       setFeaturedGuides([]);
@@ -202,15 +215,6 @@ const Guides = ({ activeSession, activeUser, pfps }) => {
                     Search
                   </button>
                 </div>
-
-                <HiMiniMagnifyingGlassCircle
-                  className="text-orange-500 text-4xl absolute"
-                  onClick={async () => {
-                    const searchedGuides = await searchGuides(searchTerm);
-                    setFeaturedGuides([]);
-                    setGuides(searchedGuides);
-                  }}
-                />
               </div>
               {/* <div className="pt-3"> */}
               {featuredGuides.length ? (
@@ -239,7 +243,7 @@ const Guides = ({ activeSession, activeUser, pfps }) => {
                           </div>
 
                           <div
-                            className="p-2 flex border-[1px] border-slate-600 text-slate-400 hover:cursor-pointer hover:text-slate-300 hover:border-slate-400"
+                            className="featured-card p-3 flex text-slate-400 hover:cursor-pointer hover:text-slate-300"
                             onClick={(e) => {
                               navigate("/guide/" + featuredGuide._id);
                             }}
@@ -355,7 +359,7 @@ const Guides = ({ activeSession, activeUser, pfps }) => {
                   return (
                     <div
                       key={index}
-                      className="grow flex sm:w-[300px] flex-col py-1.5 sm:ml-1 my-1 px-4 border-[1px] border-slate-600 text-slate-400 rounded-sm fade-in-effect hover:cursor-pointer hover:text-slate-300 hover:border-slate-400"
+                      className="guide-card grow flex sm:w-[300px] flex-col py-2.5 sm:ml-1 my-1 px-4 text-slate-400 rounded-lg fade-in-effect hover:cursor-pointer hover:text-slate-300"
                       onClick={() => {
                         navigate("/guide/" + guide._id);
                       }}
