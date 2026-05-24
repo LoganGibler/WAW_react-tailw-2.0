@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // const URL = "http://localhost:8000";
-const URL = "https://waw-api-node-js.onrender.com";
+// const URL = "https://waw-api-node-js.onrender.com";
+const URL = import.meta.env.VITE_API_URL;
 
 const headersTemp = document.cookie.split(";");
 const finalHeaders = {};

@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 // const URL = "http://localhost:8000";
-const URL = "https://waw-api-node-js.onrender.com";
+const URL = import.meta.env.VITE_API_URL;
 
 const headersTemp = document.cookie.split(";");
 const finalHeaders = {};
@@ -44,7 +44,7 @@ export async function getUserDataByID(_id) {
         authorization: finalHeaders["AUTH_API"],
         user_id: finalHeaders["USER_ID"],
       },
-    }
+    },
   );
   return response.data;
 }
@@ -61,7 +61,7 @@ export async function addGuideToUserBookmarks(_id, guide_id) {
         authorization: finalHeaders["AUTH_API"],
         user_id: finalHeaders["USER_ID"],
       },
-    }
+    },
   );
   return response.data;
 }
@@ -79,7 +79,7 @@ export async function getUsersBookmarkedGuides(activeUser) {
           authorization: finalHeaders["AUTH_API"],
           user_id: finalHeaders["USER_ID"],
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -100,7 +100,7 @@ export async function getUsersBookmarkedGuidesData(activeUser) {
           authorization: finalHeaders["AUTH_API"],
           user_id: finalHeaders["USER_ID"],
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -121,7 +121,7 @@ export async function removeGuideFromBookmarks(_id, guide_id) {
           authorization: finalHeaders["AUTH_API"],
           user_id: finalHeaders["USER_ID"],
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -141,7 +141,7 @@ export async function getUsersGuides(_id) {
           authorization: finalHeaders["AUTH_API"],
           user_id: finalHeaders["USER_ID"],
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
